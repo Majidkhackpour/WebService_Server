@@ -57,11 +57,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assistence\ClsCache.cs" />
+    <Compile Include="Assistence\Mappings.cs" />
+    <Compile Include="Assistence\SqlProfile.cs" />
+    <Compile Include="Assistence\UnitOfWork.cs" />
+    <Compile Include="Core\IRepository.cs" />
+    <Compile Include="Persistence\GenericRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bussines\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
+      <Project>{dcb5bde2-6238-422d-ad4e-f53afce9bf30}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{4624cdbb-1744-4638-a49f-ec3f5f1cd485}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
