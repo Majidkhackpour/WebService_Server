@@ -3,6 +3,7 @@ using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using AutoMapper;
 using Persistence;
+using Persistence.Migrations;
 using Services;
 
 namespace EntityCache.Assistence
@@ -13,7 +14,7 @@ namespace EntityCache.Assistence
         {
             Cache.ConnectionString = connectionString;
             if (!CheckConnectionString(Cache.ConnectionString))
-                throw new ArgumentNullException("ConnectionString Not Correct ", nameof(Cache.ConnectionString));
+                UpdateMigration();
             var config = new MapperConfiguration(c => { c.AddProfile(new SqlProfile()); });
             Mappings.Default = new Mapper(config);
             UpdateMigration();
@@ -22,9 +23,9 @@ namespace EntityCache.Assistence
         {
             try
             {
-                //var migratorConfig = new Persistence.Migrations.Configuration();
-                //var dbMigrator = new DbMigrator(migratorConfig);
-                //dbMigrator.Update();
+                var migratorConfig = new Configuration();
+                var dbMigrator = new DbMigrator(migratorConfig);
+                dbMigrator.Update();
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Persistence.Entities;
 using Persistence.Migrations;
 
 namespace Persistence.Model
@@ -19,5 +20,6 @@ namespace Persistence.Model
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
+        public virtual DbSet<Customers> Customers { get; set; }
     }
 }
