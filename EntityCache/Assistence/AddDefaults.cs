@@ -14,7 +14,7 @@ namespace EntityCache.Assistence
     {
         public static async Task InsertDefaultDataAsync()
         {
-            var dbContext = new ModelContext(Cache.ConnectionString);
+            var dbContext = new ModelContext();
             var res = new ReturnedSaveFuncInfo();
 
             #region Users
@@ -31,7 +31,8 @@ namespace EntityCache.Assistence
                     IsBlock = false,
                     Email = "Arad_enj@yahoo.com",
                     Mobile = "09382420272",
-                    Type = EnUserType.Manager
+                    Type = EnUserType.Manager,
+                    Status = true
                 };
                 var ue = new UTF8Encoding();
                 var bytes = ue.GetBytes("2211");

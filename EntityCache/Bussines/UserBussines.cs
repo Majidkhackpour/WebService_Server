@@ -12,7 +12,7 @@ namespace EntityCache.Bussines
     {
         public Guid Guid { get; set; }
         public DateTime Modified { get; set; } = DateTime.Now;
-        public bool Status { get; set; } = true;
+        public bool Status { get; set; } = false;
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }

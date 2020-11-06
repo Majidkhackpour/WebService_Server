@@ -11,11 +11,8 @@ namespace EntityCache.Assistence
 {
     public class ClsCache
     {
-        public static void Init(string connectionString)
+        public static void Init()
         {
-            Cache.ConnectionString = connectionString;
-            if (!CheckConnectionString(Cache.ConnectionString))
-                UpdateMigration();
             var config = new MapperConfiguration(c => { c.AddProfile(new SqlProfile()); });
             Mappings.Default = new Mapper(config);
             UpdateMigration();

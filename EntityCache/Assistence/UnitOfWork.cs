@@ -7,7 +7,7 @@ namespace EntityCache.Assistence
 {
     public static class UnitOfWork
     {
-        private static readonly ModelContext db = new ModelContext(Cache.ConnectionString);
+        private static readonly ModelContext db = new ModelContext();
 
         private static ICustomerRepository _customerRepository;
         private static ICustomerLogRepository _customerLogRepository;
