@@ -55,10 +55,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
+    <Compile Include="Entities\CustomerLog.cs" />
     <Compile Include="Entities\Customers.cs" />
-    <Compile Include="Migrations\202011051651198__1.cs" />
-    <Compile Include="Migrations\202011051651198__1.designer.cs">
-      <DependentUpon>202011051651198__1.cs</DependentUpon>
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderDetails.cs" />
+    <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\Reception.cs" />
+    <Compile Include="Entities\SafeBox.cs" />
+    <Compile Include="Entities\SmsLog.cs" />
+    <Compile Include="Entities\SmsPanels.cs" />
+    <Compile Include="Entities\UserLog.cs" />
+    <Compile Include="Entities\Users.cs" />
+    <Compile Include="Migrations\202011051926349__1.cs" />
+    <Compile Include="Migrations\202011051926349__1.designer.cs">
+      <DependentUpon>202011051926349__1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
@@ -75,8 +85,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011051651198__1.resx">
-      <DependentUpon>202011051651198__1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202011051926349__1.resx">
+      <DependentUpon>202011051926349__1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

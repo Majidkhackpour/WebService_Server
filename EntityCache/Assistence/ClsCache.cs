@@ -2,6 +2,7 @@
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using AutoMapper;
+using Nito.AsyncEx;
 using Persistence;
 using Persistence.Migrations;
 using Services;
@@ -18,6 +19,7 @@ namespace EntityCache.Assistence
             var config = new MapperConfiguration(c => { c.AddProfile(new SqlProfile()); });
             Mappings.Default = new Mapper(config);
             UpdateMigration();
+            InserDefults();
         }
         private static void UpdateMigration()
         {
@@ -51,7 +53,7 @@ namespace EntityCache.Assistence
         {
             try
             {
-                //AsyncContext.Run(AddDefaults.InsertDefaultDataAsync);
+                AsyncContext.Run(AddDefaults.InsertDefaultDataAsync);
             }
             catch (Exception ex)
             {
