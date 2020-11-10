@@ -16,5 +16,6 @@ namespace Persistence.Entities
         public string Sender { get; set; }
         [MaxLength(500)]
         public string API { get; set; }
+        public bool IsCurrent { get; set; }
     }
 }

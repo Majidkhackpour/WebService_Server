@@ -43,5 +43,7 @@ namespace Persistence.Entities
         public string Password { get; set; }
         [MaxLength(50)]
         public string SiteUrl { get; set; }
+        [MaxLength(100)]
+        public string HardSerial { get; set; }
     }
 }

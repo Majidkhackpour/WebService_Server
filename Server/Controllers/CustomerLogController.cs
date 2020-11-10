@@ -10,7 +10,7 @@ namespace Server.Controllers
     {
         [HttpGet]
         [Route("CustomerLog_GetAll")]
-        public static async Task<IEnumerable<CustomerLogBussines>> GetAllAsync() =>
+        public async Task<IEnumerable<CustomerLogBussines>> GetAllAsync() =>
             await CustomerLogBussines.GetAllAsync();
         [HttpPost]
         public async Task<ReturnedSaveFuncInfo> SaveAsync(CustomerLogBussines cls) => await cls.SaveAsync();

@@ -10,22 +10,19 @@ namespace Server.Controllers
     public class ProductController : ApiController
     {
         [HttpGet]
-        [Route("Product_GetAll")]
-        public static async Task<IEnumerable<ProductBussines>> GetAllAsync() => await ProductBussines.GetAllAsync();
+        [Route("Products_GetAll")]
+        public async Task<IEnumerable<ProductBussines>> GetAllAsync() => await ProductBussines.GetAllAsync();
 
         [HttpGet]
-        [Route("Pruduct_Get/{guid}")]
-        public static async Task<ProductBussines> GetAsync(Guid guid) => await ProductBussines.GetAsync(guid);
+        [Route("Products_Get/{guid}")]
+        public async Task<ProductBussines> GetAsync(Guid guid) => await ProductBussines.GetAsync(guid);
 
         [HttpPost]
         public async Task<ReturnedSaveFuncInfo> SaveAsync(ProductBussines cls) => await cls.SaveAsync();
 
-        [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> ChangStatusAsync(ProductBussines cls, bool status) =>
-            await cls.ChangeStatusAsync(status);
 
         [HttpGet]
-        [Route("Product_NextCode")]
-        public static async Task<string> NextCodeAsync() => await ProductBussines.NextCodeAsync();
+        [Route("Products_NextCode")]
+        public async Task<string> NextCodeAsync() => await ProductBussines.NextCodeAsync();
     }
 }

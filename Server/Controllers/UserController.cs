@@ -17,7 +17,7 @@ namespace Server.Controllers
         public async Task<UserBussines> GetAsync(Guid guid) => await UserBussines.GetAsync(guid);
 
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> PostData(UserBussines cls) => await cls.SaveAsync();
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(UserBussines cls) => await cls.SaveAsync();
 
         [HttpGet]
         [Route("Users_CheckUserName/{guid},{userName}")]

@@ -16,10 +16,6 @@ namespace Server.Controllers
         [Route("SafeBox_Get/{guid}")]
         public async Task<SafeBoxBussines> GetAsync(Guid guid) => await SafeBoxBussines.GetAsync(guid);
         [HttpPost]
-        public static async Task<ReturnedSaveFuncInfo> SaveAsync(SafeBoxBussines cls) => await cls.SaveAsync();
-
-        [HttpPost]
-        public static async Task<ReturnedSaveFuncInfo> ChangeStatusAsync(SafeBoxBussines cls, bool status) =>
-            await cls.ChangeStatusAsync(status);
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(SafeBoxBussines cls) => await cls.SaveAsync();
     }
 }

@@ -32,7 +32,7 @@ namespace EntityCache.Bussines
         public string UserName { get; set; }
         public string Password { get; set; }
         public string SiteUrl { get; set; }
-
+        public string HardSerial { get; set; }
 
 
         public static async Task<CustomerBussines> GetAsync(Guid guid) => await UnitOfWork.Customers.GetAsync(guid);
