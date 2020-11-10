@@ -16,10 +16,10 @@ namespace Server.Controllers
         [Route("SmsLog_Get/{guid}")]
         public async Task<SmsLogBussines> GetAsync(Guid guid) => await SmsLogBussines.GetAsync(guid);
         [HttpPost]
-        public static async Task<ReturnedSaveFuncInfo> SaveAsync(SmsLogBussines cls) => await cls.SaveAsync();
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(SmsLogBussines cls) => await cls.SaveAsync();
 
         [HttpGet]
-        [Route("SmsLog_Get/{messageId}")]
+        [Route("SmsLog_GetByMessageId/{messageId}")]
         public async Task<SmsLogBussines> GetAsync(long messageId) => await SmsLogBussines.GetAsync(messageId);
     }
 }

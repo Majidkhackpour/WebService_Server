@@ -11,9 +11,9 @@ namespace EntityCache.Bussines
     public class SmsLogBussines : ISmsLog
     {
         public Guid Guid { get; set; }
-        public DateTime Modified { get; set; }
-        public bool Status { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Modified { get; set; } = DateTime.Now;
+        public bool Status { get; set; } = true;
+        public DateTime Date { get; set; } = DateTime.Now;
         public Guid UserGuid { get; set; }
         public string Sender { get; set; }
         public string Reciver { get; set; }
