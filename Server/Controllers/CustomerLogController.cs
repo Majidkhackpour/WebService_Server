@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using EntityCache.Bussines;
@@ -14,5 +15,10 @@ namespace Server.Controllers
             await CustomerLogBussines.GetAllAsync();
         [HttpPost]
         public async Task<ReturnedSaveFuncInfo> SaveAsync(CustomerLogBussines cls) => await cls.SaveAsync();
+
+
+        [HttpGet]
+        [Route("CustomerLog_GetLog/{parentGuid}")]
+        public async Task<CustomerLogBussines> GetAsync(Guid parentGuid) => await CustomerLogBussines.GetLogByParentAsync(parentGuid);
     }
 }

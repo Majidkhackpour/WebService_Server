@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EntityCache.Assistence;
 using Nito.AsyncEx;
@@ -9,18 +8,18 @@ using Servicess.Interfaces.Building;
 
 namespace EntityCache.Bussines
 {
-    public class ReceptionBussines : IReception
+    public class PardakhtBussines:IPardakht
     {
         public Guid Guid { get; set; }
         public DateTime Modified { get; set; }
         public bool Status { get; set; }
-        public Guid Receptor { get; set; }
+        public Guid Payer { get; set; }
         public DateTime CreateDate { get; set; }
         public string Description { get; set; }
         public decimal NaqdPrice { get; set; }
         public Guid NaqdSafeBoxGuid { get; set; }
-        public decimal BankPrice { get; set; }
         public Guid BankSafeBoxGuid { get; set; }
+        public decimal BankPrice { get; set; }
         public string FishNo { get; set; }
         public decimal Check { get; set; }
         public string CheckNo { get; set; }
@@ -30,10 +29,11 @@ namespace EntityCache.Bussines
 
 
 
-        public static async Task<List<ReceptionBussines>> GetAllAsync() => await UnitOfWork.Reception.GetAllAsync();
-        public static async Task<List<ReceptionBussines>> GetAllAsync(Guid receptioGuid) =>
-            await UnitOfWork.Reception.GetAllAsync(receptioGuid);
-        public static async Task<ReceptionBussines> GetAsync(Guid guid) => await UnitOfWork.Reception.GetAsync(guid);
+
+        public static async Task<List<PardakhtBussines>> GetAllAsync() => await UnitOfWork.Pardakht.GetAllAsync();
+        public static async Task<List<PardakhtBussines>> GetAllAsync(Guid receptioGuid) =>
+            await UnitOfWork.Pardakht.GetAllAsync(receptioGuid);
+        public static async Task<PardakhtBussines> GetAsync(Guid guid) => await UnitOfWork.Pardakht.GetAsync(guid);
         public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")
         {
             var res = new ReturnedSaveFuncInfo();
@@ -45,8 +45,8 @@ namespace EntityCache.Bussines
                 { //BeginTransaction
                 }
 
-                
-                res.AddReturnedValue(await UnitOfWork.Reception.SaveAsync(this, tranName));
+
+                res.AddReturnedValue(await UnitOfWork.Pardakht.SaveAsync(this, tranName));
                 res.ThrowExceptionIfError();
                 if (autoTran)
                 {
@@ -65,7 +65,7 @@ namespace EntityCache.Bussines
 
             return res;
         }
-        public static ReceptionBussines Get(Guid guid) => AsyncContext.Run(() => GetAsync(guid));
+        public static PardakhtBussines Get(Guid guid) => AsyncContext.Run(() => GetAsync(guid));
         public async Task<ReturnedSaveFuncInfo> RemoveAsync(string tranName = "")
         {
             var res = new ReturnedSaveFuncInfo();
@@ -77,17 +77,17 @@ namespace EntityCache.Bussines
                 { //BeginTransaction
                 }
 
-                var cust = await CustomerBussines.GetAsync(Receptor);
+                var cust = await CustomerBussines.GetAsync(Payer);
                 if (cust != null)
                 {
-                    cust.Account += NaqdPrice + BankPrice + Check;
+                    cust.Account -= NaqdPrice + BankPrice + Check;
                     await cust.SaveAsync();
                 }
 
                 var log = await CustomerLogBussines.GetLogByParentAsync(Guid);
-                if (log != null)  await log.RemoveAsync();
+                if (log != null) await log.RemoveAsync();
 
-                res.AddReturnedValue(await UnitOfWork.Reception.RemoveAsync(Guid, tranName));
+                res.AddReturnedValue(await UnitOfWork.Pardakht.RemoveAsync(Guid, tranName));
                 res.ThrowExceptionIfError();
                 if (autoTran)
                 {

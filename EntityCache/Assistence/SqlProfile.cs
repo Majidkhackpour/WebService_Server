@@ -19,6 +19,7 @@ namespace EntityCache.Assistence
             CreateMap<SmsPanelsBussines, SmsPanels>().ReverseMap();
             CreateMap<UserBussines, Users>().ReverseMap();
             CreateMap<UserLogBussines, UserLog>().ReverseMap();
+            CreateMap<PardakhtBussines, Pardakht>().ReverseMap();
         }
     }
 }

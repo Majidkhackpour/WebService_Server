@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityCache.Assistence;
@@ -12,23 +11,22 @@ using Services;
 
 namespace EntityCache.Persistence
 {
-    public class CustomerLogPersistenceRepository : GenericRepository<CustomerLogBussines, CustomerLog>, ICustomerLogRepository
+    public class PardakhtPersistenceRepository : GenericRepository<PardakhtBussines, Pardakht>, IPardakhtRepository
     {
-        private ModelContext db = new ModelContext();
-
-        public CustomerLogPersistenceRepository(ModelContext _db) : base(_db)
+        private ModelContext db;
+        public PardakhtPersistenceRepository(ModelContext _db) : base(_db)
         {
             db = _db;
         }
 
-        public async Task<CustomerLogBussines> GetLogByParentAsync(Guid parentGuid)
+        public async Task<List<PardakhtBussines>> GetAllAsync(Guid receptioGuid)
         {
             try
             {
-                var acc = db.CustomerLog.AsNoTracking()
-                    .FirstOrDefault(q => q.Parent == parentGuid);
+                var acc = db.Pardakht.AsNoTracking()
+                    .Where(q => q.Payer == receptioGuid);
 
-                return Mappings.Default.Map<CustomerLogBussines>(acc);
+                return Mappings.Default.Map<List<PardakhtBussines>>(acc);
             }
             catch (Exception exception)
             {

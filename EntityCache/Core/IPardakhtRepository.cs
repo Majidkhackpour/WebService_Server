@@ -5,8 +5,8 @@ using EntityCache.Bussines;
 
 namespace EntityCache.Core
 {
-    public interface IReceptionRepository : IRepository<ReceptionBussines>
+    public interface IPardakhtRepository : IRepository<PardakhtBussines>
     {
-        Task<List<ReceptionBussines>> GetAllAsync(Guid receptioGuid);
+        Task<List<PardakhtBussines>> GetAllAsync(Guid receptioGuid);
     }
 }

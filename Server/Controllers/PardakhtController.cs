@@ -7,18 +7,18 @@ using Services;
 
 namespace Server.Controllers
 {
-    public class ReceptionController : ApiController
+    public class PardakhtController : ApiController
     {
         [HttpGet]
-        [Route("Reception_GetAll")]
-        public async Task<IEnumerable<ReceptionBussines>> GetAllAsync() => await ReceptionBussines.GetAllAsync();
+        [Route("Pardakht_GetAll")]
+        public async Task<IEnumerable<PardakhtBussines>> GetAllAsync() => await PardakhtBussines.GetAllAsync();
 
         [HttpGet]
-        [Route("Reception_Get/{guid}")]
-        public async Task<ReceptionBussines> GetAsync(Guid guid) => await ReceptionBussines.GetAsync(guid);
+        [Route("Pardakht_Get/{guid}")]
+        public async Task<PardakhtBussines> GetAsync(Guid guid) => await PardakhtBussines.GetAsync(guid);
 
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(ReceptionBussines cls)
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(PardakhtBussines cls)
         {
             var res = new ReturnedSaveFuncInfo();
             try
@@ -34,6 +34,6 @@ namespace Server.Controllers
 
             return res;
         }
-        
+
     }
 }

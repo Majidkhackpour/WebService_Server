@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Services;
 using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
@@ -12,8 +13,8 @@ namespace Persistence.Entities
         public bool Status { get; set; }
         public DateTime Date { get; set; }
         public Guid CustomerGuid { get; set; }
-        [MaxLength(100)]
-        public string SideName { get; set; }
+        public EnCustomerLogType Side { get; set; }
         public string Description { get; set; }
+        public Guid Parent { get; set; }
     }
 }

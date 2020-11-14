@@ -93,6 +93,7 @@
     <Compile Include="Bussines\CustomerLogBussines.cs" />
     <Compile Include="Bussines\OrderBussines.cs" />
     <Compile Include="Bussines\OrderDetailBussines.cs" />
+    <Compile Include="Bussines\PardakhtBussines.cs" />
     <Compile Include="Bussines\ProductBussines.cs" />
     <Compile Include="Bussines\ReceptionBussines.cs" />
     <Compile Include="Bussines\SafeBoxBussines.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Core\ICustomerRepository.cs" />
     <Compile Include="Core\IOrderDetailRepository.cs" />
     <Compile Include="Core\IOrderRepository.cs" />
+    <Compile Include="Core\IPardakhtRepository.cs" />
     <Compile Include="Core\IProductRepository.cs" />
     <Compile Include="Core\IReceptionRepository.cs" />
     <Compile Include="Core\IRepository.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Persistence\GenericRepository.cs" />
     <Compile Include="Persistence\OrderDetailPersistenceRepository.cs" />
     <Compile Include="Persistence\OrderPersistenceRepository.cs" />
+    <Compile Include="Persistence\PardakhtPersistenceRepository.cs" />
     <Compile Include="Persistence\ProductPersistenceRepository.cs" />
     <Compile Include="Persistence\ReceptionPersistenceRepository.cs" />
     <Compile Include="Persistence\SafeBoxPersistenceRepository.cs" />
