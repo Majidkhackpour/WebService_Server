@@ -16,5 +16,6 @@ namespace Persistence.Entities
         public EnCustomerLogType Side { get; set; }
         public string Description { get; set; }
         public Guid Parent { get; set; }
+        public decimal Price { get; set; }
     }
 }

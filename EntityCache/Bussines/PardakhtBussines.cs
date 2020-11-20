@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using EntityCache.Assistence;
 using Nito.AsyncEx;
@@ -26,6 +27,7 @@ namespace EntityCache.Bussines
         public string SarResid { get; set; }
         public string BankName { get; set; }
         public Guid UserGuid { get; set; }
+        public decimal TotalPrice => NaqdPrice + BankPrice + Check;
 
 
 
@@ -44,6 +46,38 @@ namespace EntityCache.Bussines
                 if (autoTran)
                 { //BeginTransaction
                 }
+
+                var log = await CustomerLogBussines.GetLogByParentAsync(Guid);
+                var desc = $"پرداخت مبلغ {TotalPrice:N0} ریال در تاریخ {Calendar.MiladiToShamsi(CreateDate)} {Description}";
+                if (log == null)
+                {
+                    log = new CustomerLogBussines()
+                    {
+                        Guid = Guid.NewGuid(),
+                        Modified = DateTime.Now,
+                        Status = true,
+                        Date = DateTime.Now,
+                        Side = EnCustomerLogType.Pardakht,
+                        CustomerGuid = Payer,
+                        Parent = Guid
+                    };
+
+                }
+                var fPrice = log.Price;
+                log.Price = TotalPrice;
+                log.Description = desc;
+
+                await log.SaveAsync();
+
+
+                var pe = await CustomerBussines.GetAsync(Payer);
+                if (pe != null)
+                {
+                    pe.Account -= fPrice;
+                    pe.Account += TotalPrice;
+                    await pe.SaveAsync();
+                }
+
 
 
                 res.AddReturnedValue(await UnitOfWork.Pardakht.SaveAsync(this, tranName));
@@ -80,7 +114,7 @@ namespace EntityCache.Bussines
                 var cust = await CustomerBussines.GetAsync(Payer);
                 if (cust != null)
                 {
-                    cust.Account -= NaqdPrice + BankPrice + Check;
+                    cust.Account -= TotalPrice;
                     await cust.SaveAsync();
                 }
 

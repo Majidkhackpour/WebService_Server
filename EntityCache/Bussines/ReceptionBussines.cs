@@ -27,6 +27,7 @@ namespace EntityCache.Bussines
         public string SarResid { get; set; }
         public string BankName { get; set; }
         public Guid UserGuid { get; set; }
+        public decimal TotalPrice => NaqdPrice + BankPrice + Check;
 
 
 
@@ -45,7 +46,40 @@ namespace EntityCache.Bussines
                 { //BeginTransaction
                 }
 
+
+                var log = await CustomerLogBussines.GetLogByParentAsync(Guid);
+                var desc = $"دریافت مبلغ {TotalPrice:N0} ریال در تاریخ {Calendar.MiladiToShamsi(CreateDate)} {Description}";
+                if (log == null)
+                {
+                    log = new CustomerLogBussines()
+                    {
+                        Guid = Guid.NewGuid(),
+                        Modified = DateTime.Now,
+                        Status = true,
+                        Date = DateTime.Now,
+                        Side = EnCustomerLogType.Receptipn,
+                        CustomerGuid = Receptor,
+                        Parent = Guid
+                    };
+
+                }
+
+                var fPrice = log.Price;
+
+                log.Description = desc;
+                log.Price = TotalPrice;
+                await log.SaveAsync();
+
+                var pe = await CustomerBussines.GetAsync(Receptor);
+                if (pe != null)
+                {
+                    pe.Account += fPrice;
+                    pe.Account -= TotalPrice;
+                    await pe.SaveAsync();
+                }
+
                 
+
                 res.AddReturnedValue(await UnitOfWork.Reception.SaveAsync(this, tranName));
                 res.ThrowExceptionIfError();
                 if (autoTran)
@@ -80,7 +114,7 @@ namespace EntityCache.Bussines
                 var cust = await CustomerBussines.GetAsync(Receptor);
                 if (cust != null)
                 {
-                    cust.Account += NaqdPrice + BankPrice + Check;
+                    cust.Account += TotalPrice;
                     await cust.SaveAsync();
                 }
 

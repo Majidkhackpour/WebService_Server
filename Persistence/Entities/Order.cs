@@ -15,8 +15,6 @@ namespace Persistence.Entities
         public Guid UserGuid { get; set; }
         [MaxLength(50)]
         public string ContractCode { get; set; }
-        [MaxLength(50)]
-        public string Version { get; set; }
         public int LearningCount { get; set; }
         public decimal Sum { get; set; }
         public decimal Discount { get; set; }

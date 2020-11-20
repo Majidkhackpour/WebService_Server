@@ -18,6 +18,7 @@ namespace EntityCache.Bussines
         public EnCustomerLogType Side { get; set; }
         public string Description { get; set; }
         public Guid Parent { get; set; }
+        public decimal Price { get; set; }
 
 
         public static async Task<List<CustomerLogBussines>> GetAllAsync() => await UnitOfWork.CustomersLog.GetAllAsync();
