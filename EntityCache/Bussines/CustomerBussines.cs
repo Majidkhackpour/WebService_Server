@@ -49,6 +49,23 @@ namespace EntityCache.Bussines
                 { //BeginTransaction
                 }
 
+                var obj = await GetAsync(Guid);
+                var desc = "";
+                if (obj == null) desc = $"ثبت {Name} به عنوان مشتری جدید";
+                else
+                {
+                    if(Status) desc = $"ویرایش اطلاعات {Name}";
+                    else desc = $"حذف اطلاعات {Name}";
+                }
+
+                var userLog = new UserLogBussines()
+                {
+                    Description = desc,
+                    Type = EnLogType.Customers,
+                    UserGuid = UserGuid
+                };
+                await userLog.SaveAsync();
+
                 res.AddReturnedValue(await UnitOfWork.Customers.SaveAsync(this, tranName));
                 res.ThrowExceptionIfError();
                 if (autoTran)

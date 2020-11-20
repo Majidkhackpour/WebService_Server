@@ -50,6 +50,21 @@ namespace EntityCache.Bussines
                 { //BeginTransaction
                 }
 
+                var obj = await GetAsync(Guid);
+                var desc = "";
+                if (obj == null) desc = $"ثبت فاکتور {ContractCode}";
+                else desc = $"ویرایش اطلاعات فاکتور {ContractCode}";
+
+                var userLog = new UserLogBussines()
+                {
+                    Description = desc,
+                    Type = EnLogType.Orders,
+                    UserGuid = UserGuid
+                };
+                await userLog.SaveAsync();
+
+
+
                 var list = await OrderDetailBussines.GetAllAsync(Guid);
                 if (list != null && list.Count > 0) await OrderDetailBussines.RemoveRangeAsync(list, tranName);
 
@@ -123,6 +138,14 @@ namespace EntityCache.Bussines
                 if (autoTran)
                 { //BeginTransaction
                 }
+
+                var userLog = new UserLogBussines()
+                {
+                    Description = $"حذف فاکتور {ContractCode}",
+                    Type = EnLogType.Orders,
+                    UserGuid = UserGuid
+                };
+                await userLog.SaveAsync();
 
                 var list = await OrderDetailBussines.GetAllAsync(Guid);
                 if (list != null && list.Count > 0) await OrderDetailBussines.RemoveRangeAsync(list, tranName);

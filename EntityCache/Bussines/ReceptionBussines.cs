@@ -47,6 +47,19 @@ namespace EntityCache.Bussines
                 }
 
 
+                var obj = await GetAsync(Guid);
+                var desc_ = "";
+                if (obj == null) desc_ = $"ثبت دریافت جدید به مبلغ {TotalPrice:N0}";
+                else desc_ = $"ویرایش اطلاعات دریافت";
+
+                var userLog = new UserLogBussines()
+                {
+                    Description = desc_,
+                    Type = EnLogType.Reception,
+                    UserGuid = UserGuid
+                };
+                await userLog.SaveAsync();
+
                 var log = await CustomerLogBussines.GetLogByParentAsync(Guid);
                 var desc = $"دریافت مبلغ {TotalPrice:N0} ریال در تاریخ {Calendar.MiladiToShamsi(CreateDate)} {Description}";
                 if (log == null)
@@ -110,6 +123,15 @@ namespace EntityCache.Bussines
                 if (autoTran)
                 { //BeginTransaction
                 }
+
+
+                var userLog = new UserLogBussines()
+                {
+                    Description = $"ثبت دریافت جدید به مبلغ {TotalPrice:N0}",
+                    Type = EnLogType.Reception,
+                    UserGuid = UserGuid
+                };
+                await userLog.SaveAsync();
 
                 var cust = await CustomerBussines.GetAsync(Receptor);
                 if (cust != null)
