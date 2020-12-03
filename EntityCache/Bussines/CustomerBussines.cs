@@ -36,6 +36,7 @@ namespace EntityCache.Bussines
 
 
         public static async Task<CustomerBussines> GetAsync(Guid guid) => await UnitOfWork.Customers.GetAsync(guid);
+        public static async Task<CustomerBussines> GetAsync(string name) => await UnitOfWork.Customers.GetAsync(name);
         public static CustomerBussines Get(Guid guid) => AsyncContext.Run(() => GetAsync(guid));
         public static async Task<List<CustomerBussines>> GetAllAsync() => await UnitOfWork.Customers.GetAllAsync();
         public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")

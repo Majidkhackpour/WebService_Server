@@ -17,6 +17,8 @@ namespace Server.Controllers
         public async Task<CustomerBussines> GetAsync(Guid guid) => await CustomerBussines.GetAsync(guid);
         [HttpPost]
         public async Task<ReturnedSaveFuncInfo> SaveAsync(CustomerBussines cls) => await cls.SaveAsync();
-
+        [HttpGet]
+        [Route("Customer_GetByName/{name}")]
+        public async Task<CustomerBussines> GetAsync(string name) => await CustomerBussines.GetAsync(name);
     }
 }
