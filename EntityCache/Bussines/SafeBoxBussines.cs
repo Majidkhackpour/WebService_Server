@@ -20,6 +20,7 @@ namespace EntityCache.Bussines
         public static async Task<SafeBoxBussines> GetAsync(Guid guid) => await UnitOfWork.SafeBox.GetAsync(guid);
         public static SafeBoxBussines Get(Guid guid) => AsyncContext.Run(() => GetAsync(guid));
         public static async Task<List<SafeBoxBussines>> GetAllAsync() => await UnitOfWork.SafeBox.GetAllAsync();
+        public static async Task<SafeBoxBussines> GetAsync(string name) => await UnitOfWork.SafeBox.GetAsync(name);
         public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")
         {
             var res = new ReturnedSaveFuncInfo();
