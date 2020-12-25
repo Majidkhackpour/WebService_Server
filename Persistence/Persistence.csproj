@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Entities\CustomerLog.cs" />
     <Compile Include="Entities\Customers.cs" />
+    <Compile Include="Entities\ErrorLog.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderDetails.cs" />
     <Compile Include="Entities\Pardakht.cs" />
@@ -110,6 +111,14 @@
     <Compile Include="Migrations\202011200951590__11.designer.cs">
       <DependentUpon>202011200951590__11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012171622098__12.cs" />
+    <Compile Include="Migrations\202012171622098__12.designer.cs">
+      <DependentUpon>202012171622098__12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012251148228__13.cs" />
+    <Compile Include="Migrations\202012251148228__13.designer.cs">
+      <DependentUpon>202012251148228__13.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +166,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011200951590__11.resx">
       <DependentUpon>202011200951590__11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012171622098__12.resx">
+      <DependentUpon>202012171622098__12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012251148228__13.resx">
+      <DependentUpon>202012251148228__13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

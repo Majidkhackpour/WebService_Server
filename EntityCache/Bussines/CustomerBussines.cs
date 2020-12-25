@@ -33,10 +33,15 @@ namespace EntityCache.Bussines
         public string Password { get; set; }
         public string SiteUrl { get; set; }
         public string HardSerial { get; set; }
+        public string LkSerial { get; set; }
+        public bool isBlock { get; set; }
+        public bool isWebServiceBlock { get; set; }
 
 
         public static async Task<CustomerBussines> GetAsync(Guid guid) => await UnitOfWork.Customers.GetAsync(guid);
         public static async Task<CustomerBussines> GetAsync(string name) => await UnitOfWork.Customers.GetAsync(name);
+        public static async Task<CustomerBussines> GetByHardSerailAsync(string hSerial) =>
+            await UnitOfWork.Customers.GetByHardSerialAsync(hSerial);
         public static CustomerBussines Get(Guid guid) => AsyncContext.Run(() => GetAsync(guid));
         public static async Task<List<CustomerBussines>> GetAllAsync() => await UnitOfWork.Customers.GetAllAsync();
         public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")

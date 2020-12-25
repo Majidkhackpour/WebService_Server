@@ -20,6 +20,7 @@ namespace EntityCache.Assistence
             CreateMap<UserBussines, Users>().ReverseMap();
             CreateMap<UserLogBussines, UserLog>().ReverseMap();
             CreateMap<PardakhtBussines, Pardakht>().ReverseMap();
+            CreateMap<ErrorLogBussines, ErrorLog>().ReverseMap();
         }
     }
 }

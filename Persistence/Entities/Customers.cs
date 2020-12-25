@@ -45,5 +45,9 @@ namespace Persistence.Entities
         public string SiteUrl { get; set; }
         [MaxLength(100)]
         public string HardSerial { get; set; }
+        [MaxLength(500)]
+        public string LkSerial { get; set; }
+        public bool isBlock { get; set; }
+        public bool isWebServiceBlock { get; set; }
     }
 }

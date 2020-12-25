@@ -26,5 +26,6 @@ namespace Persistence.Model
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserLog> UserLogs { get; set; }
         public virtual DbSet<Pardakht> Pardakht { get; set; }
+        public virtual DbSet<ErrorLog> ErrorLog { get; set; }
     }
 }

@@ -34,5 +34,21 @@ namespace EntityCache.Persistence
                 return null;
             }
         }
+
+        public async Task<CustomerBussines> GetByHardSerialAsync(string hSerial)
+        {
+            try
+            {
+                var acc = db.Customers.AsNoTracking()
+                    .FirstOrDefault(q => q.HardSerial == hSerial);
+
+                return Mappings.Default.Map<CustomerBussines>(acc);
+            }
+            catch (Exception exception)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(exception);
+                return null;
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace EntityCache.Assistence
         private static IUserRepository _userRepository;
         private static IUserLogRepository _userLogRepository;
         private static IPardakhtRepository _pardakhtRepository;
+        private static IErrorLogRepository _errorLogRepository;
 
 
         public static void Dispose() => db?.Dispose();
@@ -85,5 +86,10 @@ namespace EntityCache.Assistence
         public static IPardakhtRepository Pardakht => _pardakhtRepository ??
                                                     (_pardakhtRepository =
                                                         new PardakhtPersistenceRepository(db));
+
+
+        public static IErrorLogRepository ErrorLog => _errorLogRepository ??
+                                                      (_errorLogRepository =
+                                                          new ErrorLogPersistenceRepository(db));
     }
 }
