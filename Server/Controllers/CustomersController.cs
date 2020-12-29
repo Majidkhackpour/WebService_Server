@@ -20,5 +20,8 @@ namespace Server.Controllers
         [HttpGet]
         [Route("Customer_GetByName/{name}")]
         public async Task<CustomerBussines> GetAsync(string name) => await CustomerBussines.GetAsync(name);
+        [HttpGet]
+        [Route("Customer_GetByHardSerial/{hSerial}")]
+        public async Task<CustomerBussines> GetByHardSerialAsync(string hSerial) => await CustomerBussines.GetByHardSerailAsync(hSerial);
     }
 }
