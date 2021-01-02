@@ -20,7 +20,6 @@ namespace EntityCache.Persistence
     {
         private ModelContext _dbContext;
         private DbSet<U> _dbSet;
-
         public GenericRepository(ModelContext db)
         {
             this._dbContext = db;
@@ -124,6 +123,7 @@ namespace EntityCache.Persistence
                             validationError.ErrorMessage);
                     }
                 }
+
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
                 return new ReturnedSaveFuncInfo(ex);
             }
