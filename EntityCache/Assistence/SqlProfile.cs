@@ -50,6 +50,7 @@ namespace EntityCache.Assistence
             CreateMap<BuildingPardakhtBussines, BuildingPardakht>().ReverseMap();
             CreateMap<BuildingGardeshHesabBussines, BuildingGardeshHesab>().ReverseMap();
             CreateMap<SyncedDataBussines, SyncedData>().ReverseMap();
+            CreateMap<AndroidsBussines, Androids>().ReverseMap();
         }
     }
 }

@@ -54,5 +54,6 @@ namespace Persistence.Model
         public virtual DbSet<BuildingPardakht> BuildingPardakhts { get; set; }
         public virtual DbSet<BuildingGardeshHesab> BuildingGardeshHesabs { get; set; }
         public virtual DbSet<SyncedData> SyncedData { get; set; }
+        public virtual DbSet<Androids> Androids { get; set; }
     }
 }

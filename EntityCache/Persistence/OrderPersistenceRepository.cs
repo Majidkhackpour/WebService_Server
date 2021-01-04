@@ -21,6 +21,7 @@ namespace EntityCache.Persistence
         {
             try
             {
+                throw new NotImplementedException();
                 var all = await GetAllAsync();
                 if (all.Count <= 0) return "1001";
                 var code = all.ToList()?.Max(q => long.Parse(q.ContractCode)) ?? 0;

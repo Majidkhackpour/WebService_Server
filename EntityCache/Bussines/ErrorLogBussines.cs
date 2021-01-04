@@ -58,7 +58,22 @@ namespace EntityCache.Bussines
                 }
 
                 if (!res.HasError)
-                    _ = Task.Run(() => SendToTelegramAsync(this));
+                {
+                    CustomerBussines cust = null;
+
+                    if (!string.IsNullOrEmpty(AndroidIme))
+                    {
+                        var android = await AndroidsBussines.GetAsync(AndroidIme);
+                        if (android != null)
+                        {
+                            cust = await CustomerBussines.GetAsync(android.CustomerGuid);
+                            HardSerial = cust.HardSerial;
+                        }
+                    }
+                    else cust = await CustomerBussines.GetAsync(HardSerial);
+
+                    _ = Task.Run(() => SendToTelegramAsync(cust));
+                }
             }
             catch (Exception ex)
             {
@@ -72,13 +87,10 @@ namespace EntityCache.Bussines
 
             return res;
         }
-
-        private async Task SendToTelegramAsync(ErrorLogBussines error)
+        private async Task SendToTelegramAsync(CustomerBussines cust)
         {
             try
             {
-                var cust = await CustomerBussines.GetByHardSerailAsync(error.HardSerial);
-
                 var message = $"Source:✨ #{Source.GetDisplay()} ✨ \r\n" +
                               $"Version:✏ {Version} ✏ \r\n" +
                               $"=========================== \r\n" +

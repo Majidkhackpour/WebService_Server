@@ -3,7 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Http;
-using Server.Models;
+using Services;
 
 namespace Server
 {
@@ -13,6 +13,7 @@ namespace Server
         {
             // Code that runs on application startup
             EntityCache.Assistence.ClsCache.Init();
+            ErrorHandler.AddHandler("9.9.9.9", ENSource.Server, "", "");
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);            

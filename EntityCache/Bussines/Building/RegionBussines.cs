@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
+using EntityCache.Assistence;
+using Services;
 using Servicess.Interfaces.Building;
 
 namespace EntityCache.Bussines.Building
 {
-    public class RegionBussines:IRegions
+    public class RegionBussines : IRegions
     {
         public Guid Guid { get; set; }
         public DateTime Modified { get; set; }
@@ -11,5 +14,47 @@ namespace EntityCache.Bussines.Building
         public string Name { get; set; }
         public Guid CityGuid { get; set; }
         public string HardSerial { get; set; }
+
+
+
+
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")
+        {
+            var res = new ReturnedSaveFuncInfo();
+            var autoTran = string.IsNullOrEmpty(tranName);
+            if (autoTran) tranName = Guid.NewGuid().ToString();
+            try
+            {
+                if (autoTran)
+                { //BeginTransaction
+                }
+
+                res.AddReturnedValue(await UnitOfWork.Region.SaveAsync(this, tranName));
+                res.ThrowExceptionIfError();
+                if (autoTran)
+                {
+                    //CommitTransAction
+                }
+
+                var temp = new SyncedDataBussines()
+                {
+                    HardSerial = HardSerial,
+                    ObjectGuid = Guid,
+                    Type = EnTemp.Region
+                };
+                res.AddReturnedValue(await temp.SaveAsync());
+            }
+            catch (Exception ex)
+            {
+                if (autoTran)
+                {
+                    //RollBackTransAction
+                }
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                res.AddReturnedValue(ex);
+            }
+
+            return res;
+        }
     }
 }

@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Androids.cs" />
     <Compile Include="Entities\Building\Building.cs" />
     <Compile Include="Entities\Building\BuildingAccountType.cs" />
     <Compile Include="Entities\Building\BuildingCondition.cs" />
@@ -149,6 +150,10 @@
     <Compile Include="Migrations\202101021533506__14.designer.cs">
       <DependentUpon>202101021533506__14.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101041622305__15.cs" />
+    <Compile Include="Migrations\202101041622305__15.designer.cs">
+      <DependentUpon>202101041622305__15.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -205,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101021533506__14.resx">
       <DependentUpon>202101021533506__14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041622305__15.resx">
+      <DependentUpon>202101041622305__15.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -92,6 +92,7 @@
     <Compile Include="Assistence\Mappings.cs" />
     <Compile Include="Assistence\SqlProfile.cs" />
     <Compile Include="Assistence\UnitOfWork.cs" />
+    <Compile Include="Bussines\AndroidsBussines.cs" />
     <Compile Include="Bussines\Building\BuildingAccountTypeBussines.cs" />
     <Compile Include="Bussines\Building\BuildingBusines.cs" />
     <Compile Include="Bussines\Building\BuildingConditionBussines.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Core\Building\IRegionRepository.cs" />
     <Compile Include="Core\Building\IRentalAuthorityRepository.cs" />
     <Compile Include="Core\Building\IStateRepository.cs" />
+    <Compile Include="Core\IAndroidsRepository.cs" />
     <Compile Include="Core\ICustomerLogRepository.cs" />
     <Compile Include="Core\ICustomerRepository.cs" />
     <Compile Include="Core\IErrorLogRepository.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Core\ISyncedDataRepository.cs" />
     <Compile Include="Core\IUserLogRepository.cs" />
     <Compile Include="Core\IUserRepository.cs" />
+    <Compile Include="Persistence\AndroidPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingAccountTypePersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingConditionPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingGalleryPersistenceRepository.cs" />
