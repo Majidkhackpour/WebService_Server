@@ -50,6 +50,7 @@ namespace EntityCache.Assistence
         private static IBuildingGardeshHesabRepository _buildingGardeshRepository;
         private static ISyncedDataRepository _syncedDataRepository;
         private static IAndroidsRepository _androidRepository;
+        private static IBuildingOptionRepository _optionsRepository;
 
 
         public static void Dispose() => db?.Dispose();
@@ -256,5 +257,10 @@ namespace EntityCache.Assistence
         public static IAndroidsRepository Android => _androidRepository ??
                                                           (_androidRepository =
                                                               new AndroidPersistenceRepository(db));
+
+
+        public static IBuildingOptionRepository BuildingOption => _optionsRepository ??
+                                                     (_optionsRepository =
+                                                         new BuildingOptionPersistenceRepository(db));
     }
 }

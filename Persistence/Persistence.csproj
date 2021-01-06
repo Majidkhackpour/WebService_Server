@@ -60,6 +60,7 @@
     <Compile Include="Entities\Building\BuildingCondition.cs" />
     <Compile Include="Entities\Building\BuildingGallery.cs" />
     <Compile Include="Entities\Building\BuildingGardeshHesab.cs" />
+    <Compile Include="Entities\Building\BuildingOptions.cs" />
     <Compile Include="Entities\Building\BuildingPardakht.cs" />
     <Compile Include="Entities\Building\BuildingReception.cs" />
     <Compile Include="Entities\Building\BuildingRelatedOption.cs" />
@@ -154,6 +155,10 @@
     <Compile Include="Migrations\202101041622305__15.designer.cs">
       <DependentUpon>202101041622305__15.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101061530259__16.cs" />
+    <Compile Include="Migrations\202101061530259__16.designer.cs">
+      <DependentUpon>202101061530259__16.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101041622305__15.resx">
       <DependentUpon>202101041622305__15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101061530259__16.resx">
+      <DependentUpon>202101061530259__16.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

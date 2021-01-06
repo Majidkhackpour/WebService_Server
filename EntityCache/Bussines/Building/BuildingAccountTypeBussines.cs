@@ -6,7 +6,7 @@ using Servicess.Interfaces.Building;
 
 namespace EntityCache.Bussines.Building
 {
-    public class BuildingAccountTypeBussines:IBuildingAccountType
+    public class BuildingAccountTypeBussines : IBuildingAccountType
     {
         public Guid Guid { get; set; }
         public DateTime Modified { get; set; }

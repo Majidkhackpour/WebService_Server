@@ -98,6 +98,7 @@
     <Compile Include="Bussines\Building\BuildingConditionBussines.cs" />
     <Compile Include="Bussines\Building\BuildingGalleryBussines.cs" />
     <Compile Include="Bussines\Building\BuildingGardeshHesabBussines.cs" />
+    <Compile Include="Bussines\Building\BuildingOptionBussines.cs" />
     <Compile Include="Bussines\Building\BuildingPardakhtBussines.cs" />
     <Compile Include="Bussines\Building\BuildingReceptionBussines.cs" />
     <Compile Include="Bussines\Building\BuildingRelatedOptionsBussines.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Core\Building\IRentalAuthorityRepository.cs" />
     <Compile Include="Core\Building\IStateRepository.cs" />
     <Compile Include="Core\IAndroidsRepository.cs" />
+    <Compile Include="Core\Building\IBuildingOptionRepository.cs" />
     <Compile Include="Core\ICustomerLogRepository.cs" />
     <Compile Include="Core\ICustomerRepository.cs" />
     <Compile Include="Core\IErrorLogRepository.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Persistence\Building\BuildingConditionPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingGalleryPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingGardeshHesabPersistenceRepository.cs" />
+    <Compile Include="Persistence\Building\BuildingOptionPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingPardakhtPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingPersistenceRepository.cs" />
     <Compile Include="Persistence\Building\BuildingReceptionPersistenceRepository.cs" />

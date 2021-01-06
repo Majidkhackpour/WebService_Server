@@ -3,7 +3,6 @@ using EntityCache.Bussines;
 using EntityCache.Bussines.Building;
 using Persistence.Entities;
 using Persistence.Entities.Building;
-using Services;
 
 namespace EntityCache.Assistence
 {
@@ -51,6 +50,7 @@ namespace EntityCache.Assistence
             CreateMap<BuildingGardeshHesabBussines, BuildingGardeshHesab>().ReverseMap();
             CreateMap<SyncedDataBussines, SyncedData>().ReverseMap();
             CreateMap<AndroidsBussines, Androids>().ReverseMap();
+            CreateMap<BuildingOptionBussines, BuildingOptions>().ReverseMap();
         }
     }
 }
