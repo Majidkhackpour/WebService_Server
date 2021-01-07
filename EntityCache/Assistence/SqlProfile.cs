@@ -51,6 +51,7 @@ namespace EntityCache.Assistence
             CreateMap<SyncedDataBussines, SyncedData>().ReverseMap();
             CreateMap<AndroidsBussines, Androids>().ReverseMap();
             CreateMap<BuildingOptionBussines, BuildingOptions>().ReverseMap();
+            CreateMap<BuildingPhoneBookBussines, BuildingPhoneBook>().ReverseMap();
         }
     }
 }

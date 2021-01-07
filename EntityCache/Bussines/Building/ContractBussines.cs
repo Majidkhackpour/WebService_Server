@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using EntityCache.Assistence;
 using Services;
 using Servicess.Interfaces.Building;
 
@@ -34,5 +36,72 @@ namespace EntityCache.Bussines.Building
         public EnRequestType Type { get; set; }
         public Guid BazaryabGuid { get; set; }
         public decimal BazaryabPrice { get; set; }
+        private ContractFinanceBussines _finance;
+        public ContractFinanceBussines Finance
+        {
+            get
+            {
+                if (_finance != null) return _finance;
+                _finance = ContractFinanceBussines.Get(Guid, Status);
+                return _finance;
+            }
+            set => _finance = value;
+        }
+
+
+
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")
+        {
+            var res = new ReturnedSaveFuncInfo();
+            var autoTran = string.IsNullOrEmpty(tranName);
+            if (autoTran) tranName = Guid.NewGuid().ToString();
+            try
+            {
+                if (autoTran)
+                { //BeginTransaction
+                }
+                if (Finance != null)
+                {
+                    var list = await ContractFinanceBussines.GetAsync(Guid, Status);
+                    if (list != null)
+                    {
+                        res.AddReturnedValue(
+                            await UnitOfWork.ContractFinance.RemoveAsync(list.Guid,
+                                tranName));
+                        res.ThrowExceptionIfError();
+                    }
+
+                    Finance.HardSerial = HardSerial;
+                    res.AddReturnedValue(
+                        await UnitOfWork.ContractFinance.SaveAsync(Finance, tranName));
+                    res.ThrowExceptionIfError();
+                }
+                res.AddReturnedValue(await UnitOfWork.Contract.SaveAsync(this, tranName));
+                res.ThrowExceptionIfError();
+                if (autoTran)
+                {
+                    //CommitTransAction
+                }
+
+                var temp = new SyncedDataBussines()
+                {
+                    HardSerial = HardSerial,
+                    ObjectGuid = Guid,
+                    Type = EnTemp.Contract
+                };
+                res.AddReturnedValue(await temp.SaveAsync());
+            }
+            catch (Exception ex)
+            {
+                if (autoTran)
+                {
+                    //RollBackTransAction
+                }
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                res.AddReturnedValue(ex);
+            }
+
+            return res;
+        }
     }
 }

@@ -56,5 +56,6 @@ namespace Persistence.Model
         public virtual DbSet<SyncedData> SyncedData { get; set; }
         public virtual DbSet<Androids> Androids { get; set; }
         public virtual DbSet<BuildingOptions> BuildingOptions { get; set; }
+        public virtual DbSet<BuildingPhoneBook> BuildingPhoneBooks { get; set; }
     }
 }

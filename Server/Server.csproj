@@ -119,11 +119,15 @@
     <Compile Include="Controllers\BuildingGardeshHesabController.cs" />
     <Compile Include="Controllers\BuildingOptionController.cs" />
     <Compile Include="Controllers\BuildingPardakhtController.cs" />
+    <Compile Include="Controllers\BuildingPhoneBookController.cs" />
     <Compile Include="Controllers\BuildingReceptionController.cs" />
+    <Compile Include="Controllers\BuildingRequestController.cs" />
+    <Compile Include="Controllers\BuildingRequestRegionController.cs" />
     <Compile Include="Controllers\BuildingTypeController.cs" />
     <Compile Include="Controllers\BuildingUserController.cs" />
     <Compile Include="Controllers\BuildingViewController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
+    <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\CustomerLogController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DocumentTypeController.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Controllers\KitchenServiceController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PardakhtController.cs" />
+    <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PeopleGroupController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ReceptionController.cs" />

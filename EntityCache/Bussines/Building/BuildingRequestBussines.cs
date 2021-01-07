@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EntityCache.Assistence;
+using Nito.AsyncEx;
+using Services;
 using Servicess.Interfaces.Building;
 
 namespace EntityCache.Bussines.Building
@@ -31,5 +37,56 @@ namespace EntityCache.Bussines.Building
         public Guid BuildingAccountTypeGuid { get; set; }
         public Guid BuildingConditionGuid { get; set; }
         public string ShortDesc { get; set; }
+        private List<BuildingRelatedRegionsBussines> _regList;
+        public List<BuildingRelatedRegionsBussines> RegionList
+        {
+            get
+            {
+                if (_regList != null) return _regList;
+                _regList = AsyncContext.Run(() => BuildingRelatedRegionsBussines.GetAllAsync(Guid, Status));
+                return _regList;
+            }
+            set => _regList = value;
+        }
+
+
+
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(string tranName = "")
+        {
+            var res = new ReturnedSaveFuncInfo();
+            var autoTran = string.IsNullOrEmpty(tranName);
+            if (autoTran) tranName = Guid.NewGuid().ToString();
+            try
+            {
+                if (autoTran)
+                { //BeginTransaction
+                }
+                res.AddReturnedValue(await UnitOfWork.BuildingRequest.SaveAsync(this, tranName));
+                res.ThrowExceptionIfError();
+                if (autoTran)
+                {
+                    //CommitTransAction
+                }
+
+                var temp = new SyncedDataBussines()
+                {
+                    HardSerial = HardSerial,
+                    ObjectGuid = Guid,
+                    Type = EnTemp.Requests
+                };
+                res.AddReturnedValue(await temp.SaveAsync());
+            }
+            catch (Exception ex)
+            {
+                if (autoTran)
+                {
+                    //RollBackTransAction
+                }
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                res.AddReturnedValue(ex);
+            }
+
+            return res;
+        }
     }
 }

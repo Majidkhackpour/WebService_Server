@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
+using EntityCache.Assistence;
+using Nito.AsyncEx;
 using Services;
 using Servicess.Interfaces.Building;
 
@@ -19,5 +22,11 @@ namespace EntityCache.Bussines.Building
         public decimal SecondAddedValue { get; set; }
         public decimal FirstTotalPrice { get; set; }
         public decimal SecondTotalPrice { get; set; }
+
+
+        public static async Task<ContractFinanceBussines> GetAsync(Guid parentGuid, bool status) =>
+            await UnitOfWork.ContractFinance.GetAsync(parentGuid, status);
+        public static ContractFinanceBussines Get(Guid parentGuid, bool status) =>
+            AsyncContext.Run(() => GetAsync(parentGuid, status));
     }
 }
