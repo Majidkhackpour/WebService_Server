@@ -116,11 +116,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BuildingAccountTypeController.cs" />
     <Compile Include="Controllers\BuildingConditionController.cs" />
+    <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\BuildingGardeshHesabController.cs" />
     <Compile Include="Controllers\BuildingOptionController.cs" />
     <Compile Include="Controllers\BuildingPardakhtController.cs" />
     <Compile Include="Controllers\BuildingPhoneBookController.cs" />
     <Compile Include="Controllers\BuildingReceptionController.cs" />
+    <Compile Include="Controllers\BuildingRelatedOptionsController.cs" />
     <Compile Include="Controllers\BuildingRequestController.cs" />
     <Compile Include="Controllers\BuildingRequestRegionController.cs" />
     <Compile Include="Controllers\BuildingTypeController.cs" />
