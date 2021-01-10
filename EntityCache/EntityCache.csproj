@@ -221,6 +221,7 @@
     <Compile Include="Persistence\UserLogPersistenceRepository.cs" />
     <Compile Include="Persistence\UserPersistenceRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\WebTelegramBuilding.cs" />
     <Compile Include="ViewModels\WebTelegramMessage.cs" />
   </ItemGroup>
   <ItemGroup>

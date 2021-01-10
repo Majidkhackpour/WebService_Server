@@ -34,7 +34,7 @@ namespace Server.Controllers
 
                         var maxContentLength = 1024 * 1024 * 1; //Size = 1 MB  
 
-                        IList<string> allowedFileExtensions = new List<string> { ".jpg", ".gif", ".png" };
+                        IList<string> allowedFileExtensions = new List<string> { ".jpg", ".png" };
                         var ext = postedFile.FileName.Substring(postedFile.FileName.LastIndexOf('.'));
                         var extension = ext.ToLower();
                         if (!allowedFileExtensions.Contains(extension))

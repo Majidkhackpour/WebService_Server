@@ -23,7 +23,7 @@ namespace EntityCache.ViewModels
             };
         }
         public void Send(string message) => Task.Run(() => SendAsync(message));
-        private async Task SendAsync(string message)
+        public async Task SendAsync(string message)
         {
             try
             {

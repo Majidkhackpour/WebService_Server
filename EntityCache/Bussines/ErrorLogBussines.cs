@@ -50,6 +50,7 @@ namespace EntityCache.Bussines
                 { //BeginTransaction
                 }
 
+                if (string.IsNullOrEmpty(HardSerial)) return res;
                 res.AddReturnedValue(await UnitOfWork.ErrorLog.SaveAsync(this, tranName));
                 res.ThrowExceptionIfError();
                 if (autoTran)

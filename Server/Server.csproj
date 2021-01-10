@@ -149,6 +149,7 @@
     <Compile Include="Controllers\SmsLogController.cs" />
     <Compile Include="Controllers\SmsPanelController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
+    <Compile Include="Controllers\TelegramBuildingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserLogController.cs" />
     <Compile Include="Global.asax.cs">
