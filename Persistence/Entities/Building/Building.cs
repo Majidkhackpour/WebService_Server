@@ -67,7 +67,8 @@ namespace Persistence.Entities.Building
         public bool BonBast { get; set; }
         public bool MamarJoda { get; set; }
         public int RoomCount { get; set; }
-        public EnBuildingStatus BuildingStatus { get; set; }
+        public EnBuildingPriority Priority { get; set; }
+        public bool IsArchive { get; set; }
         public string Image { get; set; }
     }
 }
