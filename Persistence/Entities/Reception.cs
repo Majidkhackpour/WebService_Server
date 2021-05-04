@@ -6,7 +6,7 @@ using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
 {
-    public class Reception : IReception
+    public class Reception 
     {
         [Key]
         public Guid Guid { get; set; }

@@ -1,27 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using EntityCache.Bussines;
+﻿using Persistence.Entities;
+using Persistence.Model;
 using Services;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace Server.Controllers
 {
     public class CustomersController : ApiController
     {
+        private ModelContext db = new ModelContext();
+
         [HttpGet]
         [Route("Customer_GetAll")]
-        public async Task<IEnumerable<CustomerBussines>> GetAllAsync() => await CustomerBussines.GetAllAsync();
+        public IEnumerable<Customers> GetAllAsync() => db.Customers.ToList();
+
         [HttpGet]
         [Route("Customer_Get/{guid}")]
-        public async Task<CustomerBussines> GetAsync(Guid guid) => await CustomerBussines.GetAsync(guid);
+        public Customers GetAsync(Guid guid) => db.Customers.FirstOrDefault(q => q.Guid == guid);
+
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(CustomerBussines cls) => await cls.SaveAsync();
+        public Customers SaveAsync(Customers cls)
+        {
+            try
+            {
+                var a = db.Customers.AsNoTracking()
+                    .FirstOrDefault(q => q.Guid == cls.Guid);
+                if (a == null) db.Customers.Add(cls);
+                else db.Entry(cls).State = EntityState.Modified;
+                db.SaveChanges();
+                return cls;
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                return null;
+            }
+        }
+
         [HttpGet]
         [Route("Customer_GetByName/{name}")]
-        public async Task<CustomerBussines> GetAsync(string name) => await CustomerBussines.GetAsync(name);
+        public Customers GetAsync(string name) => db.Customers.FirstOrDefault(q => q.Name == name);
+
         [HttpGet]
         [Route("Customer_GetByHardSerial/{hSerial}")]
-        public async Task<CustomerBussines> GetByHardSerialAsync(string hSerial) => await CustomerBussines.GetByHardSerailAsync(hSerial);
+        public Customers GetByHardSerialAsync(string hSerial) =>
+            db.Customers.FirstOrDefault(q => q.HardSerial == hSerial);
     }
 }

@@ -4,7 +4,7 @@ using Servicess.Interfaces.Building;
 
 namespace Persistence.Entities
 {
-    public class Pardakht : IPardakht
+    public class Pardakht 
     {
         [Key]
         public Guid Guid { get; set; }

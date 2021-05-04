@@ -1,39 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using EntityCache.Bussines;
+﻿using Persistence.Entities;
+using Persistence.Model;
 using Services;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace Server.Controllers
 {
     public class ReceptionController : ApiController
     {
+        private ModelContext db = new ModelContext();
+
         [HttpGet]
         [Route("Reception_GetAll")]
-        public async Task<IEnumerable<ReceptionBussines>> GetAllAsync() => await ReceptionBussines.GetAllAsync();
+        public IEnumerable<Reception> GetAllAsync() => db.Receptions.ToList();
 
         [HttpGet]
         [Route("Reception_Get/{guid}")]
-        public async Task<ReceptionBussines> GetAsync(Guid guid) => await ReceptionBussines.GetAsync(guid);
+        public Reception GetAsync(Guid guid) => db.Receptions.FirstOrDefault(q => q.Guid == guid);
 
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(ReceptionBussines cls)
+        public Reception SaveAsync(Reception cls)
         {
-            var res = new ReturnedSaveFuncInfo();
             try
             {
-                if (cls.Status) res.AddReturnedValue(await cls.SaveAsync());
-                else res.AddReturnedValue(await cls.RemoveAsync());
+                var a = db.Receptions.AsNoTracking()
+                    .FirstOrDefault(q => q.Guid == cls.Guid);
+                if (a == null) db.Receptions.Add(cls);
+                else db.Entry(cls).State = EntityState.Modified;
+                db.SaveChanges();
+                return cls;
             }
             catch (Exception ex)
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
-                res.AddReturnedValue(ex);
+                return null;
             }
-
-            return res;
         }
-        
+
     }
 }

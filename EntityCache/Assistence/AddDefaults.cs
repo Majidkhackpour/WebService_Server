@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using EntityCache.Bussines;
-using Persistence;
+using Persistence.Entities;
 using Persistence.Model;
 using Services;
 using Services.Access;
@@ -15,15 +15,14 @@ namespace EntityCache.Assistence
         public static async Task InsertDefaultDataAsync()
         {
             var dbContext = new ModelContext();
-            var res = new ReturnedSaveFuncInfo();
 
             #region Users
 
-            var allusers = await UserBussines.GetAllAsync();
+            var allusers = dbContext.Users.ToList();
             var access = new AccessLevel();
             if (allusers == null || allusers.Count <= 0)
             {
-                var user = new UserBussines()
+                var user = new Users()
                 {
                     Guid = Guid.NewGuid(),
                     Name = "کاربر پیش فرض",
@@ -40,8 +39,8 @@ namespace EntityCache.Assistence
                 var hashBytes = md5.ComputeHash(bytes);
                 user.Password = System.Text.RegularExpressions.Regex.Replace(BitConverter.ToString(hashBytes), "-", "")
                     .ToLower();
-                res.AddReturnedValue(await user.SaveAsync());
-                res.ThrowExceptionIfError();
+                dbContext.Users.Add(user);
+                dbContext.SaveChanges();
             }
             #endregion
 

@@ -25,7 +25,6 @@ namespace Persistence.Model
         public virtual DbSet<SmsLog> SmsLog { get; set; }
         public virtual DbSet<SmsPanels> SmsPanels { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<UserLog> UserLogs { get; set; }
         public virtual DbSet<Pardakht> Pardakht { get; set; }
         public virtual DbSet<ErrorLog> ErrorLog { get; set; }
         public virtual DbSet<States> States { get; set; }
@@ -34,7 +33,6 @@ namespace Persistence.Model
         public virtual DbSet<BuildingUsers> BuildingUsers { get; set; }
         public virtual DbSet<PeopleGroup> PeopleGroups { get; set; }
         public virtual DbSet<Peoples> Peoples { get; set; }
-        public virtual DbSet<Hazine> Hazine { get; set; }
         public virtual DbSet<BuildingAccountType> BuildingAccountTypes { get; set; }
         public virtual DbSet<BuildingCondition> BuildingConditions { get; set; }
         public virtual DbSet<BuildingType> BuildingTypes { get; set; }
@@ -49,10 +47,6 @@ namespace Persistence.Model
         public virtual DbSet<BuildingRequest> BuildingRequests { get; set; }
         public virtual DbSet<BuildingRequestRegion> BuildingRequestRegions { get; set; }
         public virtual DbSet<Contract> Contracts { get; set; }
-        public virtual DbSet<ContractFinance> ContractFinances { get; set; }
-        public virtual DbSet<BuildingReception> BuildingReceptions { get; set; }
-        public virtual DbSet<BuildingPardakht> BuildingPardakhts { get; set; }
-        public virtual DbSet<BuildingGardeshHesab> BuildingGardeshHesabs { get; set; }
         public virtual DbSet<SyncedData> SyncedData { get; set; }
         public virtual DbSet<Androids> Androids { get; set; }
         public virtual DbSet<BuildingOptions> BuildingOptions { get; set; }

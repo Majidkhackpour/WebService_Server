@@ -1,20 +1,18 @@
-﻿using System;
-using System.Data.Entity.Migrations;
-using System.Data.SqlClient;
-using AutoMapper;
+﻿using AutoMapper;
 using Nito.AsyncEx;
-using Persistence;
 using Persistence.Migrations;
 using Services;
+using System;
+using System.Data.Entity.Migrations;
 
 namespace EntityCache.Assistence
 {
     public class ClsCache
     {
+        public static string ConnectionString { get; set; } =
+            @"Data Source=.;Initial Catalog=Arad_Server;Integrated Security=True;Asynchronous Processing=True";
         public static void Init()
         {
-            var config = new MapperConfiguration(c => { c.AddProfile(new SqlProfile()); });
-            Mappings.Default = new Mapper(config);
             UpdateMigration();
             InserDefults();
         }
@@ -31,22 +29,7 @@ namespace EntityCache.Assistence
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
             }
         }
-        private static bool CheckConnectionString(string con)
-        {
-            try
-            {
-                var cn = new SqlConnection(con);
-                cn.Open();
-                cn.Close();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                WebErrorLog.ErrorInstence.StartErrorLog(ex);
-                return false;
-            }
-        }
-        public static void InserDefults()
+        private static void InserDefults()
         {
             try
             {

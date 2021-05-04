@@ -1,38 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using EntityCache.Bussines;
+﻿using Persistence.Entities;
+using Persistence.Model;
 using Services;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace Server.Controllers
 {
     public class PardakhtController : ApiController
     {
+        private ModelContext db = new ModelContext();
+
         [HttpGet]
         [Route("Pardakht_GetAll")]
-        public async Task<IEnumerable<PardakhtBussines>> GetAllAsync() => await PardakhtBussines.GetAllAsync();
+        public IEnumerable<Pardakht> GetAllAsync() => db.Pardakht.ToList();
 
         [HttpGet]
         [Route("Pardakht_Get/{guid}")]
-        public async Task<PardakhtBussines> GetAsync(Guid guid) => await PardakhtBussines.GetAsync(guid);
+        public Pardakht GetAsync(Guid guid) => db.Pardakht.FirstOrDefault(q => q.Guid == guid);
 
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(PardakhtBussines cls)
+        public Pardakht SaveAsync(Pardakht cls)
         {
-            var res = new ReturnedSaveFuncInfo();
             try
             {
-                if (cls.Status) res.AddReturnedValue(await cls.SaveAsync());
-                else res.AddReturnedValue(await cls.RemoveAsync());
+                var a = db.Pardakht.AsNoTracking()
+                    .FirstOrDefault(q => q.Guid == cls.Guid);
+                if (a == null) db.Pardakht.Add(cls);
+                else db.Entry(cls).State = EntityState.Modified;
+                db.SaveChanges();
+                return cls;
             }
             catch (Exception ex)
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
-                res.AddReturnedValue(ex);
+                return null;
             }
-
-            return res;
         }
 
     }

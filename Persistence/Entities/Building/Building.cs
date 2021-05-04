@@ -11,9 +11,11 @@ namespace Persistence.Entities.Building
         [Key, Column(Order = 0)]
         public Guid Guid { get; set; }
         [Key, Column(Order = 1)]
-        public string HardSerial { get; set; }
-        public DateTime Modified { get; set; }
+        public string HardSrial { get; set; }
         public bool Status { get; set; }
+        public DateTime Modified { get; set; }
+        public ServerStatus ServerStatus { get; set; }
+        public DateTime ServerDeliveryDate { get; set; }
         public DateTime CreateDate { get; set; }
         public string Code { get; set; }
         public Guid OwnerGuid { get; set; }

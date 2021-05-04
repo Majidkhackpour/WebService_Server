@@ -1,42 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using EntityCache.Bussines;
+﻿using Persistence.Entities;
+using Persistence.Model;
 using Services;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace Server.Controllers
 {
     public class OrderController : ApiController
     {
+        private ModelContext db = new ModelContext();
+
         [HttpGet]
         [Route("Order_GetAll")]
-        public async Task<IEnumerable<OrderBussines>> GetAllAsync() => await OrderBussines.GetAllAsync();
+        public IEnumerable<Order> GetAllAsync() => db.Order.ToList();
 
         [HttpGet]
         [Route("Order_Get/{guid}")]
-        public async Task<OrderBussines> GetAsync(Guid guid) => await OrderBussines.GetAsync(guid);
+        public Order GetAsync(Guid guid) => db.Order.FirstOrDefault(q => q.Guid == guid);
 
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(OrderBussines cls)
+        public Order SaveAsync(Order cls)
         {
-            var res = new ReturnedSaveFuncInfo();
             try
             {
-                if (cls.Status) res.AddReturnedValue(await cls.SaveAsync());
-                else res.AddReturnedValue(await cls.RemoveAsync());
+                var a = db.Order.AsNoTracking()
+                    .FirstOrDefault(q => q.Guid == cls.Guid);
+                if (a == null) db.Order.Add(cls);
+                else db.Entry(cls).State = EntityState.Modified;
+                db.SaveChanges();
+                return cls;
             }
             catch (Exception ex)
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
-                res.AddReturnedValue(ex);
+                return null;
             }
-
-            return res;
         }
 
         [HttpGet]
         [Route("Order_NextCode")]
-        public async Task<string> NextCodeAsync() => await OrderBussines.NextCodeAsync();
+        public string NextCodeAsync() => (db.Order.Max(q => q.ContractCode) + 1).ToString();
     }
 }

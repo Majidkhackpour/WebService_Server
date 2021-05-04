@@ -1,19 +1,39 @@
-﻿using System;
+﻿using Persistence.Entities.Building;
+using Persistence.Model;
+using Services;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using EntityCache.Bussines.Building;
-using Services;
 
 namespace Server.Controllers
 {
     public class BuildingController : ApiController
     {
+        private ModelContext db = new ModelContext();
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(BuildingBusines cls) => await cls.SaveAsync();
+        public Building SaveAsync(Building cls)
+        {
+            try
+            {
+                var a = db.Buildings.AsNoTracking()
+                    .FirstOrDefault(q => q.Guid == cls.Guid && q.HardSrial == cls.HardSrial);
+                if (a == null) db.Buildings.Add(cls);
+                else db.Entry(cls).State = EntityState.Modified;
+                db.SaveChanges();
+                return cls;
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                return null;
+            }
+        }
 
         [Route("PostImage")]
         [AllowAnonymous]

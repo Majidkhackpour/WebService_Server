@@ -117,11 +117,8 @@
     <Compile Include="Controllers\BuildingAccountTypeController.cs" />
     <Compile Include="Controllers\BuildingConditionController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
-    <Compile Include="Controllers\BuildingGardeshHesabController.cs" />
     <Compile Include="Controllers\BuildingOptionController.cs" />
-    <Compile Include="Controllers\BuildingPardakhtController.cs" />
     <Compile Include="Controllers\BuildingPhoneBookController.cs" />
-    <Compile Include="Controllers\BuildingReceptionController.cs" />
     <Compile Include="Controllers\BuildingRelatedOptionsController.cs" />
     <Compile Include="Controllers\BuildingRequestController.cs" />
     <Compile Include="Controllers\BuildingRequestRegionController.cs" />
@@ -135,7 +132,6 @@
     <Compile Include="Controllers\DocumentTypeController.cs" />
     <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Controllers\FloorCoverController.cs" />
-    <Compile Include="Controllers\HazineController.cs" />
     <Compile Include="Controllers\KitchenServiceController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PardakhtController.cs" />
@@ -151,11 +147,9 @@
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\TelegramBuildingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\UserLogController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +165,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="BuildingImages\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
@@ -180,6 +175,10 @@
     <ProjectReference Include="..\EntityCache\EntityCache.csproj">
       <Project>{1a4646c8-5552-41f2-93aa-a37e7b867af3}</Project>
       <Name>EntityCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{4624cdbb-1744-4638-a49f-ec3f5f1cd485}</Project>
+      <Name>Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

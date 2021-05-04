@@ -1,28 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Http;
-using EntityCache.Bussines;
+﻿using Persistence.Entities;
+using Persistence.Model;
 using Services;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Http;
 
 namespace Server.Controllers
 {
     public class ProductController : ApiController
     {
+        private ModelContext db = new ModelContext();
+
         [HttpGet]
         [Route("Products_GetAll")]
-        public async Task<IEnumerable<ProductBussines>> GetAllAsync() => await ProductBussines.GetAllAsync();
+        public IEnumerable<Product> GetAllAsync() => db.Products.ToList();
 
         [HttpGet]
         [Route("Products_Get/{guid}")]
-        public async Task<ProductBussines> GetAsync(Guid guid) => await ProductBussines.GetAsync(guid);
+        public Product GetAsync(Guid guid) => db.Products.FirstOrDefault(q => q.Guid == guid);
 
         [HttpPost]
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(ProductBussines cls) => await cls.SaveAsync();
+        public Product SaveAsync(Product cls)
+        {
+            try
+            {
+                var a = db.Products.AsNoTracking()
+                    .FirstOrDefault(q => q.Guid == cls.Guid);
+                if (a == null) db.Products.Add(cls);
+                else db.Entry(cls).State = EntityState.Modified;
+                db.SaveChanges();
+                return cls;
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                return null;
+            }
+        }
 
 
         [HttpGet]
         [Route("Products_NextCode")]
-        public async Task<string> NextCodeAsync() => await ProductBussines.NextCodeAsync();
+        public string NextCodeAsync() => ((db.Products.Max(q => q.Code) + 1)).ToString();
     }
 }

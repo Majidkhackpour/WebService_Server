@@ -12,8 +12,11 @@ namespace Persistence.Entities.Building
         public Guid Guid { get; set; }
         [Key, Column(Order = 1)]
         public string HardSerial { get; set; }
-        public DateTime Modified { get; set; }
+
         public bool Status { get; set; }
+        public DateTime Modified { get; set; }
+        public ServerStatus ServerStatus { get; set; }
+        public DateTime ServerDeliveryDate { get; set; }
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -22,7 +25,5 @@ namespace Persistence.Entities.Building
         public string AnswerQuestion { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
-        public decimal Account { get; set; }
-        public decimal AccountFirst { get; set; }
     }
 }
