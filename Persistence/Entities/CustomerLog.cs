@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Services;
 using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
 {
+    [Table("Department_CustomerLog")]
     public class CustomerLog : ICustomerLog
     {
         [Key]

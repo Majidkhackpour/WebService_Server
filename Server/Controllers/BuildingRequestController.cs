@@ -17,8 +17,11 @@ namespace Server.Controllers
         {
             try
             {
+                cls.Modified = DateTime.Now;
+                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == cls.HardSerial);
+                cls.CustomerGuid = cust?.Guid ?? Guid.Empty;
                 var a = db.BuildingRequests.AsNoTracking()
-                    .FirstOrDefault(q => q.Guid == cls.Guid && q.HardSerial == cls.HardSerial);
+                    .FirstOrDefault(q => q.Guid == cls.Guid && q.CustomerGuid == cust.Guid);
                 if (a == null) db.BuildingRequests.Add(cls);
                 else db.Entry(cls).State = EntityState.Modified;
                 db.SaveChanges();

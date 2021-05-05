@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Services;
 using Servicess.Interfaces.Building;
 using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
 {
+    [Table("Department_Reception")]
     public class Reception 
     {
         [Key]

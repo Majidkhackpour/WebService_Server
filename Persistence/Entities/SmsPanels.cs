@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Servicess.Interfaces.Building;
 
 namespace Persistence.Entities
 {
+    [Table("Department_SmsPanel")]
     public class SmsPanels : ISmsPanels
     {
         [Key]

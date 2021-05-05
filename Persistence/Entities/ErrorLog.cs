@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Services;
 using Servicess.Interfaces;
 
 namespace Persistence.Entities
 {
+    [Table("Department_ErrorLog")]
     public class ErrorLog : IHasGuid
     {
         [Key]

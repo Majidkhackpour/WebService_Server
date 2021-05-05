@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using Persistence.Entities;
 using Persistence.Entities.Building;
 using Persistence.Migrations;
@@ -7,13 +8,20 @@ namespace Persistence.Model
 {
     public class ModelContext : DbContext
     {
-        public ModelContext()
+        public ModelContext(string connectionString) : base(connectionString)
+        {
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<ModelContext, Configuration>());
+        }
+
+        public ModelContext() : base(Cache.ConnectionString)
         {
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<ModelContext, Configuration>());
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<CustomerLog> CustomerLog { get; set; }
@@ -51,5 +59,14 @@ namespace Persistence.Model
         public virtual DbSet<Androids> Androids { get; set; }
         public virtual DbSet<BuildingOptions> BuildingOptions { get; set; }
         public virtual DbSet<BuildingPhoneBook> BuildingPhoneBooks { get; set; }
+        public virtual DbSet<Advisor> Advisor { get; set; }
+        public virtual DbSet<Banks> Bank { get; set; }
+        public virtual DbSet<Kol> Kol { get; set; }
+        public virtual DbSet<Moein> Moein { get; set; }
+        public virtual DbSet<Tafsil> Tafsil { get; set; }
+        public virtual DbSet<BuildingReception> BuildingReception { get; set; }
+        public virtual DbSet<BuildingPardakht> BuildingPardakht { get; set; }
+        public virtual DbSet<Sanad> Sanad { get; set; }
+        public virtual DbSet<SanadDetail> SanadDetail { get; set; }
     }
 }

@@ -6,11 +6,13 @@ using Servicess.Interfaces.Building;
 
 namespace Persistence.Entities.Building
 {
+    [Table("Buildings_Building")]
     public class Building : IBuilding
     {
         [Key, Column(Order = 0)]
         public Guid Guid { get; set; }
         [Key, Column(Order = 1)]
+        public Guid CustomerGuid { get; set; }
         public string HardSrial { get; set; }
         public bool Status { get; set; }
         public DateTime Modified { get; set; }

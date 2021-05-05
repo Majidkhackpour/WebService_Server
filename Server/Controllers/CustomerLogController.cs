@@ -25,6 +25,7 @@ namespace Server.Controllers
             {
                 var a = db.CustomerLog.AsNoTracking()
                     .FirstOrDefault(q => q.Guid == cls.Guid);
+                cls.Modified = DateTime.Now;
                 if (a == null) db.CustomerLog.Add(cls);
                 else db.Entry(cls).State = EntityState.Modified;
                 db.SaveChanges();

@@ -9,8 +9,6 @@ namespace EntityCache.Assistence
 {
     public class ClsCache
     {
-        public static string ConnectionString { get; set; } =
-            @"Data Source=.;Initial Catalog=Arad_Server;Integrated Security=True;Asynchronous Processing=True";
         public static void Init()
         {
             UpdateMigration();

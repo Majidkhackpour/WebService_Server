@@ -31,7 +31,8 @@ namespace EntityCache.Assistence
                     Email = "Arad_enj@yahoo.com",
                     Mobile = "09382420272",
                     Type = EnUserType.Manager,
-                    Status = true
+                    Status = true,
+                    Modified = DateTime.Now
                 };
                 var ue = new UTF8Encoding();
                 var bytes = ue.GetBytes("2211");

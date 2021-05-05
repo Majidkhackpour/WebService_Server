@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Services;
 using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
 {
+    [Table("Department_SafeBox")]
     public class SafeBox : ISafeBox
     {
         [Key]

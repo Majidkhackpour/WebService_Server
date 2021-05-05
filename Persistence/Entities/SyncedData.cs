@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Services;
 using Services.Interfaces.Department;
 
 namespace Persistence.Entities
 {
+    [Table("Department_SyncedData")]
     public class SyncedData : ISyncedData
     {
         [Key]

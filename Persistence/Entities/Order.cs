@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
 {
+    [Table("Department_Order")]
     public class Order : IOrder
     {
         [Key]
