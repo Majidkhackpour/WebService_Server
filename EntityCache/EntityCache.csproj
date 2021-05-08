@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Assistence\AddDefaults.cs" />
     <Compile Include="Assistence\ClsCache.cs" />
+    <Compile Include="Assistence\DefaultProducts.cs" />
     <Compile Include="Bussines\PardakhtBussines.cs" />
     <Compile Include="Bussines\ReceptionBussines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

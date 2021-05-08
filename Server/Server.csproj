@@ -114,11 +114,15 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AsvisorController.cs" />
+    <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\BuildingAccountTypeController.cs" />
     <Compile Include="Controllers\BuildingConditionController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
     <Compile Include="Controllers\BuildingOptionController.cs" />
+    <Compile Include="Controllers\BuildingPardakhtController.cs" />
     <Compile Include="Controllers\BuildingPhoneBookController.cs" />
+    <Compile Include="Controllers\BuildingReceptionController.cs" />
     <Compile Include="Controllers\BuildingRelatedOptionsController.cs" />
     <Compile Include="Controllers\BuildingRequestController.cs" />
     <Compile Include="Controllers\BuildingRequestRegionController.cs" />
@@ -133,6 +137,8 @@
     <Compile Include="Controllers\ErrorHandlerController.cs" />
     <Compile Include="Controllers\FloorCoverController.cs" />
     <Compile Include="Controllers\KitchenServiceController.cs" />
+    <Compile Include="Controllers\KolController.cs" />
+    <Compile Include="Controllers\MoeinController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PardakhtController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
@@ -142,9 +148,12 @@
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\RentalAuthorityController.cs" />
     <Compile Include="Controllers\SafeBoxController.cs" />
+    <Compile Include="Controllers\SanadController.cs" />
+    <Compile Include="Controllers\SanadDetailController.cs" />
     <Compile Include="Controllers\SmsLogController.cs" />
     <Compile Include="Controllers\SmsPanelController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
+    <Compile Include="Controllers\TafsilController.cs" />
     <Compile Include="Controllers\TelegramBuildingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

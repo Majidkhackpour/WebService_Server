@@ -21,7 +21,7 @@ namespace Server.Controllers
         {
             try
             {
-                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == cls.HardSrial);
+                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == cls.HardSerial);
                 cls.CustomerGuid = cust?.Guid ?? Guid.Empty;
                 var a = db.Buildings.AsNoTracking()
                     .FirstOrDefault(q => q.Guid == cls.Guid && q.CustomerGuid == cust.Guid);

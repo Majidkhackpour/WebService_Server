@@ -45,6 +45,17 @@ namespace EntityCache.Assistence
             }
             #endregion
 
+            #region Products
+            var allKol = dbContext.Products.ToList();
+            if (allKol == null || allKol.Count <= 0)
+            {
+                var kol = DefaultProducts.SetDef();
+                foreach (var prd in kol)
+                    dbContext.Products.Add(prd);
+                dbContext.SaveChanges();
+            }
+            #endregion
+
             await dbContext.SaveChangesAsync();
             dbContext.Dispose();
         }
