@@ -40,6 +40,7 @@ namespace Server.Controllers
             }
         }
 
+
         [HttpGet]
         [Route("Order_NextCode")]
         public string NextCodeAsync() => (db.Order.Max(q => q.ContractCode) + 1).ToString();

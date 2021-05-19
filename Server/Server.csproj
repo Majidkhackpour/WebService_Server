@@ -140,6 +140,7 @@
     <Compile Include="Controllers\KolController.cs" />
     <Compile Include="Controllers\MoeinController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderDetailController.cs" />
     <Compile Include="Controllers\PardakhtController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Controllers\PeopleGroupController.cs" />
@@ -175,6 +176,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="BuildingImages\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\OrderDetail\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
