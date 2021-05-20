@@ -32,5 +32,8 @@ namespace Server.Controllers
                 return null;
             }
         }
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("OrderDetail_GetAll/{orderGuid}")]
+        public IEnumerable<OrderDetails> GetAsync(Guid orderGuid) => db.OrderDetails.Where(q => q.OrderGuid == orderGuid);
     }
 }
