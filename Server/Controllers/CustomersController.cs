@@ -45,6 +45,22 @@ namespace Server.Controllers
         public Customers GetAsync(string name) => db.Customers.FirstOrDefault(q => q.Name == name);
 
         [HttpGet]
+        [Route("Customer_GetByImie/{imei}")]
+        public Customers GetByImeiAsync(string imei)
+        {
+            try
+            {
+                var android = db.Androids.FirstOrDefault(q => q.IMEI == imei);
+                return android == null ? null : db.Customers.FirstOrDefault(q => q.Guid == android.CustomerGuid);
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                return null;
+            }
+        }
+
+        [HttpGet]
         [Route("Customer_GetByHardSerial/{hSerial}")]
         public Customers GetByHardSerialAsync(string hSerial) =>
             db.Customers.FirstOrDefault(q => q.HardSerial == hSerial);

@@ -131,6 +131,7 @@
     <Compile Include="Controllers\BuildingViewController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\ContractController.cs" />
+    <Compile Include="Controllers\CustomerAndroidController.cs" />
     <Compile Include="Controllers\CustomerLogController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DocumentTypeController.cs" />
