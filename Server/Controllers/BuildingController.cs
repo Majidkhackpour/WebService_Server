@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Services.AndroidViewModels;
 
 namespace Server.Controllers
 {
@@ -23,8 +24,7 @@ namespace Server.Controllers
             {
                 var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == cls.HardSerial);
                 cls.CustomerGuid = cust?.Guid ?? Guid.Empty;
-                var a = db.Buildings.AsNoTracking()
-                    .FirstOrDefault(q => q.Guid == cls.Guid && q.CustomerGuid == cust.Guid);
+                var a = db.Buildings.AsNoTracking().FirstOrDefault(q => q.Guid == cls.Guid && q.CustomerGuid == cust.Guid);
                 if (a == null) db.Buildings.Add(cls);
                 else db.Entry(cls).State = EntityState.Modified;
                 db.SaveChanges();
@@ -89,6 +89,52 @@ namespace Server.Controllers
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }
+        }
+
+        [HttpGet]
+        [Route("Buildings_GetLastList/{hSerial}")]
+        public IEnumerable<BuildingListViewModel> GetLastList(string hSerial)
+        {
+            var list = new List<BuildingListViewModel>();
+            try
+            {
+                var cust = db.Customers.FirstOrDefault(q => q.HardSerial == hSerial);
+                if (cust == null) return list;
+                var buList = db.Buildings.Where(q => q.CustomerGuid == cust.Guid)?.OrderByDescending(q => q.CreateDate)?.Take(50);
+                if (!(buList?.Any() ?? false)) return list;
+                foreach (var bu in buList)
+                {
+                    var city = db.Cities.FirstOrDefault(q => q.Guid == bu.CityGuid) ?? new Cities();
+                    var stateName = db.States.FirstOrDefault(q => q.Guid == city.StateGuid)?.Name ?? "";
+                    var cityName = city?.Name ?? "";
+                    var regionName = db.Regions.FirstOrDefault(q => q.Guid == bu.RegionGuid)?.Name ?? "";
+                    var a = new BuildingListViewModel()
+                    {
+                        Guid = bu.Guid,
+                        ImageName = bu.Image,
+                        Metrazh = $"{bu.Masahat} متر",
+                        RoomCount = $"{bu.RoomCount} خواب",
+                        TabaqeCount = $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}",
+                        Address = $"{stateName} - {cityName} - {regionName} - {bu.Address}"
+                    };
+                    if (bu.SellPrice > 0) a.Price = $"{bu.SellPrice:N0} ریال فروش";
+                    else if (bu.RahnPrice1 > 0 || bu.EjarePrice1 > 0)
+                    {
+                        if (bu.RahnPrice1 > 0 && bu.EjarePrice1 > 0)
+                            a.Price = $"{bu.RahnPrice1:N0} ریال رهن - {bu.EjarePrice1:N0} ریال اجاره";
+                        else if (bu.RahnPrice1 > 0) a.Price = $"{bu.RahnPrice1:N0} ریال رهن";
+                        else if (bu.EjarePrice1 > 0) a.Price = $"{bu.EjarePrice1:N0} ریال اجاره";
+                    }
+                    else a.Price = "-";
+                    list.Add(a);
+                }
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }
+
+            return list;
         }
     }
 }
