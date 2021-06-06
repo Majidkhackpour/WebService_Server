@@ -98,34 +98,37 @@ namespace Server.Controllers
             var list = new List<BuildingListViewModel>();
             try
             {
-                var cust = db.Customers.FirstOrDefault(q => q.HardSerial == hSerial);
+                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == hSerial);
                 if (cust == null) return list;
-                var buList = db.Buildings.Where(q => q.CustomerGuid == cust.Guid)?.OrderByDescending(q => q.CreateDate)?.Take(50);
+                var buList = db.Buildings.AsNoTracking().Where(q => q.CustomerGuid == cust.Guid)?.OrderByDescending(q => q.CreateDate)?.Take(50).ToList();
                 if (!(buList?.Any() ?? false)) return list;
                 foreach (var bu in buList)
                 {
-                    var city = db.Cities.FirstOrDefault(q => q.Guid == bu.CityGuid) ?? new Cities();
-                    var stateName = db.States.FirstOrDefault(q => q.Guid == city.StateGuid)?.Name ?? "";
+                    var city = db.Cities.AsNoTracking().FirstOrDefault(q => q.Guid == bu.CityGuid && q.CustomerGuid == cust.Guid);
+                    var stateName = db.States.AsNoTracking().FirstOrDefault(q => q.Guid == city.StateGuid)?.Name ?? "";
                     var cityName = city?.Name ?? "";
-                    var regionName = db.Regions.FirstOrDefault(q => q.Guid == bu.RegionGuid)?.Name ?? "";
+                    var regionName = db.Regions.AsNoTracking().FirstOrDefault(q => q.Guid == bu.RegionGuid && q.CustomerGuid == cust.Guid)?.Name ?? "";
                     var a = new BuildingListViewModel()
                     {
                         Guid = bu.Guid,
                         ImageName = bu.Image,
                         Metrazh = $"{bu.Masahat} متر",
-                        RoomCount = $"{bu.RoomCount} خواب",
-                        TabaqeCount = $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}",
-                        Address = $"{stateName} - {cityName} - {regionName} - {bu.Address}"
+                        Address = $"{stateName} - {cityName} - {regionName} - {bu.Address}",
+                        SaleSakht = bu.SaleSakht
                     };
                     if (bu.SellPrice > 0) a.Price = $"{bu.SellPrice:N0} ریال فروش";
                     else if (bu.RahnPrice1 > 0 || bu.EjarePrice1 > 0)
                     {
                         if (bu.RahnPrice1 > 0 && bu.EjarePrice1 > 0)
-                            a.Price = $"{bu.RahnPrice1:N0} ریال رهن - {bu.EjarePrice1:N0} ریال اجاره";
+                            a.Price = $"{bu.RahnPrice1:N0} ریال رهن \r\n \r\n {bu.EjarePrice1:N0} ریال اجاره";
                         else if (bu.RahnPrice1 > 0) a.Price = $"{bu.RahnPrice1:N0} ریال رهن";
                         else if (bu.EjarePrice1 > 0) a.Price = $"{bu.EjarePrice1:N0} ریال اجاره";
                     }
                     else a.Price = "-";
+
+                    a.RoomCount = bu.RoomCount > 0 ? $"{bu.RoomCount} خواب" : "بدون خواب";
+                    a.TabaqeCount = bu.TabaqeNo > 0 ? $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}" : "یک طبقه";
+
                     list.Add(a);
                 }
             }
@@ -135,6 +138,94 @@ namespace Server.Controllers
             }
 
             return list;
+        }
+
+        [HttpGet]
+        [Route("Buildings_GetViewByGuid/{guid},{hSerial}")]
+        public BuildingViewModel GetViewByGuid(Guid guid, string hSerial)
+        {
+            BuildingViewModel res = null;
+            try
+            {
+                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == hSerial);
+                if (cust == null) return res;
+                var bu = db.Buildings.AsNoTracking().FirstOrDefault(q => q.Guid == guid && q.CustomerGuid == cust.Guid);
+                if (bu == null) return res;
+                var city = db.Cities.AsNoTracking().FirstOrDefault(q => q.Guid == bu.CityGuid && q.CustomerGuid == cust.Guid);
+                var stateName = db.States.AsNoTracking().FirstOrDefault(q => q.Guid == city.StateGuid)?.Name ?? "";
+                var regionName = db.Regions.AsNoTracking().FirstOrDefault(q => q.Guid == bu.RegionGuid && q.CustomerGuid == cust.Guid)?.Name ?? "";
+                var owner = db.Peoples.AsNoTracking().FirstOrDefault(q => q.Guid == bu.OwnerGuid && q.CustomerGuid == cust.Guid);
+                var user = db.BuildingUsers.AsNoTracking().FirstOrDefault(q => q.Guid == bu.UserGuid && q.CustomerGuid == cust.Guid);
+                var userTell = db.BuildingPhoneBooks.AsNoTracking().FirstOrDefault(q => q.ParentGuid == user.Guid && q.CustomerGuid == cust.Guid);
+
+                res = new BuildingViewModel()
+                {
+                    Address = bu?.Address ?? "-",
+                    Code = bu?.Code ?? "-",
+                    FloorCoverName = db.FloorCovers.AsNoTracking().FirstOrDefault(q => q.Guid == bu.FloorCoverGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    CityName = city?.Name ?? "",
+                    StateName = stateName,
+                    RegionName = regionName,
+                    DocumentName = db.DocumentTypes.AsNoTracking().FirstOrDefault(q => q.Guid == bu.DocumentType && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    KitchenServiceName = db.KitchenServices.AsNoTracking().FirstOrDefault(q => q.Guid == bu.KitchenServiceGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    Masahat = $"{bu.Masahat} متر مربع",
+                    SideName = bu.Side.GetDisplay(),
+                    VahedPerTabaqe = $"{bu.VahedPerTabaqe} واحد",
+                    TypeName = db.BuildingTypes.AsNoTracking().FirstOrDefault(q => q.Guid == bu.BuildingTypeGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    ViewName = db.BuildingViews.AsNoTracking().FirstOrDefault(q => q.Guid == bu.BuildingViewGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    OwnerName = owner?.Name ?? "-",
+                    OwnerAddress = owner?.Address ?? "-",
+                    AdvisorName = user?.Name ?? "-",
+                    AdvisorTell = userTell?.Tell ?? "-"
+                };
+
+                var ownerTells = db.BuildingPhoneBooks.AsNoTracking().Where(q => q.ParentGuid == owner.Guid && q.CustomerGuid == cust.Guid).ToList();
+                if (!(ownerTells?.Any() ?? false))
+                {
+                    if (ownerTells.Count >= 2)
+                    {
+                        res.OwnerTell1 = ownerTells[0]?.Tell ?? "-";
+                        res.OwnerTell2 = ownerTells[1]?.Tell ?? "-";
+                    }
+                    else if (ownerTells.Count >= 1)
+                    {
+                        res.OwnerTell1 = ownerTells[0]?.Tell ?? "-";
+                        res.OwnerTell2 = "-";
+                    }
+                    else
+                    {
+                        res.OwnerTell1 = "-";
+                        res.OwnerTell2 = "-";
+                    }
+                }
+                else
+                {
+                    res.OwnerTell1 = "-";
+                    res.OwnerTell2 = "-";
+                }
+
+                if (!string.IsNullOrEmpty(bu.ShortDesc)) res.Description = bu.ShortDesc;
+                else bu.ShortDesc = "ندارد";
+
+                if (bu.SellPrice > 0) res.Price = $"{bu.SellPrice:N0} ریال فروش";
+                else if (bu.RahnPrice1 > 0 || bu.EjarePrice1 > 0)
+                {
+                    if (bu.RahnPrice1 > 0 && bu.EjarePrice1 > 0)
+                        res.Price = $"{bu.RahnPrice1:N0} ریال رهن \r\n \r\n {bu.EjarePrice1:N0} ریال اجاره";
+                    else if (bu.RahnPrice1 > 0) res.Price = $"{bu.RahnPrice1:N0} ریال رهن";
+                    else if (bu.EjarePrice1 > 0) res.Price = $"{bu.EjarePrice1:N0} ریال اجاره";
+                }
+                else res.Price = "-";
+
+                res.RoomCount = bu.RoomCount > 0 ? $"{bu.RoomCount} خواب" : "بدون خواب";
+                res.TabaqeCount = bu.TabaqeNo > 0 ? $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}" : "یک طبقه";
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }
+
+            return res;
         }
     }
 }
