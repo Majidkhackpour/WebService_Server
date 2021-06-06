@@ -158,39 +158,59 @@ namespace Server.Controllers
                 var user = db.BuildingUsers.AsNoTracking().FirstOrDefault(q => q.Guid == bu.UserGuid && q.CustomerGuid == cust.Guid);
                 var userTell = db.BuildingPhoneBooks.AsNoTracking().FirstOrDefault(q => q.ParentGuid == user.Guid && q.CustomerGuid == cust.Guid);
 
-                res = new BuildingViewModel()
+                res = new BuildingViewModel
                 {
                     Address = bu?.Address ?? "-",
                     Code = bu?.Code ?? "-",
-                    FloorCoverName = db.FloorCovers.AsNoTracking().FirstOrDefault(q => q.Guid == bu.FloorCoverGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    FloorCoverName = db.FloorCovers.AsNoTracking()
+                                         .FirstOrDefault(
+                                             q => q.Guid == bu.FloorCoverGuid && q.CustomerGuid == cust.Guid)?.Name ??
+                                     "-",
                     CityName = city?.Name ?? "",
                     StateName = stateName,
                     RegionName = regionName,
-                    DocumentName = db.DocumentTypes.AsNoTracking().FirstOrDefault(q => q.Guid == bu.DocumentType && q.CustomerGuid == cust.Guid)?.Name ?? "-",
-                    KitchenServiceName = db.KitchenServices.AsNoTracking().FirstOrDefault(q => q.Guid == bu.KitchenServiceGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    DocumentName = db.DocumentTypes.AsNoTracking()
+                                       .FirstOrDefault(q => q.Guid == bu.DocumentType && q.CustomerGuid == cust.Guid)
+                                       ?.Name ?? "-",
+                    KitchenServiceName = db.KitchenServices.AsNoTracking()
+                                             .FirstOrDefault(q =>
+                                                 q.Guid == bu.KitchenServiceGuid && q.CustomerGuid == cust.Guid)
+                                             ?.Name ?? "-",
                     Masahat = $"{bu.Masahat} متر مربع",
                     SideName = bu.Side.GetDisplay(),
-                    VahedPerTabaqe = $"{bu.VahedPerTabaqe} واحد",
-                    TypeName = db.BuildingTypes.AsNoTracking().FirstOrDefault(q => q.Guid == bu.BuildingTypeGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
-                    ViewName = db.BuildingViews.AsNoTracking().FirstOrDefault(q => q.Guid == bu.BuildingViewGuid && q.CustomerGuid == cust.Guid)?.Name ?? "-",
+                    TypeName = db.BuildingTypes.AsNoTracking()
+                                   .FirstOrDefault(q => q.Guid == bu.BuildingTypeGuid && q.CustomerGuid == cust.Guid)
+                                   ?.Name ?? "-",
+                    ViewName = db.BuildingViews.AsNoTracking()
+                                   .FirstOrDefault(q => q.Guid == bu.BuildingViewGuid && q.CustomerGuid == cust.Guid)
+                                   ?.Name ?? "-",
                     OwnerName = owner?.Name ?? "-",
                     OwnerAddress = owner?.Address ?? "-",
                     AdvisorName = user?.Name ?? "-",
-                    AdvisorTell = userTell?.Tell ?? "-"
+                    AdvisorTell = userTell?.Tell ?? "-",
+                    VahedPerTabaqe = bu.VahedPerTabaqe > 0 ? $"{bu.VahedPerTabaqe} طبقه" : "ثبت نشده"
                 };
 
-                var ownerTells = db.BuildingPhoneBooks.AsNoTracking().Where(q => q.ParentGuid == owner.Guid && q.CustomerGuid == cust.Guid).ToList();
-                if (!(ownerTells?.Any() ?? false))
+                if (owner != null)
                 {
-                    if (ownerTells.Count >= 2)
+                    var ownerTells = db.BuildingPhoneBooks.AsNoTracking().Where(q => q.ParentGuid == owner.Guid && q.CustomerGuid == cust.Guid).ToList();
+                    if (!(ownerTells?.Any() ?? false))
                     {
-                        res.OwnerTell1 = ownerTells[0]?.Tell ?? "-";
-                        res.OwnerTell2 = ownerTells[1]?.Tell ?? "-";
-                    }
-                    else if (ownerTells.Count >= 1)
-                    {
-                        res.OwnerTell1 = ownerTells[0]?.Tell ?? "-";
-                        res.OwnerTell2 = "-";
+                        if (ownerTells.Count >= 2)
+                        {
+                            res.OwnerTell1 = ownerTells[0]?.Tell ?? "-";
+                            res.OwnerTell2 = ownerTells[1]?.Tell ?? "-";
+                        }
+                        else if (ownerTells.Count >= 1)
+                        {
+                            res.OwnerTell1 = ownerTells[0]?.Tell ?? "-";
+                            res.OwnerTell2 = "-";
+                        }
+                        else
+                        {
+                            res.OwnerTell1 = "-";
+                            res.OwnerTell2 = "-";
+                        }
                     }
                     else
                     {
