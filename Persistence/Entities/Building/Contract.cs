@@ -7,20 +7,20 @@ using Servicess.Interfaces.Building;
 namespace Persistence.Entities.Building
 {
     [Table("Buildings_Contract")]
-    public class Contract:IContract
+    public class Contract : IContract
     {
         [Key, Column(Order = 0)]
         public Guid Guid { get; set; }
         [Key, Column(Order = 1)]
         public Guid CustomerGuid { get; set; }
         public string HardSerial { get; set; }
-
         public bool Status { get; set; }
         public DateTime Modified { get; set; }
         public ServerStatus ServerStatus { get; set; }
         public DateTime ServerDeliveryDate { get; set; }
         public DateTime DateM { get; set; }
         public long Code { get; set; }
+        public string CodeInArchive { get; set; }
         public bool IsTemp { get; set; }
         public Guid FirstSideGuid { get; set; }
         public Guid SecondSideGuid { get; set; }
