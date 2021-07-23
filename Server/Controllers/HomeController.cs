@@ -13,5 +13,25 @@ namespace Server.Controllers
         {
             return View();
         }
+        [Route("Register")]
+        public ActionResult Register()
+        {
+            return View();
+        }
+        //[HttpPost]
+        //public ActionResult Register()
+        //{
+        //    return View();
+        //}
+        [Route("Login")]
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult Menu()
+        {
+            return PartialView();
+        }
     }
 }
