@@ -336,6 +336,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\ManageErrors\ManageErrors.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
