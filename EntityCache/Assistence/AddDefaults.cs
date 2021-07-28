@@ -41,7 +41,6 @@ namespace EntityCache.Assistence
                 user.Password = System.Text.RegularExpressions.Regex.Replace(BitConverter.ToString(hashBytes), "-", "")
                     .ToLower();
                 dbContext.Users.Add(user);
-                dbContext.SaveChanges();
             }
             #endregion
 
@@ -88,8 +87,36 @@ namespace EntityCache.Assistence
                     isBlock = false,
                     isWebServiceBlock = false
                 };
+                var prd_ = new Androids()
+                {
+                    Guid = Guid.NewGuid(),
+                    Modified = DateTime.Now,
+                    Status = true,
+                    Name = "Emulator A50",
+                    CustomerGuid = prd.Guid,
+                    IMEI = "7e8a55a609e7ec3f"
+                };
                 dbContext.Customers.Add(prd);
-                dbContext.SaveChanges();
+                dbContext.Androids.Add(prd_);
+            }
+            #endregion
+
+            #region Users
+
+            var allPanels = dbContext.SmsPanels.ToList();
+            if (allPanels == null || allPanels.Count <= 0)
+            {
+                var prd = new SmsPanels()
+                {
+                    Guid = Guid.NewGuid(),
+                    Modified = DateTime.Now,
+                    Status = true,
+                    Name = "SmsSender",
+                    IsCurrent = true,
+                    API = "38782F7144637944703643765069305A514C796B5A413D3D",
+                    Sender = "10000100007766"
+                };
+                dbContext.SmsPanels.Add(prd);
             }
             #endregion
 
