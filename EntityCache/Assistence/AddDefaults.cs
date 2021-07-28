@@ -24,7 +24,7 @@ namespace EntityCache.Assistence
             {
                 var user = new Users()
                 {
-                    Guid = Guid.NewGuid(),
+                    Guid = Guid.Parse("34593FF9-606D-4CFA-8B3C-1A2919BF11FF"),
                     Name = "کاربر پیش فرض",
                     UserName = "Admin",
                     IsBlock = false,
@@ -52,6 +52,43 @@ namespace EntityCache.Assistence
                 var kol = DefaultProducts.SetDef();
                 foreach (var prd in kol)
                     dbContext.Products.Add(prd);
+            }
+            #endregion
+
+            #region Customer
+            var allCus = dbContext.Customers.ToList();
+            if (allCus == null || allCus.Count <= 0)
+            {
+                var prd = new Customers()
+                {
+                    Guid = Guid.NewGuid(),
+                    HardSerial = "265155255",
+                    Modified = DateTime.Now,
+                    Address = "مشهد- محمدیه 5/5- پلاک9",
+                    Name = "مجید خاکپور",
+                    Status = true,
+                    UserGuid = Guid.Parse("34593FF9-606D-4CFA-8B3C-1A2919BF11FF"),
+                    CreateDate = DateTime.Now,
+                    UserName = "",
+                    Description = "",
+                    Account = 0,
+                    AppSerial = "7225368797445068625332",
+                    CompanyName = "املاک آراد",
+                    Email = "arad_enj@yahoo.com",
+                    ExpireDate = new DateTime(2022, 05, 05, 20, 26, 17),
+                    LkSerial = "",
+                    NationalCode = "0860439021",
+                    Password = "",
+                    PostalCode = "",
+                    SiteUrl = "",
+                    Tell1 = "09382420272",
+                    Tell2 = "09011804993",
+                    Tell3 = "09154751439",
+                    Tell4 = "",
+                    isBlock = false,
+                    isWebServiceBlock = false
+                };
+                dbContext.Customers.Add(prd);
                 dbContext.SaveChanges();
             }
             #endregion
