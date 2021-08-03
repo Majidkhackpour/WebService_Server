@@ -234,6 +234,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AsvisorController.cs" />
+    <Compile Include="Controllers\BackUpManagerController.cs" />
     <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\BuildingAccountTypeController.cs" />
     <Compile Include="Controllers\BuildingConditionController.cs" />
@@ -282,6 +283,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MimeMultipart.cs" />
+    <Compile Include="Models\UploadFileMultiparProvider.cs" />
+    <Compile Include="Models\UploadFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -347,8 +351,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="BackUpFiles\" />
     <Folder Include="BuildingImages\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\BackUpManager\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">

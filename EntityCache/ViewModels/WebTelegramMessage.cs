@@ -22,6 +22,15 @@ namespace EntityCache.ViewModels
                 ContactType = EnTelegramType.Channel
             };
         }
+        public static WebTelegramMessage GetBackUpLog_bot()
+        {
+            return new WebTelegramMessage()
+            {
+                ApiKey = "1924570658:AAG731AopxGpEr7GbchHhSd3TDSdUtGqPxk",
+                ChatID = "@AradBackUp",
+                ContactType = EnTelegramType.Channel
+            };
+        }
         public void Send(string message) => Task.Run(() => SendAsync(message));
         public async Task SendAsync(string message)
         {

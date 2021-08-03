@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Cache.cs" />
     <Compile Include="Entities\Androids.cs" />
+    <Compile Include="Entities\BackUpLog.cs" />
     <Compile Include="Entities\Building\Advisor.cs" />
     <Compile Include="Entities\Building\Banks.cs" />
     <Compile Include="Entities\Building\Building.cs" />
@@ -132,6 +133,10 @@
     <Compile Include="Migrations\202107281016002__8.designer.cs">
       <DependentUpon>202107281016002__8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108021558155__9.cs" />
+    <Compile Include="Migrations\202108021558155__9.designer.cs">
+      <DependentUpon>202108021558155__9.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -170,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202107281016002__8.resx">
       <DependentUpon>202107281016002__8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108021558155__9.resx">
+      <DependentUpon>202108021558155__9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
