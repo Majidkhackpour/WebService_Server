@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Server.Models;
 using Services.AndroidViewModels;
 
 namespace Server.Controllers
@@ -92,43 +93,62 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        [Route("Buildings_GetLastList/{hSerial}")]
-        public IEnumerable<BuildingListViewModel> GetLastList(string hSerial)
+        [Route("Buildings_GetLastList/{_type}")]
+        public IEnumerable<BuildingListViewModel> GetLastList(EnRequestType _type)
         {
             var list = new List<BuildingListViewModel>();
             try
             {
-                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == hSerial);
-                if (cust == null) return list;
-                var buList = db.Buildings.AsNoTracking().Where(q => q.CustomerGuid == cust.Guid)?.OrderByDescending(q => q.CreateDate)?.Take(50).ToList();
+                var guid = Request.Headers.GetValues("cusGuid").FirstOrDefault();
+                if (string.IsNullOrEmpty(guid)) return list;
+                var cusGuid = Guid.Parse(guid);
+                if (!Assistence.CheckCustomer(cusGuid)) return list;
+                List<Building> buList = null;
+                switch (_type)
+                {
+                    case EnRequestType.Rahn:
+                        buList = db.Buildings.AsNoTracking().Where(q => q.CustomerGuid == cusGuid && q.RahnPrice1 > 0)
+                            ?.OrderByDescending(q => q.CreateDate)?.Take(50).ToList();
+                        break;
+                    case EnRequestType.Forush:
+                        buList = db.Buildings.AsNoTracking().Where(q => q.CustomerGuid == cusGuid && q.SellPrice > 0)
+                            ?.OrderByDescending(q => q.CreateDate)?.Take(50).ToList();
+                        break;
+                    case EnRequestType.PishForush:
+                        buList = db.Buildings.AsNoTracking().Where(q => q.CustomerGuid == cusGuid && q.PishPrice > 0)
+                            ?.OrderByDescending(q => q.CreateDate)?.Take(50).ToList();
+                        break;
+                    case EnRequestType.Mosharekat:
+                        buList = db.Buildings.AsNoTracking().Where(q => q.CustomerGuid == cusGuid && !string.IsNullOrEmpty(q.MosharekatDesc))
+                            ?.OrderByDescending(q => q.CreateDate)?.Take(50).ToList();
+                        break;
+                }
                 if (!(buList?.Any() ?? false)) return list;
                 foreach (var bu in buList)
                 {
-                    var city = db.Cities.AsNoTracking().FirstOrDefault(q => q.Guid == bu.CityGuid && q.CustomerGuid == cust.Guid);
+                    var city = db.Cities.AsNoTracking().FirstOrDefault(q => q.Guid == bu.CityGuid && q.CustomerGuid == cusGuid);
                     var stateName = db.States.AsNoTracking().FirstOrDefault(q => q.Guid == city.StateGuid)?.Name ?? "";
                     var cityName = city?.Name ?? "";
-                    var regionName = db.Regions.AsNoTracking().FirstOrDefault(q => q.Guid == bu.RegionGuid && q.CustomerGuid == cust.Guid)?.Name ?? "";
+                    var regionName = db.Regions.AsNoTracking().FirstOrDefault(q => q.Guid == bu.RegionGuid && q.CustomerGuid == cusGuid)?.Name ?? "";
+                    var accTypeName = db.BuildingAccountTypes.AsNoTracking().FirstOrDefault(q => q.CustomerGuid == cusGuid && q.Guid == bu.BuildingAccountTypeGuid)?.Name ?? "";
+                    var typeName = db.BuildingTypes.AsNoTracking().FirstOrDefault(q => q.CustomerGuid == cusGuid && q.Guid == bu.BuildingTypeGuid)?.Name ?? "";
                     var a = new BuildingListViewModel()
                     {
                         Guid = bu.Guid,
                         ImageName = bu.Image,
                         Metrazh = $"{bu.Masahat} متر",
-                        Address = $"{stateName} - {cityName} - {regionName} - {bu.Address}",
-                        SaleSakht = bu.SaleSakht
+                        Address = $"{stateName} - {cityName} - {regionName}",
+                        SaleSakht = bu.SaleSakht,
+                        SellPrice = $"{(bu.SellPrice / 10)} تومان",
+                        RoomCount = bu.RoomCount > 0 ? $"{bu.RoomCount} خواب" : "بدون خواب",
+                        PishPrice = $"{(bu.PishPrice / 10)} ",
+                        TabaqeCount = bu.TabaqeNo > 0 ? $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}" : "یک طبقه",
+                        PishTotalPrice = $"{(bu.PishTotalPrice / 10)} ",
+                        Date = bu.CreateDate.GetTelegramDate(),
+                        EjarePrice = $"{(bu.EjarePrice1 / 10)} ",
+                        RahnPrice = $"{(bu.RahnPrice1) / 10} ",
+                        Type = $"{accTypeName} - {typeName}"
                     };
-                    if (bu.SellPrice > 0) a.Price = $"{bu.SellPrice:N0} ریال فروش";
-                    else if (bu.RahnPrice1 > 0 || bu.EjarePrice1 > 0)
-                    {
-                        if (bu.RahnPrice1 > 0 && bu.EjarePrice1 > 0)
-                            a.Price = $"{bu.RahnPrice1:N0} ریال رهن \r\n \r\n {bu.EjarePrice1:N0} ریال اجاره";
-                        else if (bu.RahnPrice1 > 0) a.Price = $"{bu.RahnPrice1:N0} ریال رهن";
-                        else if (bu.EjarePrice1 > 0) a.Price = $"{bu.EjarePrice1:N0} ریال اجاره";
-                    }
-                    else a.Price = "-";
-
-                    a.RoomCount = bu.RoomCount > 0 ? $"{bu.RoomCount} خواب" : "بدون خواب";
-                    a.TabaqeCount = bu.TabaqeNo > 0 ? $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}" : "یک طبقه";
-
                     list.Add(a);
                 }
             }

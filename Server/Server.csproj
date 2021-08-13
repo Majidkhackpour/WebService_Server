@@ -283,6 +283,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Assistence.cs" />
     <Compile Include="Models\MimeMultipart.cs" />
     <Compile Include="Models\UploadFileMultiparProvider.cs" />
     <Compile Include="Models\UploadFiles.cs" />
