@@ -139,14 +139,14 @@ namespace Server.Controllers
                         Metrazh = $"{bu.Masahat} متر",
                         Address = $"{stateName} - {cityName} - {regionName}",
                         SaleSakht = bu.SaleSakht,
-                        SellPrice = $"{(bu.SellPrice / 10)} تومان",
+                        SellPrice = $"{(bu.SellPrice / 10):N0} تومان",
                         RoomCount = bu.RoomCount > 0 ? $"{bu.RoomCount} خواب" : "بدون خواب",
-                        PishPrice = $"{(bu.PishPrice / 10)} ",
+                        PishPrice = $"{(bu.PishPrice / 10):N0} تومان",
                         TabaqeCount = bu.TabaqeNo > 0 ? $"طبقه {bu.TabaqeNo} از {bu.TedadTabaqe}" : "یک طبقه",
-                        PishTotalPrice = $"{(bu.PishTotalPrice / 10)} ",
+                        PishTotalPrice = $"{(bu.PishTotalPrice / 10):N0} تومان",
                         Date = bu.CreateDate.GetTelegramDate(),
-                        EjarePrice = $"{(bu.EjarePrice1 / 10)} ",
-                        RahnPrice = $"{(bu.RahnPrice1) / 10} ",
+                        EjarePrice = $"{(bu.EjarePrice1 / 10):N0} تومان",
+                        RahnPrice = $"{(bu.RahnPrice1 / 10):N0} تومان",
                         Type = $"{accTypeName} - {typeName}"
                     };
                     list.Add(a);
