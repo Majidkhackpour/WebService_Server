@@ -1,4 +1,10 @@
-﻿<!--body content wrap start-->
+﻿@model EntityCache.ViewModels.loginViewModel
+
+@{
+    ViewBag.Title = "ورودبه سایت";
+}
+
+<!--body content wrap start-->
 <div class="main">
 
     <!--hero section start-->
@@ -21,49 +27,62 @@
                                 <h5 class="h3">ورود</h5>
                                 <p class="text-muted mb-0">برای ادامه وارد حساب خود شوید.</p>
                             </div>
-
-                            <!--login form-->
-                            <form class="login-signup-form">
-                                <div class="form-group">
-                                    <label class="pb-1">آدرس ایمیل</label>
-                                    <div class="input-group input-group-merge">
-                                        <div class="input-icon">
-                                            <span class="ti-email color-primary"></span>
-                                        </div>
-                                        <input type="email" class="form-control" placeholder="name@yourdomain.com">
-                                    </div>
-                                </div>
-                                <!-- Password -->
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label class="pb-1">رمز عبور</label>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="password-reset.html" class="form-text small text-muted">
-                                                فراموشی رمز؟
-                                            </a>
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <!--login form-->
+                                <form class="login-signup-form">
+                                    <div class="form-group">
+                                        <label class="pb-1">آدرس ایمیل</label>
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-icon">
+                                                <span class="ti-email color-primary"></span>
+                                            </div>
+                                            <span class="form-control">
+                                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "exampel@mail.com", @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </span>
                                         </div>
                                     </div>
-                                    <div class="input-group input-group-merge">
-                                        <div class="input-icon">
-                                            <span class="ti-lock color-primary"></span>
+                                    <!-- Password -->
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="pb-1">رمز عبور</label>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="password-reset.html" class="form-text small text-muted">
+                                                    فراموشی رمز؟
+                                                </a>
+                                            </div>
                                         </div>
-                                        <input type="password" class="form-control" placeholder="رمز ورود خود را وارد کنید">
+                                        <div class="input-group input-group-merge">
+                                            <div class="input-icon">
+                                                <span class="ti-lock color-primary"></span>
+                                            </div>
+                                            <span class="form-control">
+                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { placeholder = "رمز ورود خود را وارد کنید", @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <!-- Submit -->
-                                <button class="btn btn-lg btn-block solid-btn border-radius mt-4 mb-3">
-                                    ورود
-                                </button>
-
-                            </form>
+                                    <div class="form-group">
+                                            <span class="form-control">
+                                                <label class="pb-3">مرا به خاطر بسپار</label>
+                                                @Html.CheckBoxFor(model => model.RememberMe, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                                            </span>
+                                    </div>
+                                    <!-- Submit -->
+                                    <button class="btn btn-lg btn-block solid-btn border-radius mt-4 mb-3">
+                                        ورود
+                                    </button>
+                                </form>
+                            }
                         </div>
-                        <div class="card-footer bg-transparent border-top px-md-5">
-                            <small>ثبت نام نکرده اید؟</small>
-                            <a href="sign-up.html" class="small"> ایجاد حساب</a>
-                        </div>
+
                     </div>
                 </div>
             </div>
