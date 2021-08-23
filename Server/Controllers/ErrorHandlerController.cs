@@ -93,6 +93,7 @@ namespace Server.Controllers
                               $"FunctionName: #{err.FuncName.Replace(" ", "_")} \r\n" +
                               $"Type: {err.ExceptionType.Replace(" ", "_")} \r\n" +
                               $"Message: {err.ExceptionMessage} \r\n" +
+                              $"Description: {err.Description}\r\n" +
                               $"=========================== \r\n" +
                               $"HardSerial: {err.HardSerial} \r\n" +
                               $"Customer:😉 #{(cust?.Name ?? "").Replace(" ", "_")} 😉 \r\n" +
@@ -100,6 +101,7 @@ namespace Server.Controllers
                               $"Tell1:📱 {cust?.Tell1 ?? ""} 📱 \r\n" +
                               $"Tell2:📱 {cust?.Tell2 ?? ""} 📱 \r\n" +
                               $"IP:🌐 {err.Ip} 🌐 \r\n" +
+                              $"Date: {Calendar.MiladiToShamsi(err.Date)} \r\n" +
                               $"Time:🕟 {err.Time} 🕟";
 
                 WebTelegramMessage.GetErrorLog_bot().Send(message);
