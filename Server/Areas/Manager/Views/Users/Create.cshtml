@@ -1,0 +1,98 @@
+﻿@model Persistence.Entities.Users
+
+@{
+    ViewBag.Title = "افزودن کاربر جدید";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="card container col-md-11">
+        <div class="card-body">
+            @Html.HiddenFor(model => model.Modified)
+            @Html.HiddenFor(model => model.Guid)
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal ">
+                <label class="text-center container ">فرم ثبت کاربر جدید</label>
+                <hr />
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">نام</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">نام کاربری</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">رمز عبور</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { placeholder = "باید دارای حد اقل 8 کاراکتر باشد", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">آدرس ایمیل</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "exampel@mail.com", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">شماره موبایل</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">عنوان سیستمی</label>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Type, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">وضعیت آزاد / مسدود</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsBlock)
+                            @Html.ValidationMessageFor(model => model.IsBlock, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                @*@Html.DropDownList("kok",new SelectList(new[]{new { Value = "true", Text = "Yes" },new { Value = "false", Text = "No" }},"Value","Text",Model))*@
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">وضعیت فعال / غیر فعال</label>
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.Status)
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="افزودن" class="btn btn-outline-success btn-rounded btn-success" />  <a href="@Url.Action("index","Users")" class="btn btn-outline-warning btn-rounded btn-uppercase">بازگشت</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
