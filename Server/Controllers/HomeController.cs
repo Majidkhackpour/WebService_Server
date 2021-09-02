@@ -63,7 +63,8 @@ namespace Server.Controllers
             return View(Login); ;
         }
 
-        public ActionResult logout()
+        [Route("logOut")]
+        public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
             return Redirect("/");

@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>قالب Nextable - قالب مدیریتی نکستیبل</title>
+    <title>سیستم جامع مدیریت املاک آراد</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="~/Areas/Manager/Content/assets/media/image/favicon.png">
+    <link rel="shortcut icon" href="~/Areas/Manager/Content/assets/media/image/Arad_Icon.ico">
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#5867dd">
@@ -36,7 +36,7 @@
             <figure class="avatar avatar-state-success avatar-lg mb-4">
                 <img src="~/Areas/Manager/Content/assets/media/image/avatar.jpg" class="rounded-circle" alt="image">
             </figure>
-            <h4 class="text-primary m-b-10">جان اسنو</h4>
+            <h4 class="text-primary m-b-10">@User.Identity.Name</h4>
             <p class="text-muted d-flex align-items-center justify-content-center line-height-0 mb-0">
                 رهبر تیم <a href="#" class="ml-2" data-toggle="tooltip" title="تنظیمات" data-sidebar-open="#settings"> <i class="ti-settings"></i> </a>
             </p>
@@ -240,6 +240,11 @@
                 </li>
                 <li data-toggle="tooltip" title="صفحات">
                     <a href="#navigationPages" title="صفحات کاربری">
+                        <i class="icon ti-user"></i>
+                    </a>
+                </li>
+                <li data-toggle="tooltip" title="مدیریت">
+                    <a href="#navigationManage" title="مدیریت آراد">
                         <i class="icon ti-user"></i>
                     </a>
                 </li>
@@ -528,6 +533,15 @@
                     </ul>
                 </li>
             </ul>
+
+            <ul id="navigationManage">
+                <li class="navigation-divider">مدیریت</li>
+                <li><a href="@Url.Action("Index","Home",new { area="Manager"})">داشبورد </a></li>
+                <li><a href="@Url.Action("Index","Users")">کاربران </a></li>
+                <li><a href="@Url.Action("ViewErrors","Home")">خطاها </a></li>
+          
+            </ul>
+
         </div>
     </div>
     <!-- end::navigation -->
@@ -536,10 +550,10 @@
 
         <!-- begin::header logo -->
         <div class="header-logo">
-            <a href="index.html">
-                <img class="large-logo" src="~/Areas/Manager/Content/assets/media/image/logo.png" alt="image">
-                <img class="small-logo" src="~/Areas/Manager/Content/assets/media/image/logo-sm.png" alt="image">
-                <img class="dark-logo" src="~/Areas/Manager/Content/assets/media/image/logo-dark.png" alt="image">
+            <a href="@Url.Action("Index","Home",new { area="Manager"})">
+                <img class="large-logo" src="~/Areas/Manager/Content/assets/media/image/Arad_Icon.ico" alt="image">
+                <img class="small-logo" src="~/Areas/Manager/Content/assets/media/image/Arad_Icon.ico" alt="image">
+                <img class="dark-logo" src="~/Areas/Manager/Content/assets/media/image/Arad_Icon.ico" alt="image" style="max-width:50px">
             </a>
         </div>
         <!-- end::header logo -->

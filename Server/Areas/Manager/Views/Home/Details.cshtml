@@ -1,0 +1,141 @@
+﻿@model Persistence.Entities.ErrorLog
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <h4>جزئیات خطا</h4>
+        <hr />
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Date) : @Services.Calendar.MiladiToShamsi(Model.Date)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Time) : @Html.DisplayFor(model => model.Time)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Source) : @Html.DisplayFor(model => model.Source)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Version) : @Html.DisplayFor(model => model.Version)
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ClassName) :   @Html.DisplayFor(model => model.ClassName)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.FuncName) : @Html.DisplayFor(model => model.FuncName)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Description) : @Html.DisplayFor(model => model.Description)
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ExceptionError) : @Html.DisplayFor(model => model.ExceptionError)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ExceptionMessage) : @Html.DisplayFor(model => model.ExceptionMessage)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ExceptionType) : @Html.DisplayFor(model => model.ExceptionType)
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.AndroidIme) :  @Html.DisplayFor(model => model.AndroidIme)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Ip) : @Html.DisplayFor(model => model.Ip)
+                            </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.HardSerial) : @Html.DisplayFor(model => model.HardSerial)
+                            </dt>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dl-horizontal">
+                            <div class="card card-body" style="height: 200px; overflow: auto;">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.StackTrace) :  @Html.DisplayFor(model => model.StackTrace)
+                                </dt>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dl-horizontal">
+                            <div class="card card-body" style="height: 200px; overflow: auto;">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.FlowStackTrace) : @Html.DisplayFor(model => model.FlowStackTrace)
+                                </dt>
+                            </div>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        @Html.Action("CustomerDetail", "Home")
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <a class="btn btn-dribbble btn-sm" href="@Url.Action("ViewErrors")">بازگشت</a>
+    </div>
+</div>

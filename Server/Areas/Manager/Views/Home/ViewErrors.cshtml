@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Persistence.Entities.ErrorLog>
+
+@{
+    ViewBag.Title = "نمایش لیست اررورها";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div class="card card-body table-responsive">
+    <h4>لیست خطاها</h4>
+    <table class="table ">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuncName)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Services.Calendar.MiladiToShamsi(item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuncName)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Details",new { id=item.Guid})">
+                        مشاهده<i class="fa fa-desktop"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete",new { id=item.Guid})" >
+                        حذف<i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

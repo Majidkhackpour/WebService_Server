@@ -9,12 +9,13 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Persistence.Entities;
 using Persistence.Model;
+using Services;
 
 namespace Server.Areas.Manager.Controllers
 {
     public class UsersController : Controller
     {
-        private ModelContext db = new ModelContext();
+        ModelContext db = new ModelContext();
 
         // GET: Manager/Users
         public ActionResult Index()
@@ -50,15 +51,22 @@ namespace Server.Areas.Manager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Guid,Modified,Status,Name,UserName,Password,Mobile,Email,IsBlock,Type")] Users users)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (users.Guid == Guid.Empty) users.Guid = Guid.NewGuid();
                 users.Modified = DateTime.Now;
-                users.Guid = Guid.NewGuid();
-                users.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(users.Password, "MD5");
-                db.Users.Add(users);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {                   
+                    users.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(users.Password, "MD5");
+                    db.Users.Add(users);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }            
 
             return View(users);
         }

@@ -1,87 +1,66 @@
 ﻿@model Persistence.Entities.Users
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "جزئیات";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Users</h4>
+    <h2>جزئیات اطلاعات کاربران</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Modified)
+            @Html.DisplayNameFor(model => model.Modified) : @Html.DisplayFor(model => model.Modified)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Modified)
-        </dd>
+        
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => model.Status) :  @Html.DisplayFor(model => model.Status)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+      
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Name) :  @Html.DisplayFor(model => model.Name)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+     
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => model.UserName) :  @Html.DisplayFor(model => model.UserName)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+        
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.Password) : @Html.DisplayFor(model => model.Password)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+      
 
         <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
+            @Html.DisplayNameFor(model => model.Mobile) : @Html.DisplayFor(model => model.Mobile)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
+        
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Email) : @Html.DisplayFor(model => model.Email)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+       
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsBlock)
+            @Html.DisplayNameFor(model => model.IsBlock) : @Html.DisplayFor(model => model.IsBlock)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsBlock)
-        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Type) : @Html.DisplayFor(model => model.Type)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
+        
 
     </dl>
 </div>

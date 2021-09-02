@@ -1,0 +1,98 @@
+﻿@model Persistence.Entities.ErrorLog
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h3 class="alert alert-danger text-center">آیا از حذف خطا با مشخصات زیر اطمینان دارید</h3>
+        <hr />
+        <h4 class="text-center">جزئیات خطا</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Date) : @Services.Calendar.MiladiToShamsi(Model.Date)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Time) : @Html.DisplayFor(model => model.Time)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Source) : @Html.DisplayFor(model => model.Source)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Version) : @Html.DisplayFor(model => model.Version)
+            </dt>
+
+            <hr />
+            <br />
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ClassName) :   @Html.DisplayFor(model => model.ClassName)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FuncName) : @Html.DisplayFor(model => model.FuncName)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description) : @Html.DisplayFor(model => model.Description)
+            </dt>
+
+            <hr />
+            <br />
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ExceptionError) : @Html.DisplayFor(model => model.ExceptionError)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExceptionMessage) : @Html.DisplayFor(model => model.ExceptionMessage)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ExceptionType) : @Html.DisplayFor(model => model.ExceptionType)
+            </dt>
+
+            <hr />
+            <br />
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AndroidIme) :  @Html.DisplayFor(model => model.AndroidIme)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Ip) : @Html.DisplayFor(model => model.Ip)
+            </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.HardSerial) : @Html.DisplayFor(model => model.HardSerial)
+            </dt>
+
+            <hr />
+            <br />
+
+            <div class="card card-body" style="height: 70px; overflow: auto;background-color:darkslategray">
+                <dt>
+                    @Html.DisplayNameFor(model => model.StackTrace) :  @Html.DisplayFor(model => model.StackTrace)
+                </dt>
+            </div>
+
+            <hr />
+            <br />
+
+            <div class="card card-body" style="height: 200px; overflow: auto;background-color:darkslategray">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FlowStackTrace) : @Html.DisplayFor(model => model.FlowStackTrace)
+                </dt>
+            </div>
+
+        </dl>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="حذف" class="btn btn-danger" /> <a class="btn btn-dribbble btn-sm" href="@Url.Action("ViewErrors")">بازگشت</a>
+            </div>
+        }
+
+        
+    </div>
+</div>
+   

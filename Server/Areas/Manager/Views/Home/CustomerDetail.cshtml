@@ -1,0 +1,29 @@
+﻿@model Persistence.Entities.Customers
+
+<div>
+    <h4 class="text-center">مشخصات مشتری</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name) : @Html.DisplayFor(model => model.Name)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName) : @Html.DisplayFor(model => model.CompanyName)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tell1) : @Html.DisplayFor(model => model.Tell1)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tell2) : @Html.DisplayFor(model => model.Tell2)
+        </dt>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.SoftWare) : @Html.DisplayFor(model => model.SoftWare)
+            </dt>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.AppSerial) : @Html.DisplayFor(model => model.AppSerial)
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address) : @Html.DisplayFor(model => model.Address)
+        </dt>
+    </dl>
+</div>

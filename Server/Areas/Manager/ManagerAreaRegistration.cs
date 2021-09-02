@@ -15,9 +15,9 @@ namespace Server.Areas.Manager
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Manager_default",
-                "Manager/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                "Arad-Manager_default",
+                "Arad-Manager/{controller}/{action}/{id}",
+                new {Controller="Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
