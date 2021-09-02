@@ -64,25 +64,22 @@ namespace EntityCache.ViewModels
         {
             try
             {
-                //var bot = new TelegramBotClient(ApiKey);
-                //await bot.SendTextMessageAsync(ChatID, message);
+                var bot = new TelegramBotClient(ApiKey);
+                await bot.SendTextMessageAsync(ChatID, message);
 
-                var uri = $"https://api.telegram.org/bot{ApiKey}/sendMessage?chat_id={ChatID}&text={message}";
-                using (var client = new WebClient())
-                {
-                    dynamic s = client.DownloadString(uri);
-                }
+                //var uri = $"https://api.telegram.org/bot{ApiKey}/sendMessage?chat_id={ChatID}&text={message}";
+                //using (var client = new WebClient())
+                //{
+                //    dynamic s = client.DownloadString(uri);
+                //}
             }
             catch (HttpRequestException) { }
-            catch (Telegram.Bot.Exceptions.BadRequestException)
-            {
-            }
-            catch (Telegram.Bot.Exceptions.ApiRequestException)
-            {
-            }
+            catch (Telegram.Bot.Exceptions.BadRequestException) { }
+            catch (Telegram.Bot.Exceptions.ApiRequestException) { }
             catch (Exception ex)
             {
-                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                if (!ex.Message.Contains("Unable to connect to the remote server"))
+                    WebErrorLog.ErrorInstence.StartErrorLog(ex);
             }
         }
     }
