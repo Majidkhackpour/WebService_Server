@@ -685,11 +685,13 @@
     <Compile Include="Controllers\SafeBoxController.cs" />
     <Compile Include="Controllers\SanadController.cs" />
     <Compile Include="Controllers\SanadDetailController.cs" />
+    <Compile Include="Controllers\ScrapperController.cs" />
     <Compile Include="Controllers\SmsLogController.cs" />
     <Compile Include="Controllers\SmsPanelController.cs" />
     <Compile Include="Controllers\StatesController.cs" />
     <Compile Include="Controllers\TafsilController.cs" />
     <Compile Include="Controllers\TelegramBuildingController.cs" />
+    <Compile Include="Controllers\TelegramReporterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1008,7 +1010,6 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="BackUpFiles\" />
     <Folder Include="BuildingImages\" />
-    <Folder Include="Views\BackUpManager\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">

@@ -69,5 +69,6 @@ namespace Persistence.Model
         public virtual DbSet<Sanad> Sanad { get; set; }
         public virtual DbSet<SanadDetail> SanadDetail { get; set; }
         public virtual DbSet<BackUpLog> BackUpLog { get; set; }
+        public virtual DbSet<Scrapper> Scrapper { get; set; }
     }
 }

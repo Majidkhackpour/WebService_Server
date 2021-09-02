@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Services;
@@ -31,13 +32,46 @@ namespace EntityCache.ViewModels
                 ContactType = EnTelegramType.Channel
             };
         }
+        public static WebTelegramMessage GetReporter_bot()
+        {
+            return new WebTelegramMessage()
+            {
+                ApiKey = "1980977682:AAFMqZCdd1Ov_HvPRo04itE5dy-jRPp5UpY",
+                ChatID = "@AradReporter",
+                ContactType = EnTelegramType.Channel
+            };
+        }
+        public static WebTelegramMessage GetRealState_bot()
+        {
+            return new WebTelegramMessage()
+            {
+                ApiKey = "1938467902:AAGuNKETK__xYRW5fO7zsCO8Df8If91CeLg",
+                ChatID = "@Arad_Real_State",
+                ContactType = EnTelegramType.Channel
+            };
+        }
+        public static WebTelegramMessage GetTicket_bot()
+        {
+            return new WebTelegramMessage()
+            {
+                ApiKey = "1975038302:AAH_yXaVPvq6cHnVgz4cAloFnFqgMuQA0ks",
+                ChatID = "@AradTicket",
+                ContactType = EnTelegramType.Channel
+            };
+        }
         public void Send(string message) => Task.Run(() => SendAsync(message));
         public async Task SendAsync(string message)
         {
             try
             {
-                var bot = new TelegramBotClient(ApiKey);
-                await bot.SendTextMessageAsync(ChatID, message);
+                //var bot = new TelegramBotClient(ApiKey);
+                //await bot.SendTextMessageAsync(ChatID, message);
+
+                var uri = $"https://api.telegram.org/bot{ApiKey}/sendMessage?chat_id={ChatID}&text={message}";
+                using (var client = new WebClient())
+                {
+                    dynamic s = client.DownloadString(uri);
+                }
             }
             catch (HttpRequestException) { }
             catch (Telegram.Bot.Exceptions.BadRequestException)

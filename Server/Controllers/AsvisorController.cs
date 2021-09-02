@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Persistence.Entities.Building;
+using Persistence.Model;
+using Services;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Mvc;
-using Persistence.Entities.Building;
-using Persistence.Model;
-using Services;
 
 namespace Server.Controllers
 {
@@ -13,7 +12,7 @@ namespace Server.Controllers
     {
         private ModelContext db = new ModelContext();
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public Advisor SaveAsync(Advisor cls)
         {
             try

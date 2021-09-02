@@ -3,6 +3,7 @@ using Persistence.Entities;
 using Persistence.Model;
 using Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -57,13 +58,22 @@ namespace Server.Controllers
 
             return errorLog;
         }
-
         private void SendToTelegram(ErrorLog err)
         {
             try
             {
                 Customers cust = null;
+                if (err.Source == ENSource.Server)
+                {
+                    _ = Task.Run(() => SendServerErrorToTelegramAsync(err));
+                    return;
+                }
 
+                if (err.Source == ENSource.Scrapper)
+                {
+                    _ = Task.Run(() => SendScrapperErrorToTelegramAsync(err));
+                    return;
+                }
                 if (!string.IsNullOrEmpty(err.AndroidIme))
                 {
                     var android = db.Androids.FirstOrDefault(q => q.IMEI == err.AndroidIme);
@@ -102,7 +112,55 @@ namespace Server.Controllers
                               $"Tell2:📱 {cust?.Tell2 ?? ""} 📱 \r\n" +
                               $"IP:🌐 {err.Ip} 🌐 \r\n" +
                               $"Date: {Calendar.MiladiToShamsi(err.Date)} \r\n" +
-                              $"Time:🕟 {err.Time} 🕟";
+                              $"Time:🕟 {err.Time} 🕟 \r\n" +
+                              $"https://aarad.ir/Arad-Manager/Home/Details/{err.Guid}";
+
+                WebTelegramMessage.GetErrorLog_bot().Send(message);
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }
+        }
+        private void SendServerErrorToTelegramAsync(ErrorLog err)
+        {
+            try
+            {
+                var message = $"Source:✨ #{err.Source.GetDisplay()} ✨ \r\n" +
+                              $"=========================== \r\n" +
+                              $"ClassName: #{err.ClassName.Replace(" ", "_")} \r\n" +
+                              $"FunctionName: #{err.FuncName.Replace(" ", "_")} \r\n" +
+                              $"Type: {err.ExceptionType.Replace(" ", "_")} \r\n" +
+                              $"Message: {err.ExceptionMessage} \r\n" +
+                              $"Description: {err.Description}\r\n" +
+                              $"=========================== \r\n" +
+                              $"Date: {Calendar.MiladiToShamsi(err.Date)} \r\n" +
+                              $"Time:🕟 {err.Time} 🕟 \r\n" +
+                              $"https://aarad.ir/Arad-Manager/Home/Details/{err.Guid}";
+
+                WebTelegramMessage.GetErrorLog_bot().Send(message);
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }
+        }
+        private void SendScrapperErrorToTelegramAsync(ErrorLog err)
+        {
+            try
+            {
+                var message = $"Source:✨ #{err.Source.GetDisplay()} ✨ \r\n" +
+                              $"Version:✏ {err.Version} ✏ \r\n" +
+                              $"=========================== \r\n" +
+                              $"ClassName: #{err.ClassName.Replace(" ", "_")} \r\n" +
+                              $"FunctionName: #{err.FuncName.Replace(" ", "_")} \r\n" +
+                              $"Type: {err.ExceptionType.Replace(" ", "_")} \r\n" +
+                              $"Message: {err.ExceptionMessage} \r\n" +
+                              $"Description: {err.Description}\r\n" +
+                              $"=========================== \r\n" +
+                              $"Date: {Calendar.MiladiToShamsi(err.Date)} \r\n" +
+                              $"Time:🕟 {err.Time} 🕟 \r\n" +
+                              $"https://aarad.ir/Arad-Manager/Home/Details/{err.Guid}";
 
                 WebTelegramMessage.GetErrorLog_bot().Send(message);
             }
