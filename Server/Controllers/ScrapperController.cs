@@ -31,18 +31,19 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        [Route("Scrapper_GetAll/{date}")]
-        public IEnumerable<Scrapper> GetAllAsync(DateTime? date)
+        [Route("Scrapper_GetAll")]
+        public IEnumerable<Scrapper> GetAllAsync()
         {
             try
             {
                 var guid = Request.Headers.GetValues("cusGuid").FirstOrDefault();
+                var date= Request.Headers.GetValues("date").FirstOrDefault();
+                var insertedDate = DateTime.Parse(date);
                 if (string.IsNullOrEmpty(guid)) return null;
                 var cusGuid = Guid.Parse(guid);
                 if (!Assistence.CheckCustomer(cusGuid)) return null;
-                if (date == null) date = DateTime.Now.AddDays(-7);
-                date = new DateTime(date.Value.Year, date.Value.Month, date.Value.Day, 0, 0, 0);
-                return _db.Scrapper.Where(q => q.DateM >= date);
+                insertedDate = new DateTime(insertedDate.Year, insertedDate.Month, insertedDate.Day, 0, 0, 0);
+                return _db.Scrapper.Where(q => q.DateM >= insertedDate).ToList();
             }
             catch (Exception ex)
             {
