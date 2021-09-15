@@ -19,6 +19,7 @@ namespace Server.Controllers
         {
             try
             {
+                if (cls == null) return null;
                 _db.Scrapper.AddOrUpdate(cls);
                 _db.SaveChanges();
                 return cls;

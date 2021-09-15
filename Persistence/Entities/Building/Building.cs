@@ -80,5 +80,7 @@ namespace Persistence.Entities.Building
         public int SheypoorCount { get; set; }
         public AdvertiseType? AdvertiseType { get; set; }
         public string DivarTitle { get; set; }
+        [MaxLength(250)] public string Hiting { get; set; }
+        [MaxLength(250)] public string Colling { get; set; }
     }
 }
