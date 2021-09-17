@@ -1,20 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using EntityCache.ViewModels;
 using Services;
 using System.Web.Http;
+using Persistence.Entities;
+using Persistence.Model;
 
 namespace Server.Controllers
 {
     public class TelegramReporterController : ApiController
     {
+        private ModelContext db = new ModelContext();
         [HttpPost]
-        public ScrapperReportViewModel SendAsync(List<ScrapperReportViewModel> cls)
+        public ScrapperReportViewModel SendAsync(WebTelegramReporter cls)
         {
             try
             {
-                var str = GetTelegramMessage(cls);
-                WebTelegramMessage.GetReporter_bot().Send(str);
+                var msg = "";
+                if (cls == null) return null;
+
+                if (cls.Source == ENSource.Scrapper)
+                    msg = SendScrapperErrorToTelegramAsync(cls);
+                else if (cls.Source == ENSource.Building)
+                    msg = SendToTelegramAsync(cls);
+
+                WebTelegramMessage.GetReporter_bot().Send(msg);
                 return null;
             }
             catch (Exception ex)
@@ -23,22 +35,45 @@ namespace Server.Controllers
                 return null;
             }
         }
-        private string GetTelegramMessage(List<ScrapperReportViewModel> cls)
+        private string SendScrapperErrorToTelegramAsync(WebTelegramReporter err)
         {
-            var msg = "";
             try
             {
-                msg = $"دریافت داده از دیوار \r\n" +
-                      $"====================== \r\n \r\n";
-                foreach (var item in cls)
-                    msg += $"{item.Type.GetDisplay()} : {item.Count} \r\n";
+                return $"Source:✨ #{err.Source.GetDisplay()} ✨ \r\n" +
+                              $"=========================== \r\n" +
+                              $"#{err.Message} \r\n" +
+                              $"=========================== \r\n" +
+                              $"Date: {Calendar.MiladiToShamsi(err.Date)} \r\n" +
+                              $"Time:🕟 {err.Time} 🕟";
             }
             catch (Exception ex)
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                return "";
             }
-
-            return msg;
+        }
+        private string SendToTelegramAsync(WebTelegramReporter err)
+        {
+            try
+            {
+                var cust = db.Customers.FirstOrDefault(q => q.Guid == err.CustomerGuid);
+                return $"Source:✨ #{err.Source.GetDisplay()} ✨ \r\n" +
+                              $"=========================== \r\n" +
+                              $"Customer:😉 #{(cust?.Name ?? "").Replace(" ", "_")} 😉 \r\n" +
+                              $"Company:🏫 #{(cust?.CompanyName ?? "").Replace(" ", "_")} 🏫 \r\n" +
+                              $"Tell1:📱 {cust?.Tell1 ?? ""} 📱 \r\n" +
+                              $"Tell2:📱 {cust?.Tell2 ?? ""} 📱 \r\n" +
+                              $"=========================== \r\n" +
+                              $"{err.Message} \r\n" +
+                              $"=========================== \r\n" +
+                              $"Date: {Calendar.MiladiToShamsi(err.Date)} \r\n" +
+                              $"Time:🕟 {err.Time} 🕟";
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                return "";
+            }
         }
     }
 }
