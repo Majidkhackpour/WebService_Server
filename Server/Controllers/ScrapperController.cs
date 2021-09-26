@@ -38,8 +38,12 @@ namespace Server.Controllers
             try
             {
                 var guid = Request.Headers.GetValues("cusGuid").FirstOrDefault();
-                var date= Request.Headers.GetValues("date").FirstOrDefault();
+                var date = Request.Headers.GetValues("date").FirstOrDefault();
                 var insertedDate = DateTime.Parse(date);
+                var newDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                var distance = newDate - insertedDate;
+                if (distance.Days > 7)
+                    insertedDate = DateTime.Now.AddDays(-7);
                 if (string.IsNullOrEmpty(guid)) return null;
                 var cusGuid = Guid.Parse(guid);
                 if (!Assistence.CheckCustomer(cusGuid)) return null;
