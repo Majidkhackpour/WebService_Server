@@ -96,6 +96,7 @@
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\WebTelegramBuilding.cs" />
     <Compile Include="ViewModels\WebTelegramMessage.cs" />
+    <Compile Include="ViewModels\WebWhatsappBuilding.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

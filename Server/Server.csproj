@@ -694,6 +694,7 @@
     <Compile Include="Controllers\TelegramBuildingController.cs" />
     <Compile Include="Controllers\TelegramReporterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WhatsappBuildingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
