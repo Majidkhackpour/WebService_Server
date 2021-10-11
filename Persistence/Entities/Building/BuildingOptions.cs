@@ -20,5 +20,6 @@ namespace Persistence.Entities.Building
         public ServerStatus ServerStatus { get; set; }
         public DateTime ServerDeliveryDate { get; set; }
         public string Name { get; set; }
+        public bool IsFullOption { get; set; }
     }
 }

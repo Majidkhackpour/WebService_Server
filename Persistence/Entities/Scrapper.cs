@@ -39,5 +39,6 @@ namespace Persistence.Entities
         public string FloorCover { get; set; }
         public string Colling { get; set; }
         public string Hitting { get; set; }
+        public EnBuildingParent Parent { get; set; }
     }
 }
