@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Persistence.Entities.Users>
 @using Server.Utilitis;
+@using Services
 @{
     ViewBag.Title = "مدیزیت کاربرن";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
@@ -60,7 +61,7 @@
                                 }
                             </td>
                             <td>
-                                @item.Modified.ToShamsi()
+                                @Calendar.MiladiToShamsi(item.Modified)
                             </td>
                             <td>
                                 @if (item.IsBlock == false)

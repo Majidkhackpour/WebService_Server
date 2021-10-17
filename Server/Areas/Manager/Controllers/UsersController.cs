@@ -49,7 +49,7 @@ namespace Server.Areas.Manager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Guid,Modified,Status,Name,UserName,Password,Mobile,Email,IsBlock,Type")] Users users)
+        public ActionResult Create([Bind(Include = "Status,Name,UserName,Password,Mobile,Email,IsBlock,Type")] Users users)
         {
             try
             {
