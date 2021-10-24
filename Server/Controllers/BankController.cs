@@ -1,11 +1,11 @@
-﻿using System;
-using System.Data.Entity;
+﻿using Persistence.Entities.Building;
+using Persistence.Model;
+using Server.Models;
+using Services;
+using System;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Http;
-using System.Web.Mvc;
-using Persistence.Entities.Building;
-using Persistence.Model;
-using Services;
 
 namespace Server.Controllers
 {
@@ -13,18 +13,20 @@ namespace Server.Controllers
     {
         private ModelContext db = new ModelContext();
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public Banks SaveAsync(Banks cls)
         {
             try
             {
-                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == cls.HardSerial);
-                cls.CustomerGuid = cust?.Guid ?? Guid.Empty;
-                var a = db.Bank.AsNoTracking()
-                    .FirstOrDefault(q => q.Guid == cls.Guid && q.CustomerGuid == cust.Guid);
-                if (a == null) db.Bank.Add(cls);
-                else db.Entry(cls).State = EntityState.Modified;
+                var headers = Request.Headers?.ToList();
+                if (headers == null || headers.Count <= 0) return null;
+                var guid = Request.Headers.GetValues("cusGuid").FirstOrDefault();
+                if (string.IsNullOrEmpty(guid)) return null;
+                var cusGuid = Guid.Parse(guid);
+                if (!Assistence.CheckCustomer(cusGuid)) return null;
+                db.Bank.AddOrUpdate(cls);
                 db.SaveChanges();
+                Assistence.SaveLog(cusGuid, cls.Guid, EnTemp.Bank);
                 return cls;
             }
             catch (Exception ex)

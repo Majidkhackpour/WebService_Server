@@ -1,9 +1,6 @@
 ﻿using EntityCache.ViewModels;
 using Persistence.Model;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -48,7 +45,7 @@ namespace Server.Controllers
                         FormsAuthentication.SetAuthCookie(user.UserName, Login.RememberMe);
                         return Redirect(ReturnUrl);
                     }
-                    else 
+                    else
                     {
                         ModelState.AddModelError("Email", "کاربر گرامی حساب کاربری شما توسط سیستم مسدود شده است");
                         //ViewBag.IsBlock = true;

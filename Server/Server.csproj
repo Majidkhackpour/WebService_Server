@@ -651,6 +651,7 @@
     <Compile Include="Controllers\BuildingAccountTypeController.cs" />
     <Compile Include="Controllers\BuildingConditionController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
+    <Compile Include="Controllers\BuildingNoteController.cs" />
     <Compile Include="Controllers\BuildingOptionController.cs" />
     <Compile Include="Controllers\BuildingPardakhtController.cs" />
     <Compile Include="Controllers\BuildingPhoneBookController.cs" />
@@ -683,7 +684,6 @@
     <Compile Include="Controllers\ReceptionController.cs" />
     <Compile Include="Controllers\RegionController.cs" />
     <Compile Include="Controllers\RentalAuthorityController.cs" />
-    <Compile Include="Controllers\SafeBoxController.cs" />
     <Compile Include="Controllers\SanadController.cs" />
     <Compile Include="Controllers\SanadDetailController.cs" />
     <Compile Include="Controllers\ScrapperController.cs" />
@@ -1012,6 +1012,7 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="BackUpFiles\" />
     <Folder Include="BuildingImages\" />
+    <Folder Include="Views\BuildingNote\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">

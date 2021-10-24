@@ -29,7 +29,6 @@ namespace Persistence.Model
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Reception> Receptions { get; set; }
-        public virtual DbSet<SafeBox> SafeBoxe { get; set; }
         public virtual DbSet<SmsLog> SmsLog { get; set; }
         public virtual DbSet<SmsPanels> SmsPanels { get; set; }
         public virtual DbSet<Users> Users { get; set; }
@@ -70,5 +69,7 @@ namespace Persistence.Model
         public virtual DbSet<SanadDetail> SanadDetail { get; set; }
         public virtual DbSet<BackUpLog> BackUpLog { get; set; }
         public virtual DbSet<Scrapper> Scrapper { get; set; }
+        public virtual DbSet<BuildingNote> BuildingNote { get; set; }
+        public virtual DbSet<BuildingRelatedNumber> BuildingRelatedNumber { get; set; }
     }
 }

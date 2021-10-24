@@ -11,10 +11,10 @@ namespace Persistence.Entities
     {
         [Key]
         public Guid Guid { get; set; }
+        public Guid CustomerGuid { get; set; }
         public DateTime Modified { get; set; }
         public bool Status { get; set; }
         public Guid ObjectGuid { get; set; }
-        public string HardSerial { get; set; }
         public EnTemp Type { get; set; }
     }
 }

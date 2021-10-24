@@ -2,12 +2,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Services;
-using Servicess.Interfaces.Building;
+using Services.Interfaces.Building;
 
 namespace Persistence.Entities.Building
 {
-    [Table("Buildings_BuildingRelatedOptions")]
-    public class BuildingRelatedOption : IBuildingRelatedOptions
+    [Table("Buildings_BuildingNote")]
+    public class BuildingNote : IBuildingNote
     {
         [Key, Column(Order = 0)]
         public Guid Guid { get; set; }
@@ -16,7 +16,7 @@ namespace Persistence.Entities.Building
         public DateTime Modified { get; set; }
         public ServerStatus ServerStatus { get; set; }
         public DateTime ServerDeliveryDate { get; set; }
-        public Guid BuildinGuid { get; set; }
-        public Guid BuildingOptionGuid { get; set; }
+        public Guid BuildingGuid { get; set; }
+        public string Note { get; set; }
     }
 }

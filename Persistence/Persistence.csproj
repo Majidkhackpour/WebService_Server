@@ -63,10 +63,12 @@
     <Compile Include="Entities\Building\BuildingAccountType.cs" />
     <Compile Include="Entities\Building\BuildingCondition.cs" />
     <Compile Include="Entities\Building\BuildingGallery.cs" />
+    <Compile Include="Entities\Building\BuildingNote.cs" />
     <Compile Include="Entities\Building\BuildingOptions.cs" />
     <Compile Include="Entities\Building\BuildingPardakht.cs" />
     <Compile Include="Entities\Building\BuildingPhoneBook.cs" />
     <Compile Include="Entities\Building\BuildingReception.cs" />
+    <Compile Include="Entities\Building\BuildingRelatedNumber.cs" />
     <Compile Include="Entities\Building\BuildingRelatedOption.cs" />
     <Compile Include="Entities\Building\BuildingRequest.cs" />
     <Compile Include="Entities\Building\BuildingRequestRegion.cs" />
@@ -96,7 +98,6 @@
     <Compile Include="Entities\Pardakht.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Reception.cs" />
-    <Compile Include="Entities\SafeBox.cs" />
     <Compile Include="Entities\Scrapper.cs" />
     <Compile Include="Entities\SmsLog.cs" />
     <Compile Include="Entities\SmsPanels.cs" />
@@ -170,6 +171,10 @@
     <Compile Include="Migrations\202110111635394__16.designer.cs">
       <DependentUpon>202110111635394__16.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110231832548__17.cs" />
+    <Compile Include="Migrations\202110231832548__17.designer.cs">
+      <DependentUpon>202110231832548__17.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -235,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110111635394__16.resx">
       <DependentUpon>202110111635394__16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110231832548__17.resx">
+      <DependentUpon>202110231832548__17.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

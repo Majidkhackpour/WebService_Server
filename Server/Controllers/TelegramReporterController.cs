@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EntityCache.ViewModels;
-using Services;
-using System.Web.Http;
-using Persistence.Entities;
+﻿using EntityCache.ViewModels;
 using Persistence.Model;
+using Services;
+using System;
+using System.Linq;
+using System.Web.Http;
 
 namespace Server.Controllers
 {

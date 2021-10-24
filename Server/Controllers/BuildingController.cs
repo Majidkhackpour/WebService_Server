@@ -1,17 +1,18 @@
 ﻿using Persistence.Entities.Building;
 using Persistence.Model;
+using Server.Models;
 using Services;
+using Services.AndroidViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using Server.Models;
-using Services.AndroidViewModels;
 
 namespace Server.Controllers
 {
@@ -23,12 +24,15 @@ namespace Server.Controllers
         {
             try
             {
-                var cust = db.Customers.AsNoTracking().FirstOrDefault(q => q.HardSerial == cls.HardSerial);
-                cls.CustomerGuid = cust?.Guid ?? Guid.Empty;
-                var a = db.Buildings.AsNoTracking().FirstOrDefault(q => q.Guid == cls.Guid && q.CustomerGuid == cust.Guid);
-                if (a == null) db.Buildings.Add(cls);
-                else db.Entry(cls).State = EntityState.Modified;
+                var headers = Request.Headers?.ToList();
+                if (headers == null || headers.Count <= 0) return null;
+                var guid = Request.Headers.GetValues("cusGuid").FirstOrDefault();
+                if (string.IsNullOrEmpty(guid)) return null;
+                var cusGuid = Guid.Parse(guid);
+                if (!Assistence.CheckCustomer(cusGuid)) return null;
+                db.Buildings.AddOrUpdate(cls);
                 db.SaveChanges();
+                Assistence.SaveLog(cusGuid, cls.Guid, EnTemp.Building);
                 return cls;
             }
             catch (Exception ex)

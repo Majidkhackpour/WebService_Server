@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Persistence.Entities;
+using Persistence.Model;
+using Services;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
-using Persistence.Entities;
-using Persistence.Model;
-using Services;
 
 namespace Server.Controllers
 {
