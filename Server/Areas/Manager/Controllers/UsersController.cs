@@ -35,7 +35,7 @@ namespace Server.Areas.Manager.Controllers
             {
                 return HttpNotFound();
             }
-            return View(users);
+            return PartialView(users);
         }
 
         // GET: Manager/Users/Create
@@ -103,7 +103,7 @@ namespace Server.Areas.Manager.Controllers
         }
 
         // GET: Manager/Users/Delete/5
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid id)
         {
             if (id == null)
             {
@@ -114,7 +114,10 @@ namespace Server.Areas.Manager.Controllers
             {
                 return HttpNotFound();
             }
-            return View(users);
+            return PartialView(users);
+            //Users users = db.Users.Find(id);
+            //db.Users.Remove(users);
+            //db.SaveChanges();
         }
 
         // POST: Manager/Users/Delete/5
@@ -123,7 +126,7 @@ namespace Server.Areas.Manager.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             Users users = db.Users.Find(id);
-            db.Users.Remove(users);
+            users.Status = false;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -136,5 +139,6 @@ namespace Server.Areas.Manager.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

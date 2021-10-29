@@ -14,11 +14,6 @@ namespace Server.Controllers
         {
             return View();
         }
-        [Route("Register")]
-        public ActionResult Register()
-        {
-            return View();
-        }
         //[HttpPost]
         //public ActionResult Register()
         //{
@@ -32,7 +27,7 @@ namespace Server.Controllers
 
         [Route("Login")]
         [HttpPost]
-        public ActionResult Login(FormCollection form, loginViewModel Login, string ReturnUrl = "/")
+        public ActionResult Login(FormCollection form, loginViewModel Login, string ReturnUrl = "/arad-manager")
         {
             if (ModelState.IsValid)
             {

@@ -4,49 +4,112 @@
     ViewBag.Title = "نمایش لیست اررورها";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
-<div class="card card-body table-responsive">
-    <h4>لیست خطاها</h4>
-    <table class="table ">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClassName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuncName)
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Services.Calendar.MiladiToShamsi(item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Time)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClassName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FuncName)
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("Details",new { id=item.Guid})">
-                        مشاهده<i class="fa fa-desktop"></i>
-                    </a>
-                    <a class="btn btn-danger btn-sm" href="@Url.Action("Delete",new { id=item.Guid})" >
-                        حذف<i class="fa fa-trash"></i>
-                    </a>
-                </td>
-            </tr>
-        }
-    </table>
+
+<div class="card">
+    <div class="card-body">
+        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="example1_length"><label>نمایش <select name="example1_length" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> رکورد</label></div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter"><label>جستجو:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label></div></div></div><div class="row">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-hover table-striped table-responsive-stack" width="100%" role="grid" aria-describedby="example1_info">
+                        <tr>
+                            <th><input type="checkbox" id="checkAll" /></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Time)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ClassName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FuncName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Version)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Source)
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="checkBox"
+                                           value="@item.Guid" />
+                                </td>
+                                <td>
+                                    @Services.Calendar.MiladiToShamsi(item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Time)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClassName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FuncName)
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Version)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Source)</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary" type="button" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-88px, 30px, 0px);">
+                                            <a class="dropdown-item" href="@Url.Action("Details",new { id=item.Guid})">
+                                                <i class="fa fa-desktop"></i> مشاهده
+                                            </a>
+                                            <a class="dropdown-item" href="#" onclick="Delete('@item.Guid')">
+                                                <i class="fa fa-trash"></i> حذف
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite">نمایش 1 تا 10 از 57 رکورد</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">قبلی</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">بعدی</a></li></ul></div></div></div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+<div class="text-center">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">عنوان مودال</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="exampleModalCenterBody">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function Delete(id) {
+        $.get("/Arad-Manager/Home/Delete/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("حذف خطا");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+</script>
 

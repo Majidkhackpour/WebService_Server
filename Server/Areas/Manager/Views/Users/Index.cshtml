@@ -12,85 +12,146 @@
             <div>
                 <a href="@Url.Action("Create")">
                     <button class="btn btn-outline-success btn-success">
-                        <i class="fa fa-plus"></i>افزودن کاربر جدید
+                        <i class="fa fa-plus"></i> افزودن کاربر جدید
                     </button>
                 </a>
             </div>
-            <table class="table table-hover table-responsive">
-                <thead>
-                    <tr>
-                        <th>
-                            نام
-                        </th>
-                        <th>
-                            نام کاربری
-                        </th>
-                        <th>
-                            فعال / غیر فعال
-                        </th>
-                        <th>
-                            تاریخ ثبت نام
-                        </th>
-                        <th>
-                            آزاد / مسدود
-                        </th>
-                        <th>
-                            عنوان سیستمی
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @if (item.Status == true)
+
+            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="example1_length"><label>نمایش <select name="example1_length" aria-controls="example1" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> رکورد</label></div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter"><label>جستجو:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label></div></div></div><div class="row">
+                    <div class="col-sm-12">
+                        <table id="example1" class="table table-hover table-striped table-responsive-stack" width="100%" role="grid" aria-describedby="example1_info">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        نام
+                                    </th>
+                                    <th>
+                                        نام کاربری
+                                    </th>
+                                    <th>
+                                        فعال / غیر فعال
+                                    </th>
+                                    <th>
+                                        تاریخ ثبت نام
+                                    </th>
+                                    <th>
+                                        آزاد / مسدود
+                                    </th>
+                                    <th>
+                                        عنوان سیستمی
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
                                 {
-                                    <span class="badge badge-success">فعال</span>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        <td>
+                                            @if (item.Status == true)
+                                            {
+                                                <span class="badge badge-success">فعال</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">غیر فعال</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Calendar.MiladiToShamsi(item.Modified)
+                                        </td>
+                                        <td>
+                                            @if (item.IsBlock == false)
+                                            {
+                                                <span class="badge badge-success">آزاد</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">مسدود</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Type)
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-88px, 30px, 0px);">
+                                                    <a class="dropdown-item" href="#" onclick="Details('@item.Guid')">
+                                                        <i class="fa fa-desktop"></i>  نمایش
+                                                    </a>
+                                                    <a class="dropdown-item" href="@Url.Action("Edit",new { id=item.Guid})">
+                                                        <i class="fa fa-edit"></i>  ویرایش
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="Delete('@item.Guid')">
+                                                        <i class="fa fa-trash"></i>  حذف
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
                                 }
-                                else
-                                {
-                                    <span class="badge badge-danger">غیر فعال</span>
-                                }
-                            </td>
-                            <td>
-                                @Calendar.MiladiToShamsi(item.Modified)
-                            </td>
-                            <td>
-                                @if (item.IsBlock == false)
-                                {
-                                    <span class="badge badge-success">آزاد</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-danger">مسدود</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Type)
-                            </td>
-                            <td>
-                                <a class="btn btn-primary btn-sm" href="@Url.Action("Details",new { id=item.Guid})">
-                                    مشاهده<i class="fa fa-desktop"></i>
-                                </a>
-                                <a class="btn btn-warning btn-sm" href="@Url.Action("Edit",new { id=item.Guid})">
-                                    ویرایش  <i class="fa fa-edit"></i>
-                                </a>
-                                <a class="btn btn-danger btn-sm" href="@Url.Action("Delete",new { id=item.Guid})">
-                                    حذف <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="text-center">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">عنوان مودال</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="exampleModalCenterBody">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function Details(id) {
+        $.get("/arad-Manager/Users/Details/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("جزئیات اطلاعات کاربر");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+
+
+    function Delete(id) {
+        $.get("/arad-Manager/Users/Delete/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("ویرایش گروه");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+
+
+
+    function success() {
+        $("#myModal").modal('hide');
+    }
+</script>
