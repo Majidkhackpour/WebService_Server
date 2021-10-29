@@ -1,70 +1,68 @@
 ﻿@model Persistence.Entities.Users
+@using Services
 
-@{
-    ViewBag.Title = "جزئیات";
-    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
-}
-
-<div>
-    <h2>جزئیات اطلاعات کاربران</h2>
+@*<div class="card bg-light">
+        <div class="card-header">سرصفحه</div>
+        <div class="card-body">
+            <h6 class="card-title">عنوان کارت روشن</h6>
+            <p class="card-text">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و</p>
+        </div>
+    </div>*@
+<div class="card card-body text-left">
+    <h2>جزئیات اطلاعات کاربر "@Model.Name"</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Modified) : @Html.DisplayFor(model => model.Modified)
+            تاریخ ثبت نام : @Calendar.MiladiToShamsi(Model.Modified)
         </dt>
-
-        
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status) :  @Html.DisplayFor(model => model.Status)
+            وضعیت :
+            @if (Model.Status == true)
+            {
+                <span class="badge badge-success">فعال</span>
+            }
+            else
+            {
+                <span class="badge badge-danger">غیر فعال</span>
+            }
         </dt>
-
-      
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name) :  @Html.DisplayFor(model => model.Name)
+            نام :  @Html.DisplayFor(model => model.Name)
         </dt>
-
-     
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserName) :  @Html.DisplayFor(model => model.UserName)
+            نام کاربری :  @Html.DisplayFor(model => model.UserName)
         </dt>
-
-        
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password) : @Html.DisplayFor(model => model.Password)
+            شماره همراه : @Html.DisplayFor(model => model.Mobile)
         </dt>
-
-      
 
         <dt>
-            @Html.DisplayNameFor(model => model.Mobile) : @Html.DisplayFor(model => model.Mobile)
+            آدرس ایمیل : @Html.DisplayFor(model => model.Email)
         </dt>
-
-        
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email) : @Html.DisplayFor(model => model.Email)
+            وضعیت مسدودی :
+            @if (Model.IsBlock == false)
+            {
+                <span class="badge badge-success">آزاد</span>
+            }
+            else
+            {
+                <span class="badge badge-danger">مسدود</span>
+            }
         </dt>
-
-       
 
         <dt>
-            @Html.DisplayNameFor(model => model.IsBlock) : @Html.DisplayFor(model => model.IsBlock)
+            عنوان سیستمی : @Html.DisplayFor(model => model.Type)
         </dt>
-
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Type) : @Html.DisplayFor(model => model.Type)
-        </dt>
-
-        
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Guid }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<hr />
+<div>
+    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">بستن</button>
+</div>

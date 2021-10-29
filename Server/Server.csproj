@@ -182,6 +182,7 @@
     <Content Include="Areas\Manager\Content\assets\js\examples\toast.js" />
     <Content Include="Areas\Manager\Content\assets\js\examples\tour.js" />
     <Content Include="Areas\Manager\Content\assets\js\examples\vmap.js" />
+    <Content Include="Areas\Manager\Content\assets\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Areas\Manager\Content\assets\media\image\avatar.jpg" />
     <Content Include="Areas\Manager\Content\assets\media\image\ckeditor-logo.png" />
     <Content Include="Areas\Manager\Content\assets\media\image\favicon.png" />
@@ -990,7 +991,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\ManageErrors\ManageErrors.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />

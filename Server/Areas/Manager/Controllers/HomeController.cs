@@ -41,7 +41,7 @@ namespace Server.Areas.Manager.Controllers
             return View(errorLog);
         }
 
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid id)
         {
             ErrorLog errorLog = db.ErrorLog.Find(id);
             try
@@ -61,7 +61,7 @@ namespace Server.Areas.Manager.Controllers
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
             }
 
-            return View(errorLog);
+            return PartialView(errorLog);
         }
 
         // POST: Manager/Users/Delete/5

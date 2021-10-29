@@ -72,14 +72,15 @@
                     <li class="nav-item">
                         <a class="nav-link page-scroll" href="#contact">تماس</a>
                     </li>
-
+                    <!-- User Sign In/Sign Up Starts -->
+                    @Html.Partial("_logedinuser")
+                    <!-- User Sign In/Sign Up Ends -->
                 </ul>
+             
             </div>
             
             <div class="navbar-brand page-scroll" href="#about">
-                <!-- User Sign In/Sign Up Starts -->
-                @Html.Partial("_logedinuser")
-                <!-- User Sign In/Sign Up Ends -->
+              
             </div>
         </div>
     </nav>
