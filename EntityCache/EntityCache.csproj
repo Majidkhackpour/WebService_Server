@@ -89,10 +89,17 @@
   <ItemGroup>
     <Compile Include="Assistence\AddDefaults.cs" />
     <Compile Include="Assistence\ClsCache.cs" />
+    <Compile Include="Assistence\DatabaseUtilities.cs" />
     <Compile Include="Assistence\DefaultProducts.cs" />
+    <Compile Include="Bussines\BuildingBussines.cs" />
     <Compile Include="Bussines\PardakhtBussines.cs" />
     <Compile Include="Bussines\ReceptionBussines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\WebTelegramBuilding.cs" />
     <Compile Include="ViewModels\WebTelegramMessage.cs" />
@@ -102,7 +109,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
       <Project>{dcb5bde2-6238-422d-ad4e-f53afce9bf30}</Project>
@@ -112,6 +124,9 @@
       <Project>{4624cdbb-1744-4638-a49f-ec3f5f1cd485}</Project>
       <Name>Persistence</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ertegha.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

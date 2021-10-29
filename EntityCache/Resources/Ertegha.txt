@@ -1,0 +1,47 @@
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Buildings_GetBuildingListViewModel]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Buildings_GetBuildingListViewModel]	As Begin print 11 end')
+GO
+ALTER PROCEDURE [dbo].[sp_Buildings_GetBuildingListViewModel]
+	@cusGuid uniqueidentifier,
+	@buType smallint
+AS
+BEGIN
+	select    bu.Guid As Guid
+			, bu.Image As ImageName
+			, bu.Masahat As Masahat
+			, bu.ZirBana As ZirBana
+			, States.Name + ' - ' + City.Name + ' - ' + Region.Name As Address
+			, bu.SaleSakht As SaleSakht
+			, bu.SellPrice As SellPrice
+			, bu.RoomCount As RoomCount
+			, bu.PishPrice As PishPrice
+			, bu.TabaqeNo As TabaqeNo
+			, bu.TedadTabaqe As TedadTabaqe
+			, bu.PishTotalPrice As PishTotalPrice
+			, bu.CreateDate As CreateDate
+			, bu.EjarePrice1 As EjarePrice
+			, bu.RahnPrice1 As RahnPrice
+			, bu.Parent As Parent
+			, AccType.Name + ' - ' + buType.Name As Type
+			, buOwner.Name As OwnerName
+			, buOwner.Address As OwnerAddress
+			, Tell.Tell As OwnerTell
+			, Tell.Title As OwnerTellTitle
+			, Num.Number As RelatedNumber
+	from Buildings_Building As bu
+		 inner join Buildings_Cities As City on bu.CityGuid=City.Guid
+		 inner join Buildings_States As States on City.StateGuid=States.Guid
+		 inner join Buildings_Regions As Region on bu.RegionGuid=Region.Guid
+		 left outer join Buildings_BuildingAccountType As AccType on bu.BuildingAccountTypeGuid=AccType.Guid
+		 left outer join Buildings_BuildingTypes As buType on bu.BuildingTypeGuid=buType.Guid
+		 left outer join Buildings_Peoples As buOwner on bu.OwnerGuid=buOwner.Guid
+		 left outer join Buildings_PhoneBook As Tell on buOwner.Guid=Tell.ParentGuid
+		 left outer join Buildings_BuildingRelatedNumber As Num on bu.Guid=Num.BuildingGuid
+	where   bu.Guid<>'00000000-0000-0000-0000-000000000000' and
+			bu.CustomerGuid=@cusGuid and
+		  ((@buType=0 and (bu.RahnPrice1>0 or bu.EjarePrice1>0 or bu.Parent in (109,110,111,112,113,114,115,116,117))) or
+		   (@buType=1 and (bu.SellPrice>0 or bu.Parent in (101,102,103,104,105,106,107,108))) or
+		   (@buType=2 and (bu.PishPrice>0 or bu.Parent in (117,118,119,120))) or
+		   (@buType=4 and (bu.Parent in (125,126)))
+		  )
+END

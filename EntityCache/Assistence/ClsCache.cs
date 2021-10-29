@@ -1,9 +1,10 @@
-﻿using AutoMapper;
-using Nito.AsyncEx;
+﻿using Nito.AsyncEx;
 using Persistence.Migrations;
 using Services;
 using System;
 using System.Data.Entity.Migrations;
+using System.Data.SqlClient;
+using Persistence;
 
 namespace EntityCache.Assistence
 {
@@ -11,8 +12,16 @@ namespace EntityCache.Assistence
     {
         public static void Init()
         {
-            UpdateMigration();
-            InserDefults();
+            try
+            {
+                UpdateMigration();
+                InserDefults();
+                RunScripts();
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }
         }
         private static void UpdateMigration()
         {
@@ -37,6 +46,34 @@ namespace EntityCache.Assistence
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
             }
+        }
+        private static void RunScripts()
+        {
+            try
+            {
+                var res = StartErtegha(Cache.ConnectionString);
+                if (res.HasError) throw new ArgumentException("خطا در اجرای کوئری" + res.ErrorMessage);
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+            }
+        }
+        public static ReturnedSaveFuncInfo StartErtegha(string connectionString)
+        {
+            var res = new ReturnedSaveFuncInfo();
+            try
+            {
+                var cn = new SqlConnection(connectionString);
+                res.AddReturnedValue(DatabaseUtilities.Run(Properties.Resources.Ertegha, cn));
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                res.AddReturnedValue(ex);
+            }
+
+            return res;
         }
     }
 }
