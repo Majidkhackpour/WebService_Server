@@ -1,18 +1,15 @@
-﻿@model IEnumerable<Persistence.Entities.Users>
-@using Server.Utilitis;
-@using Services
+﻿@model IEnumerable<Persistence.Entities.Product>
+
 @{
-    ViewBag.Title = "مدیریت کاربران";
+    ViewBag.Title = "مدیریت کالاها";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
-
-
 <div class="card">
     <div class="card-body">
         <div>
             <a href="@Url.Action("Create")">
                 <button class="btn btn-outline-success btn-success">
-                    <i class="fa fa-plus"></i> افزودن کاربر جدید
+                    <i class="fa fa-plus"></i> افزودن کالای جدید
                 </button>
             </a>
         </div>
@@ -21,22 +18,19 @@
                 <thead>
                     <tr>
                         <th>
-                            نام
+                            @Html.DisplayNameFor(model => model.Code)
                         </th>
                         <th>
-                            نام کاربری
+                            @Html.DisplayNameFor(model => model.Name)
                         </th>
                         <th>
-                            فعال / غیر فعال
+                            @Html.DisplayNameFor(model => model.Unit)
                         </th>
                         <th>
-                            تاریخ ثبت نام
+                            قیمت (ریال)
                         </th>
                         <th>
-                            آزاد / مسدود
-                        </th>
-                        <th>
-                            عنوان سیستمی
+                            هزینه پشتیبانی (ریال)
                         </th>
                         <th></th>
                     </tr>
@@ -46,36 +40,19 @@
                     {
                         <tr>
                             <td>
+                                @Html.DisplayFor(modelItem => item.Code)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
+                                @Html.DisplayFor(modelItem => item.Unit)
                             </td>
                             <td>
-                                @if (item.Status == true)
-                                {
-                                    <span class="badge badge-success">فعال</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-danger">غیر فعال</span>
-                                }
+                                @item.Price.ToString("N0")
                             </td>
                             <td>
-                                @Calendar.MiladiToShamsi(item.Modified)
-                            </td>
-                            <td>
-                                @if (item.IsBlock == false)
-                                {
-                                    <span class="badge badge-success">آزاد</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-danger">مسدود</span>
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Type)
+                                @item.BckUpPrice.ToString("N0")
                             </td>
                             <td class="text-right">
                                 <div class="dropdown">
@@ -92,6 +69,9 @@
                                         <a class="dropdown-item" href="#" onclick="Delete('@item.Guid')">
                                             <i class="fa fa-trash"></i>  حذف
                                         </a>
+                                        <a class="dropdown-item" href="@Url.Action("Gardesh",new { id=item.Guid})">
+                                            <i class="fa fa-file"></i>  مشاهده گردش کالا
+                                        </a>
                                     </div>
                                 </div>
                             </td>
@@ -102,7 +82,6 @@
         </div>
     </div>
 </div>
-
 <div class="text-center">
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -120,24 +99,22 @@
         </div>
     </div>
 </div>
-
-
 <script>
     function Details(id) {
-        $.get("/arad-Manager/Users/Details/" + id,
+        $.get("/arad-Manager/Products/Details/" + id,
             function (result) {
                 $("#exampleModalCenter").modal('show');
-                $("#exampleModalCenterTitle").html("جزئیات اطلاعات کاربر");
+                $("#exampleModalCenterTitle").html("جزئیات اطلاعات کالا");
                 $("#exampleModalCenterBody").html(result);
             });
     }
 
 
     function Delete(id) {
-        $.get("/arad-Manager/Users/Delete/" + id,
+        $.get("/arad-Manager/Products/Delete/" + id,
             function (result) {
                 $("#exampleModalCenter").modal('show');
-                $("#exampleModalCenterTitle").html("ویرایش گروه");
+                $("#exampleModalCenterTitle").html("حذف کالا");
                 $("#exampleModalCenterBody").html(result);
             });
     }

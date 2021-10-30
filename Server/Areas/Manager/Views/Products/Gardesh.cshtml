@@ -1,0 +1,103 @@
+﻿@model IEnumerable<EntityCache.ViewModels.ProductGardeshViewModel>
+
+@{
+    ViewBag.Title = "مشاهده گردش کالا";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        <h4>گردش کالا ( @ViewBag.ProductName )</h4>
+        <hr />
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            شماره فاکتور
+                        </th>
+                        <th>
+                            تاریخ فاکتور
+                        </th>
+                        <th>
+                            طرف حساب
+                        </th>
+                        <th>
+                            عنوان مجموعه
+                        </th>
+                        <th>
+                            فی واحد (ریال)
+                        </th>
+                        <th>
+                            تعداد
+                        </th>
+                        <th>
+                            تخفیف (ریال)
+                        </th>
+                        <th>
+                            بهای تمام شده (ریال)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.ContractCode
+                            </td>
+                            <td>
+                                @item.DateSh
+                            </td>
+                            <td>
+                                @item.CustomerName
+                            </td>
+                            <td>
+                                @item.CompanyName
+                            </td>
+                            <td>
+                                @item.Price.ToString("N0")
+                            </td>
+                            <td>
+                                @item.Count
+                            </td>
+                            <td>
+                                @item.Discount.ToString("N0")
+                            </td>
+                            <td>
+                                @item.TotalPrice.ToString("N0")
+                            </td>
+                            <td class="text-right">
+                                <div class="dropdown">
+                                    <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#" onclick="Details('@item.OrderGuid')">
+                                            <i class="fa fa-desktop"></i> مشاهده سند
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    //function Details(id) {
+    //    $.get("/arad-Manager/Products/Details/" + id,
+    //        function (result) {
+    //            $("#exampleModalCenter").modal('show');
+    //            $("#exampleModalCenterTitle").html("جزئیات اطلاعات کالا");
+    //            $("#exampleModalCenterBody").html(result);
+    //        });
+    //}
+
+    function success() {
+        $("#myModal").modal('hide');
+    }
+</script>
+

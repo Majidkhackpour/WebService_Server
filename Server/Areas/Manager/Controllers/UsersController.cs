@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Persistence.Entities;
+using Persistence.Model;
+using Services;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Persistence.Entities;
-using Persistence.Model;
-using Services;
 
 namespace Server.Areas.Manager.Controllers
 {
@@ -56,7 +53,7 @@ namespace Server.Areas.Manager.Controllers
                 if (users.Guid == Guid.Empty) users.Guid = Guid.NewGuid();
                 users.Modified = DateTime.Now;
                 if (ModelState.IsValid)
-                {                   
+                {
                     users.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(users.Password, "MD5");
                     db.Users.Add(users);
                     db.SaveChanges();
@@ -66,7 +63,7 @@ namespace Server.Areas.Manager.Controllers
             catch (Exception ex)
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
-            }            
+            }
 
             return View(users);
         }

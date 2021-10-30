@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Servicess.Interfaces.Department;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
 {
