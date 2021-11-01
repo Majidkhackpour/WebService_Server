@@ -1,0 +1,76 @@
+﻿@using Services
+@model Persistence.Entities.Customers
+
+<div class="card card-body text-left">
+    <h2>جزئیات اطلاعات مشتری</h2>
+    <h2>" @Model.Name "</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            عنوان : @Model.Name
+        </dt>
+        <dt>
+            نام مجموعه :  @Model.CompanyName
+        </dt>
+
+        <dt>
+            شماره ملی :  @Model.NationalCode
+        </dt>
+
+        <dt>
+            سریال نرم افزار : @Model.AppSerial
+        </dt>
+
+        <dt>
+            مشخصه فنی : @Model.HardSerial
+        </dt>
+        <dt>
+            آدرس : @Model.Address
+        </dt>
+        <dt>
+            کد پستی : @Model.PostalCode
+        </dt>
+        <dt>
+            تلفن 1 : @Model.Tell1
+        </dt>
+        <dt>
+            تلفن 2 : @Model.Tell2
+        </dt>
+        <dt>
+            تلفن 3  : @Model.Tell3
+        </dt>
+        <dt>
+            تلفن 4 : @Model.Tell4
+        </dt>
+        <dt>
+            پست الکترونیک : @Model.Email
+        </dt>
+        <dt>
+            تاریخ انقضای پشتیبانی : @Calendar.MiladiToShamsi(Model.ExpireDate)
+        </dt>
+        <dt>
+            وضعیت : @if (!Model.isBlock)
+                    {
+                        <span class="badge badge-success">فعال</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">مسدود</span>
+                    }
+        </dt>
+        <dt>
+            وضعیت وب سرویس : @if (!Model.isWebServiceBlock)
+                             {
+                                 <span class="badge badge-success">فعال</span>
+                             }
+                             else
+                             {
+                                 <span class="badge badge-danger">مسدود</span>
+                             }
+        </dt>
+    </dl>
+</div>
+<hr />
+<div>
+    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">بستن</button>
+</div>

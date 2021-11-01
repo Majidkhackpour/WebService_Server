@@ -1,0 +1,204 @@
+﻿@using Services
+@model IEnumerable<Persistence.Entities.Customers>
+
+@{
+    ViewBag.Title = "مدیریت اشخاص";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        <div>
+            <a href="@Url.Action("Create")">
+                <button class="btn btn-outline-success btn-success">
+                    <i class="fa fa-plus"></i> افزودن مشتری جدید
+                </button>
+            </a>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            تاریخ ثبت
+                        </th>
+                        <th>
+                            عنوان
+                        </th>
+                        <th>
+                            نام مجموعه
+                        </th>
+                        <th>
+                            مشخصه فنی
+                        </th>
+                        <th>
+                            انقضای پشتیبانی
+                        </th>
+                        <th>
+                            مانده حساب
+                        </th>
+                        <th>
+                            وضعیت
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Calendar.MiladiToShamsi(item.CreateDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @item.CompanyName
+                            </td>
+                            <td>
+                                @item.HardSerial
+                            </td>
+                            <td>
+                                @Calendar.MiladiToShamsi(item.ExpireDate)
+                            </td>
+                            <td>
+                                @if (item.Account == 0)
+                                {
+                                    <span class="badge badge-success">بی حساب</span>
+                                }
+                                else if (item.Account < 0)
+                                {
+                                    <span class="badge badge-danger">@Math.Abs(item.Account).ToString("N0") بد</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">@item.Account.ToString("N0") بس</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Status)
+                                {
+                                    <span class="badge badge-success">فعال</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">حذف شده</span>
+                                }
+                            </td>
+                            <td>
+                                @if (!item.isBlock)
+                                {
+                                    <span class="badge badge-success">آزاد</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">مسدود</span>
+                                }
+                            </td>
+                            <td class="text-right">
+                                <div class="dropdown">
+                                    <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="#" onclick="Details('@item.Guid')">
+                                            <i class="fa fa-desktop"></i>  نمایش
+                                        </a>
+                                        <a class="dropdown-item" href="@Url.Action("Edit",new { id=item.Guid})">
+                                            <i class="fa fa-edit"></i>  ویرایش
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="Delete('@item.Guid')">
+                                            <i class="fa fa-trash"></i>  حذف
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <hr />
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-key"></i>  کد فعالسازی
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-mobile-phone"></i>  لیست اندرویدها
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  ثبت فاکتور جدید
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده گردش حساب
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده سابقه
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <hr />
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده املاک
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده درخواست ها
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده قراردادها
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده کاربران
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده لیست اشخاص
+                                        </a>
+                                        <a class="dropdown-item" href="#" onclick="">
+                                            <i class="fa fa-indent"></i>  مشاهده گروه اشخاص
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">عنوان مودال</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="exampleModalCenterBody">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function Details(id) {
+        $.get("/arad-Manager/Customers/Details/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("جزئیات اطلاعات مشتری");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+
+
+    //function Delete(id) {
+    //    $.get("/arad-Manager/Products/Delete/" + id,
+    //        function (result) {
+    //            $("#exampleModalCenter").modal('show');
+    //            $("#exampleModalCenterTitle").html("حذف کالا");
+    //            $("#exampleModalCenterBody").html(result);
+    //        });
+    //}
+
+
+
+    function success() {
+        $("#myModal").modal('hide');
+    }
+</script>

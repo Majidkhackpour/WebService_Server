@@ -10,13 +10,12 @@ namespace Persistence.Entities
     {
         [Key]
         public Guid Guid { get; set; }
-        
         public DateTime Modified { get; set; }
-
         public bool Status { get; set; }
         public DateTime CreateDate { get; set; }
         [Display(Name = "عنوان")]
         [MaxLength(500)]
+        [Required(ErrorMessage = "لطفا {0} را پر کنید")]
         public string Name { get; set; }
         [Display(Name = "نام مجموعه")]
         [MaxLength(500)]

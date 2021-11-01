@@ -642,6 +642,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Manager\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Manager\Controllers\HomeController.cs" />
     <Compile Include="Areas\Manager\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Manager\Controllers\UsersController.cs" />
@@ -993,6 +994,11 @@
     <Content Include="Areas\Manager\Views\Products\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Details.cshtml" />
     <Content Include="Areas\Manager\Views\Products\Gardesh.cshtml" />
+    <Content Include="Areas\Manager\Views\Customers\Create.cshtml" />
+    <Content Include="Areas\Manager\Views\Customers\Delete.cshtml" />
+    <Content Include="Areas\Manager\Views\Customers\Details.cshtml" />
+    <Content Include="Areas\Manager\Views\Customers\Edit.cshtml" />
+    <Content Include="Areas\Manager\Views\Customers\Index.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
