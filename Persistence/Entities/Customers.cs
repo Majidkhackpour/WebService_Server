@@ -20,6 +20,7 @@ namespace Persistence.Entities
         [Display(Name = "نام مجموعه")]
         [MaxLength(500)]
         public string CompanyName { get; set; }
+        [Display(Name = "کد ملی")]
         [MaxLength(50)]
         public string NationalCode { get; set; }
         [Display(Name = "سریال نرم افزار")]
@@ -36,12 +37,16 @@ namespace Persistence.Entities
         [Display(Name = "تلفن 2")]
         [MaxLength(50)]
         public string Tell2 { get; set; }
+        [Display(Name = "تلفن 3")]
         [MaxLength(50)]
         public string Tell3 { get; set; }
+        [Display(Name = "تلفن 4")]
         [MaxLength(50)]
         public string Tell4 { get; set; }
+        [Display(Name = "پست الکترونیک")]
         [MaxLength(100)]
         public string Email { get; set; }
+        [Display(Name = "توضیحات")]
         public string Description { get; set; }
         public DateTime ExpireDate { get; set; }
         public Guid UserGuid { get; set; }
@@ -50,8 +55,10 @@ namespace Persistence.Entities
         public string UserName { get; set; }
         [MaxLength(100)]
         public string Password { get; set; }
+        [Display(Name = "آدرس سایت")]
         [MaxLength(50)]
         public string SiteUrl { get; set; }
+        [Display(Name = "مشخصه فنی")]
         [MaxLength(100)]
         public string HardSerial { get; set; }
         [MaxLength(500)]

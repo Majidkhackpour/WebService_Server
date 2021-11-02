@@ -44,11 +44,18 @@ namespace Server.Areas.Manager.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Guid,Modified,Status,CreateDate,Name,CompanyName,NationalCode,AppSerial,Address,PostalCode,Tell1,Tell2,Tell3,Tell4,Email,Description,ExpireDate,UserGuid,Account,UserName,Password,SiteUrl,HardSerial,LkSerial,isBlock,isWebServiceBlock")] Customers customers)
+        public ActionResult Create([Bind(Include = "Name,CompanyName,NationalCode,PostalCode,AppSerial,Address,Tell1,Tell2,Tell3,Tell4,Email,HardSerial,SiteUrl,Address,Description")] Customers customers)
         {
             if (ModelState.IsValid)
             {
                 customers.Guid = Guid.NewGuid();
+                customers.Modified = DateTime.Now;
+                customers.Status = true;
+                customers.Account = 0;
+                customers.CreateDate = DateTime.Now;
+                customers.ExpireDate=DateTime.Now.AddYears(1);
+                customers.isBlock = false;
+                customers.isWebServiceBlock = false;
                 db.Customers.Add(customers);
                 db.SaveChanges();
                 return RedirectToAction("Index");
