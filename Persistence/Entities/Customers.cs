@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Services;
 using Servicess.Interfaces.Department;
 
 namespace Persistence.Entities
@@ -29,6 +30,7 @@ namespace Persistence.Entities
         [Display(Name = "آدرس")]
         [MaxLength(500)]
         public string Address { get; set; }
+        [Display(Name = "کدپستی")]
         [MaxLength(100)]
         public string PostalCode { get; set; }
         [Display(Name = "تلفن 1")]
@@ -65,5 +67,6 @@ namespace Persistence.Entities
         public string LkSerial { get; set; }
         public bool isBlock { get; set; }
         public bool isWebServiceBlock { get; set; }
+        [NotMapped] public string ExpireDateSh => Calendar.MiladiToShamsi(ExpireDate);
     }
 }

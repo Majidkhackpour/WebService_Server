@@ -1,0 +1,58 @@
+﻿@model Persistence.Entities.Customers
+
+@{
+    ViewBag.Title = "ActivationCode";
+    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card container col-md-11">
+    <div class="card-body">
+        <label class="text-center container " style="font-size:20px;">کد فعالسازی</label>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                عنوان مشتری : @Model.Name
+            </dt>
+            <dt>
+                تاریخ انقضای پشتیبانی : @Model.ExpireDateSh
+            </dt>
+        </dl>
+        <hr />
+        <label class="text-center container ">سریال نرم افزار</label>
+        <label class="text-center container " style="font-size:32px;">@Model.AppSerial</label>
+        <hr />
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">مدت اعتبار (تمدید) بر اساس ماه:</label>
+            <div class="col-sm-3">
+                <input class="form-control" type="number" min="1" max="12" value="12" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">مشخصه فنی مشتری:</label>
+            <div class="col-sm-6">
+                <input class="form-control" type="text" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">کد فعالسازی:</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="text" readonly="readonly" />
+            </div>
+            <input type="submit" value="ایجاد کدفعالسازی" class="btn btn-outline-primary btn-rounded" />
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label">شرح:</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="form-group center" >
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-outline-success btn-rounded btn-success" />
+                <input type="submit" value="ارسال کد فعالسازی از طریق پیامک" class="btn btn-outline-dribbble btn-rounded" />
+                <a href="@Url.Action("index","Customers")" class="btn btn-outline-warning btn-rounded btn-uppercase">بازگشت</a>
+            </div>
+        </div>
+    </div>
+</div>
+

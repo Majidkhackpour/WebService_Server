@@ -120,7 +120,19 @@ namespace Server.Areas.Manager.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public ActionResult ActivationCode(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customers customers = db.Customers.Find(id);
+            if (customers == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customers);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
