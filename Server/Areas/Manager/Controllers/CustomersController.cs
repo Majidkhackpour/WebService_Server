@@ -120,6 +120,8 @@ namespace Server.Areas.Manager.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
         public ActionResult ActivationCode(Guid? id)
         {
             if (id == null)
@@ -133,6 +135,57 @@ namespace Server.Areas.Manager.Controllers
             }
             return View(customers);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ActivationCode(Guid id)
+        {
+            Customers customers = db.Customers.Find(id);
+            if (ModelState.IsValid)
+            {
+                var a = customers.Guid;
+                var b = customers.UserGuid;
+                var c = customers.Name;
+                var d = customers.ExpireDateSh;
+                var e = customers.AppSerial;
+                var f = customers.UserName;
+                return RedirectToAction("Index");
+            }
+            return View(customers);
+        }
+
+        public ActionResult ActivationSmsCode(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customers customers = db.Customers.Find(id);
+            if (customers == null)
+            {
+                return HttpNotFound();
+            }
+            return PartialView(customers);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ActivationSmsCode(Guid id)
+        {
+            Customers customers = db.Customers.Find(id);
+            if (ModelState.IsValid)
+            {
+                var a = customers.Guid;
+                var b = customers.UserGuid;
+                var c = customers.Name;
+                var d = customers.ExpireDateSh;
+                var e = customers.AppSerial;
+                var f = customers.UserName;
+                return RedirectToAction("Index");
+            }
+            return View(customers);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

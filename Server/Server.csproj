@@ -1000,6 +1000,7 @@
     <Content Include="Areas\Manager\Views\Customers\Edit.cshtml" />
     <Content Include="Areas\Manager\Views\Customers\Index.cshtml" />
     <Content Include="Areas\Manager\Views\Customers\ActivationCode.cshtml" />
+    <Content Include="Areas\Manager\Views\Customers\ActivationSmsCode.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

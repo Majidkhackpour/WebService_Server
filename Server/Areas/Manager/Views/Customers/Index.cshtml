@@ -100,58 +100,84 @@
                                     <a href="#" class="btn btn-light btn-floating btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#" onclick="Details('@item.Guid')">
-                                            <i class="fa fa-desktop"></i>  نمایش
-                                        </a>
-                                        <a class="dropdown-item" href="@Url.Action("Edit",new { id=item.Guid})">
-                                            <i class="fa fa-edit"></i>  ویرایش
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="Delete('@item.Guid')">
-                                            <i class="fa fa-trash"></i>  حذف
-                                        </a>
-                                        <a class="dropdown-item">
-                                            <hr />
-                                        </a>
-                                        <a class="dropdown-item" href="@Url.Action("ActivationCode",new { id=item.Guid})">
-                                            <i class="fa fa-key"></i>  کد فعالسازی
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-mobile-phone"></i>  لیست اندرویدها
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  ثبت فاکتور جدید
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده گردش حساب
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده سابقه
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده لاگ سینک ها
-                                        </a>
-                                        <a class="dropdown-item">
-                                            <hr />
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده املاک
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده درخواست ها
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده قراردادها
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده کاربران
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده لیست اشخاص
-                                        </a>
-                                        <a class="dropdown-item" href="#" onclick="">
-                                            <i class="fa fa-indent"></i>  مشاهده گروه اشخاص
-                                        </a>
+                                    <div class="dropdown-menu">
+                                        <div class="accordion accordion-primary custom-accordion">
+
+                                            <div class="accordion-row">
+                                                <a href="#" class="accordion-header">
+                                                    <span>سایر 1</span>
+                                                    <i class="accordion-status-icon close fa fa-chevron-up"></i>
+                                                    <i class="accordion-status-icon open fa fa-chevron-down"></i>
+                                                </a>
+                                                <div class="accordion-body">
+                                                    <a class="dropdown-item" href="#" onclick="Details('@item.Guid')">
+                                                        <i class="fa fa-desktop"></i>  نمایش
+                                                    </a>
+                                                    <a class="dropdown-item" href="@Url.Action("Edit",new { id=item.Guid})">
+                                                        <i class="fa fa-edit"></i>  ویرایش
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="Delete('@item.Guid')">
+                                                        <i class="fa fa-trash"></i>  حذف
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-row">
+                                                <a href="#" class="accordion-header">
+                                                    <span>سایر گزینه ها 2</span>
+                                                    <i class="accordion-status-icon close fa fa-chevron-up"></i>
+                                                    <i class="accordion-status-icon open fa fa-chevron-down"></i>
+                                                </a>
+                                                <div class="accordion-body">
+                                                    <a class="dropdown-item" href="@Url.Action("ActivationCode",new { id=item.Guid})">
+                                                        <i class="fa fa-key"></i>  کد فعالسازی
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-mobile-phone"></i>  لیست اندرویدها
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  ثبت فاکتور جدید
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده گردش حساب
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده سابقه
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده لاگ سینک ها
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-row">
+                                                <a href="#" class="accordion-header">
+                                                    <span>سایر گزینه ها 3</span>
+                                                    <i class="accordion-status-icon close fa fa-chevron-up"></i>
+                                                    <i class="accordion-status-icon open fa fa-chevron-down"></i>
+                                                </a>
+                                                <div class="accordion-body">
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده املاک
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده درخواست ها
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده قراردادها
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده کاربران
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده لیست اشخاص
+                                                    </a>
+                                                    <a class="dropdown-item" href="#" onclick="">
+                                                        <i class="fa fa-indent"></i>  مشاهده گروه اشخاص
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -162,6 +188,10 @@
         </div>
     </div>
 </div>
+
+
+
+
 <div class="text-center">
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -179,6 +209,8 @@
         </div>
     </div>
 </div>
+<script src="~/Areas/Manager/Content/vendors/select2/js/select2.min.js"></script>
+
 <script>
     function Details(id) {
         $.get("/arad-Manager/Customers/Details/" + id,
@@ -201,7 +233,7 @@
 
 
 
-    function success() {
-        $("#myModal").modal('hide');
-    }
+    //function success() {
+    //    $("#myModal").modal('hide');
+    //}
 </script>

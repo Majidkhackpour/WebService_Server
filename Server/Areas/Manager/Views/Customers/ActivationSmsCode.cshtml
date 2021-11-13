@@ -1,12 +1,11 @@
 ﻿@model Persistence.Entities.Customers
 
 @{
-    ViewBag.Title = "ActivationCode";
-    Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "ActivationSmsCode";
 }
-<div class="card container col-md-11">
-    <div class="card-body">
-        <label class="text-center container " style="font-size:20px;">کد فعالسازی</label>
+<div class="">
+    <div class="">
+        <label class="" style="font-size:20px;">کد فعالسازی</label>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -50,8 +49,7 @@
             @Html.AntiForgeryToken()
             <div class="form-group center">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="ثبت" class="btn btn-outline-success btn-rounded btn-success" />
-                    <a href="#" onclick="smsactivation('@Model.Guid')" class="btn btn-outline-dribbble btn-rounded">ارسال کد فعالسازی از طریق پیامک</a>
+                    <input type="submit" value="ارسال کد فعالسازی از طریق پیامک" class="btn btn-outline-dribbble btn-rounded" />
                     <button href="@Url.Action("index","Customers")" class="btn btn-outline-warning btn-rounded btn-uppercase">بازگشت</button>
                 </div>
             </div>
@@ -59,34 +57,4 @@
     </div>
 </div>
 
-<div class="text-center">
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">عنوان مودال</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
-                        <i class="ti-close"></i>
-                    </button>
-                </div>
-                <div class="modal-body" id="exampleModalCenterBody">
-                    ...
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    function smsactivation(id) {
-        $.get("/arad-Manager/Customers/ActivationSmsCode/" + id,
-            function (result) {
-                $("#exampleModalCenter").modal('show');
-                $("#exampleModalCenterTitle").html("پیامک فعالسازی");
-                $("#exampleModalCenterBody").html(result);
-            });
-    }
 
-    //function success() {
-    //    $("#myModal").modal('hide');
-    //}
-</script>
