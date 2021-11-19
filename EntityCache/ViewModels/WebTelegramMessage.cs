@@ -64,14 +64,9 @@ namespace EntityCache.ViewModels
         {
             try
             {
+                if (string.IsNullOrEmpty(message)) return;
                 var bot = new TelegramBotClient(ApiKey);
                 await bot.SendTextMessageAsync(ChatID, message);
-
-                //var uri = $"https://api.telegram.org/bot{ApiKey}/sendMessage?chat_id={ChatID}&text={message}";
-                //using (var client = new WebClient())
-                //{
-                //    dynamic s = client.DownloadString(uri);
-                //}
             }
             catch (HttpRequestException) { }
             catch (Telegram.Bot.Exceptions.BadRequestException) { }
