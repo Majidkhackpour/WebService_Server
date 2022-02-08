@@ -1,4 +1,5 @@
-﻿@using Services
+﻿
+@using Services
 @model IEnumerable<Persistence.Entities.Customers>
 
 @{
@@ -105,7 +106,7 @@
 
                                             <div class="accordion-row">
                                                 <a href="#" class="accordion-header">
-                                                    <span>سایر 1</span>
+                                                    <span>مدیریت مشتری</span>
                                                     <i class="accordion-status-icon close fa fa-chevron-up"></i>
                                                     <i class="accordion-status-icon open fa fa-chevron-down"></i>
                                                 </a>
@@ -124,7 +125,7 @@
 
                                             <div class="accordion-row">
                                                 <a href="#" class="accordion-header">
-                                                    <span>سایر گزینه ها 2</span>
+                                                    <span>اعمال مدیریتی</span>
                                                     <i class="accordion-status-icon close fa fa-chevron-up"></i>
                                                     <i class="accordion-status-icon open fa fa-chevron-down"></i>
                                                 </a>
@@ -135,6 +136,31 @@
                                                     <a class="dropdown-item" href="#" onclick="">
                                                         <i class="fa fa-mobile-phone"></i>  لیست اندرویدها
                                                     </a>
+                                                    @if (item.isBlock == true)
+                                                    {
+                                                        <a class="dropdown-item" href="#" onclick="Block('@item.Guid')">
+                                                            <i class="fa fa-indent"></i>  آزاد سازی
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="dropdown-item" href="#" onclick="Block('@item.Guid')">
+                                                            <i class="fa fa-indent"></i>  مسدود کردن
+                                                        </a>
+                                                    }
+                                                    @if (item.isWebServiceBlock == true)
+                                                    {
+                                                        <a class="dropdown-item" href="#" onclick="WebServiceBlock('@item.Guid')">
+                                                            <i class="fa fa-indent"></i> آزاد سازی وب سرویس
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="dropdown-item" href="#" onclick="WebServiceBlock('@item.Guid')">
+                                                            <i class="fa fa-indent"></i>  مسدود کردن وب سرویس
+                                                        </a>
+                                                    }
+
                                                     <a class="dropdown-item" href="#" onclick="">
                                                         <i class="fa fa-indent"></i>  ثبت فاکتور جدید
                                                     </a>
@@ -152,7 +178,7 @@
 
                                             <div class="accordion-row">
                                                 <a href="#" class="accordion-header">
-                                                    <span>سایر گزینه ها 3</span>
+                                                    <span>داده های مشتری</span>
                                                     <i class="accordion-status-icon close fa fa-chevron-up"></i>
                                                     <i class="accordion-status-icon open fa fa-chevron-down"></i>
                                                 </a>
@@ -192,6 +218,11 @@
 
 
 
+
+
+
+
+
 <div class="text-center">
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -221,15 +252,32 @@
             });
     }
 
+    function Block(id) {
+        $.get("/arad-Manager/Customers/isBlock/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("مسدود کردن مشتری");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
 
-    //function Delete(id) {
-    //    $.get("/arad-Manager/Products/Delete/" + id,
-    //        function (result) {
-    //            $("#exampleModalCenter").modal('show');
-    //            $("#exampleModalCenterTitle").html("حذف کالا");
-    //            $("#exampleModalCenterBody").html(result);
-    //        });
-    //}
+    function WebServiceBlock(id) {
+        $.get("/arad-Manager/Customers/isWebServiceBlock/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("مسدود کردن وبسرویس مشتری");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+
+    function Delete(id) {
+        $.get("/arad-Manager/Customers/Delete/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("حذف مشتری");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
 
 
 
@@ -237,3 +285,4 @@
     //    $("#myModal").modal('hide');
     //}
 </script>
+

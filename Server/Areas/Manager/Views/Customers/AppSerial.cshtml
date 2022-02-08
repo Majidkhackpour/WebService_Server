@@ -1,0 +1,16 @@
+﻿
+@model Persistence.Entities.Customers
+
+<div class="form-group">
+
+    <div class="col-md-10">
+        <select class="js-example-basic-single form-control" multiple name="item">
+            @foreach (var item in Model.AppSerial)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+    </div>
+    
+    
+</div>

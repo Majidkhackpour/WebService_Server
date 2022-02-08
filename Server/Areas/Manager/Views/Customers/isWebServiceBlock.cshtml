@@ -1,0 +1,33 @@
+﻿@model Persistence.Entities.Customers
+
+<div class="card">
+    <div class="card-header">مسدود کرردن وب سرویس</div>
+    <div class="card-body">
+        <div class="card-scroll" tabindex="3" style="overflow: hidden; outline: none;">
+            <p>
+                آیا می خواهید وب سرویس کاربر "@Model.Name" مسدود کنید
+            </p>
+        </div>
+    </div>
+    <div class="card-footer">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Guid)<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @if (Model.isWebServiceBlock == true)
+                    {
+                        <input type="submit" value="آزاد سازی" class="btn btn-success" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="مسدود کردن" class="btn btn-danger" />
+                    }
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="بستن">
+                        انصراف
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

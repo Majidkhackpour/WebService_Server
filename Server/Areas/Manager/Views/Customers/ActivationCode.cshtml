@@ -37,8 +37,14 @@
             <div class="col-sm-4">
                 <input class="form-control" type="text" readonly="readonly" />
             </div>
-            <input type="submit" value="ایجاد کدفعالسازی" class="btn btn-outline-primary btn-rounded" />
-        </div>
+            @*@using (Html.BeginForm())
+            {
+                @Model.Guid
+                @Html.EditorFor()
+            }*@
+                <a href="#" onclick="GeneratActivationCode('@Model.Guid',12)" class="btn btn-outline-primary btn-rounded">ایجاد کدفعالسازی</a>
+                @*<input type="submit" value=""  />*@
+            </div>
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">شرح:</label>
             <div class="col-sm-6">
@@ -82,6 +88,15 @@
             function (result) {
                 $("#exampleModalCenter").modal('show');
                 $("#exampleModalCenterTitle").html("پیامک فعالسازی");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+
+    function GeneratActivationCode(id , month) {
+        $.get("/arad-Manager/Customers/GeneratActivationCode/" + id + month,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("تولید کد فعالسازی");
                 $("#exampleModalCenterBody").html(result);
             });
     }
