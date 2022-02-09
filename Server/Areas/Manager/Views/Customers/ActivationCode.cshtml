@@ -4,22 +4,21 @@
     ViewBag.Title = "ActivationCode";
     Layout = "~/Areas/Manager/Views/Shared/_Layout.cshtml";
 }
-
 <div class="card container col-md-11">
     <div class="card-body">
         <label class="text-center container " style="font-size:20px;">کد فعالسازی</label>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                عنوان مشتری : @Model.Name
+                عنوان مشتری : @Html.DisplayFor(model => model.Name)
             </dt>
             <dt>
-                تاریخ انقضای پشتیبانی : @Model.ExpireDateSh
+                تاریخ انقضای پشتیبانی : @Html.DisplayFor(model => model.ExpireDateSh)
             </dt>
         </dl>
         <hr />
         <label class="text-center container ">سریال نرم افزار</label>
-        <label class="text-center container " style="font-size:32px;">@Model.AppSerial</label>
+        <label class="text-center container " style="font-size:32px;">@Html.DisplayFor(model => model.AppSerial)</label>
         <hr />
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">مدت اعتبار (تمدید) بر اساس ماه:</label>
@@ -38,21 +37,71 @@
             <div class="col-sm-4">
                 <input class="form-control" type="text" readonly="readonly" />
             </div>
-            <input type="submit" value="ایجاد کدفعالسازی" class="btn btn-outline-primary btn-rounded" />
-        </div>
+            @*@using (Html.BeginForm())
+            {
+                @Model.Guid
+                @Html.EditorFor()
+            }*@
+                <a href="#" onclick="GeneratActivationCode('@Model.Guid',12)" class="btn btn-outline-primary btn-rounded">ایجاد کدفعالسازی</a>
+                @*<input type="submit" value=""  />*@
+            </div>
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">شرح:</label>
             <div class="col-sm-6">
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
         </div>
-        <div class="form-group center" >
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="ثبت" class="btn btn-outline-success btn-rounded btn-success" />
-                <input type="submit" value="ارسال کد فعالسازی از طریق پیامک" class="btn btn-outline-dribbble btn-rounded" />
-                <a href="@Url.Action("index","Customers")" class="btn btn-outline-warning btn-rounded btn-uppercase">بازگشت</a>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group center">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ثبت" class="btn btn-outline-success btn-rounded btn-success" />
+                    <a href="#" onclick="smsactivation('@Model.Guid')" class="btn btn-outline-dribbble btn-rounded">ارسال کد فعالسازی از طریق پیامک</a>
+                    <button href="@Url.Action("index","Customers")" class="btn btn-outline-warning btn-rounded btn-uppercase">بازگشت</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="text-center">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">عنوان مودال</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="exampleModalCenterBody">
+                    ...
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function smsactivation(id) {
+        $.get("/arad-Manager/Customers/ActivationSmsCode/" + id,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("پیامک فعالسازی");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
 
+    function GeneratActivationCode(id , month) {
+        $.get("/arad-Manager/Customers/GeneratActivationCode/" + id + month,
+            function (result) {
+                $("#exampleModalCenter").modal('show');
+                $("#exampleModalCenterTitle").html("تولید کد فعالسازی");
+                $("#exampleModalCenterBody").html(result);
+            });
+    }
+
+    //function success() {
+    //    $("#myModal").modal('hide');
+    //}
+</script>
