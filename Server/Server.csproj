@@ -661,9 +661,12 @@
     <Compile Include="Controllers\BuildingRelatedOptionsController.cs" />
     <Compile Include="Controllers\BuildingRequestController.cs" />
     <Compile Include="Controllers\BuildingRequestRegionController.cs" />
+    <Compile Include="Controllers\BuildingReviewController.cs" />
     <Compile Include="Controllers\BuildingTypeController.cs" />
     <Compile Include="Controllers\BuildingUserController.cs" />
     <Compile Include="Controllers\BuildingViewController.cs" />
+    <Compile Include="Controllers\BuildingWindowController.cs" />
+    <Compile Include="Controllers\BuildingZoncanController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\CustomerAndroidController.cs" />
     <Compile Include="Controllers\CustomerLogController.cs" />
@@ -1030,6 +1033,9 @@
     <Folder Include="BackUpFiles\" />
     <Folder Include="BuildingImages\" />
     <Folder Include="Views\BuildingNote\" />
+    <Folder Include="Views\BuildingReview\" />
+    <Folder Include="Views\BuildingWindow\" />
+    <Folder Include="Views\BuildingZoncan\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
