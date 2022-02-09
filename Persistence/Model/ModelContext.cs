@@ -53,23 +53,16 @@ namespace Persistence.Model
         public virtual DbSet<BuildingRelatedOption> BuildingRelatedOptions { get; set; }
         public virtual DbSet<BuildingRequest> BuildingRequests { get; set; }
         public virtual DbSet<BuildingRequestRegion> BuildingRequestRegions { get; set; }
-        public virtual DbSet<Contract> Contracts { get; set; }
         public virtual DbSet<SyncedData> SyncedData { get; set; }
         public virtual DbSet<Androids> Androids { get; set; }
         public virtual DbSet<BuildingOptions> BuildingOptions { get; set; }
         public virtual DbSet<BuildingPhoneBook> BuildingPhoneBooks { get; set; }
-        public virtual DbSet<Advisor> Advisor { get; set; }
-        public virtual DbSet<Banks> Bank { get; set; }
-        public virtual DbSet<Kol> Kol { get; set; }
-        public virtual DbSet<Moein> Moein { get; set; }
-        public virtual DbSet<Tafsil> Tafsil { get; set; }
-        public virtual DbSet<BuildingReception> BuildingReception { get; set; }
-        public virtual DbSet<BuildingPardakht> BuildingPardakht { get; set; }
-        public virtual DbSet<Sanad> Sanad { get; set; }
-        public virtual DbSet<SanadDetail> SanadDetail { get; set; }
         public virtual DbSet<BackUpLog> BackUpLog { get; set; }
         public virtual DbSet<Scrapper> Scrapper { get; set; }
         public virtual DbSet<BuildingNote> BuildingNote { get; set; }
         public virtual DbSet<BuildingRelatedNumber> BuildingRelatedNumber { get; set; }
+        public virtual DbSet<BuildingReview> BuildingReview { get; set; }
+        public virtual DbSet<BuildingWindow> BuildingWindow { get; set; }
+        public virtual DbSet<BuildingZoncan> BuildingZoncan { get; set; }
     }
 }

@@ -17,9 +17,7 @@ namespace EntityCache.Assistence
             var dbContext = new ModelContext();
 
             #region Users
-
             var allusers = dbContext.Users.ToList();
-            var access = new AccessLevel();
             if (allusers == null || allusers.Count <= 0)
             {
                 var user = new Users()
@@ -101,7 +99,7 @@ namespace EntityCache.Assistence
             }
             #endregion
 
-            #region Users
+            #region SmsPanel
 
             var allPanels = dbContext.SmsPanels.ToList();
             if (allPanels == null || allPanels.Count <= 0)
