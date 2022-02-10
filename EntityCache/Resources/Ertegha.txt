@@ -68,3 +68,1501 @@ BEGIN
 		inner join Department_OrderDetail As Dets on Dets.OrderGuid=Factor.Guid
 	Where Dets.PrdGuid=@prdGuid
 END
+GO
+--==========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Building_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Building_Save]	As Begin print 11 end')  
+GO
+ALTER PROCEDURE [dbo].[sp_Building_Save]
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@ownerGuid uniqueidentifier,
+	@sellPrice decimal,
+	@vamPrice decimal,
+	@qestPrice decimal,
+	@dong int,
+	@docTypeGuid uniqueidentifier=null,
+	@tarakom smallint=null,
+	@rahnPrice1 decimal,
+	@ejarePrice1 decimal,
+	@rentalGuid uniqueidentifier=null,
+	@isShortTime bit=null,
+	@isOwnerHere bit=null,
+	@pishTotalPrice decimal,
+	@pishPrice decimal,
+	@deliveryDate datetime=null,
+	@pishDesc nvarchar(Max)=null,
+	@moavezeDesc nvarchar(Max)=null,
+	@mosharekatDesc nvarchar(Max)=null,
+	@masahat int,
+	@zirbana int,
+	@cityGuid uniqueidentifier,
+	@regionGuid uniqueidentifier,
+	@address nvarchar(Max)=null,
+	@conditionGuid uniqueidentifier=null,
+	@side int=null,
+	@typeGuid uniqueidentifier,
+	@shortDesc nvarchar(Max)=null,
+	@accountTypeGuid uniqueidentifier,
+	@metrazhTejari real,
+	@viewGuid uniqueidentifier=null,
+	@floorCoverGuid uniqueidentifier=null,
+	@kitchenServiceGuid uniqueidentifier=null,
+	@water smallint=null,
+	@barq smallint=null,
+	@gas smallint=null,
+	@tell smallint=null,
+	@tedadTabaqe int,
+	@tabaqeNo int,
+	@vahedPerTabaqe int,
+	@metrazheKouche real,
+	@ertefaSaqf real,
+	@hashie real,
+	@saleSakht nvarchar(30)=null,
+	@dateParvane nvarchar(30)=null,
+	@parvaneSerial nvarchar(300)=null,
+	@bonBast bit,
+	@mamarJoda bit,
+	@roomCount int,
+	@code nvarchar(50)=null,
+	@userGuid uniqueidentifier,
+	@createDate datetime,
+	@image nvarchar(100)=null,
+	@priority smallint,
+	@isArchive bit,
+	@serverSt smallint,
+	@serverDate datetime=null,
+	@lenght real,
+	@advType smallint=null,
+	@divarTitle nvarchar(500)='',
+	@hitting nvarchar(250)='',
+	@colling nvarchar(250)='',
+	@tabdil bit=null,
+	@reformArear float=0,
+	@buildingPermits bit=null,
+	@widthOfPassage float=0,
+	@villaType smallint=null,
+	@commeriacallLicense smallint=null,
+	@suitableFor nvarchar(max)='',
+	@wallCovering nvarchar(max)='',
+	@treeCount int=0,
+	@constructionStage smallint=null,
+	@parent smallint=null,
+	@zoncanGuid uniqueidentifier=null,
+	@windowGuid uniqueidentifier=null,
+	@vahedNo int=0
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_Building]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[OwnerGuid] = @ownerGuid
+		  ,[SellPrice] = @sellPrice
+		  ,[VamPrice] = @vamPrice
+		  ,[QestPrice] = @qestPrice
+		  ,[Dang] = @dong
+		  ,[DocumentType] = @docTypeGuid
+		  ,[Tarakom] = @tarakom
+		  ,[RahnPrice1] = @rahnPrice1
+		  ,[EjarePrice1] = @ejarePrice1
+		  ,[RentalAutorityGuid] = @rentalGuid
+		  ,[IsShortTime] = @isShortTime
+		  ,[IsOwnerHere] = @isOwnerHere
+		  ,[PishTotalPrice] = @pishTotalPrice
+		  ,[PishPrice] = @pishPrice
+		  ,[DeliveryDate] = @deliveryDate
+		  ,[PishDesc] = @pishDesc
+		  ,[MoavezeDesc] = @moavezeDesc
+		  ,[MosharekatDesc] = @mosharekatDesc
+		  ,[Masahat] = @masahat
+		  ,[ZirBana] = @zirbana
+		  ,[CityGuid] = @cityGuid
+		  ,[RegionGuid] = @regionGuid
+		  ,[Address] = @address
+		  ,[BuildingConditionGuid] = @conditionGuid
+		  ,[Side] = @side
+		  ,[BuildingTypeGuid] = @typeGuid
+		  ,[ShortDesc] = @shortDesc
+		  ,[BuildingAccountTypeGuid] = @accountTypeGuid
+		  ,[MetrazhTejari] = @metrazhTejari
+		  ,[BuildingViewGuid] = @viewGuid
+		  ,[FloorCoverGuid] = @floorCoverGuid
+		  ,[KitchenServiceGuid] = @kitchenServiceGuid
+		  ,[Water] = @water
+		  ,[Barq] = @barq
+		  ,[Gas] = @gas
+		  ,[Tell] = @tell
+		  ,[TedadTabaqe] = @tedadTabaqe
+		  ,[TabaqeNo] = @tabaqeNo
+		  ,[VahedPerTabaqe] = @vahedPerTabaqe
+		  ,[MetrazhKouche] = @metrazheKouche
+		  ,[ErtefaSaqf] = @ertefaSaqf
+		  ,[Hashie] = @hashie
+		  ,[SaleSakht] = @saleSakht
+		  ,[DateParvane] = @dateParvane
+		  ,[ParvaneSerial] = @parvaneSerial
+		  ,[BonBast] = @bonBast
+		  ,[MamarJoda] = @mamarJoda
+		  ,[RoomCount] = @roomCount
+		  ,[Code] = @code
+		  ,[Image] = @image
+		  ,[Priority] = @priority
+		  ,[IsArchive] = @isArchive
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+		  ,[Lenght] = @lenght
+		  ,[AdvertiseType] = @advType
+		  ,[DivarTitle] = @divarTitle
+		  ,[Hiting] = @hitting
+		  ,[Colling] = @colling
+		  ,[Tabdil] = @tabdil
+		  ,[ReformArea] = @reformArear
+		  ,[BuildingPermits] = @buildingPermits
+		  ,[WidthOfPassage] = @widthOfPassage
+		  ,[VillaType] = @villaType
+		  ,[CommericallLicense] = @commeriacallLicense
+		  ,[SuitableFor] = @suitableFor
+		  ,[WallCovering] = @wallCovering
+		  ,[TreeCount] = @treeCount
+		  ,[ConstructionStage] = @constructionStage
+		  ,[Parent] = @parent
+		  ,[ZoncanGuid] = @zoncanGuid
+		  ,[WindowGuid] = @windowGuid
+		  ,[VahedNo] = @vahedNo
+		  WHERE [Guid] = @guid and CustomerGuid=@cusGuid
+	if @@ROWCOUNT = 0
+	begin
+		INSERT INTO [dbo].[Buildings_Building]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[OwnerGuid]
+           ,[SellPrice]
+           ,[VamPrice]
+           ,[QestPrice]
+           ,[Dang]
+           ,[DocumentType]
+           ,[Tarakom]
+           ,[RahnPrice1]
+           ,[EjarePrice1]
+           ,[RentalAutorityGuid]
+           ,[IsShortTime]
+           ,[IsOwnerHere]
+           ,[PishTotalPrice]
+           ,[PishPrice]
+           ,[DeliveryDate]
+           ,[PishDesc]
+           ,[MoavezeDesc]
+           ,[MosharekatDesc]
+           ,[Masahat]
+           ,[ZirBana]
+           ,[CityGuid]
+           ,[RegionGuid]
+           ,[Address]
+           ,[BuildingConditionGuid]
+           ,[Side]
+           ,[BuildingTypeGuid]
+           ,[ShortDesc]
+           ,[BuildingAccountTypeGuid]
+           ,[MetrazhTejari]
+           ,[BuildingViewGuid]
+           ,[FloorCoverGuid]
+           ,[KitchenServiceGuid]
+           ,[Water]
+           ,[Barq]
+           ,[Gas]
+           ,[Tell]
+           ,[TedadTabaqe]
+           ,[TabaqeNo]
+           ,[VahedPerTabaqe]
+           ,[MetrazhKouche]
+           ,[ErtefaSaqf]
+           ,[Hashie]
+           ,[SaleSakht]
+           ,[DateParvane]
+           ,[ParvaneSerial]
+           ,[BonBast]
+           ,[MamarJoda]
+           ,[RoomCount]
+           ,[Code]
+           ,[UserGuid]
+           ,[CreateDate]
+           ,[Image]
+           ,[Priority]
+           ,[IsArchive]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[Lenght]
+		   ,[AdvertiseType]
+		   ,[DivarTitle]
+		   ,[Hiting]
+		   ,[Colling]
+		   ,[Tabdil] 
+		   ,[ReformArea] 
+		   ,[BuildingPermits] 
+		   ,[WidthOfPassage] 
+		   ,[VillaType] 
+		   ,[CommericallLicense] 
+		   ,[SuitableFor] 
+		   ,[WallCovering] 
+		   ,[TreeCount] 
+		   ,[ConstructionStage] 
+		   ,[Parent]
+		   ,[ZoncanGuid]
+		   ,[WindowGuid]
+		   ,[VahedNo]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@ownerGuid
+           ,@sellPrice
+           ,@vamPrice
+           ,@qestPrice
+           ,@dong
+           ,@docTypeGuid
+           ,@tarakom
+           ,@rahnPrice1
+           ,@ejarePrice1
+           ,@rentalGuid
+           ,@isShortTime
+           ,@isOwnerHere
+           ,@pishTotalPrice
+           ,@pishPrice
+           ,@deliveryDate
+           ,@pishDesc
+           ,@moavezeDesc
+           ,@mosharekatDesc
+           ,@masahat
+           ,@zirbana
+           ,@cityGuid
+           ,@regionGuid
+           ,@address
+           ,@conditionGuid
+           ,@side
+           ,@typeGuid
+           ,@shortDesc
+           ,@accountTypeGuid
+           ,@metrazhTejari
+           ,@viewGuid
+           ,@floorCoverGuid
+           ,@kitchenServiceGuid
+           ,@water
+           ,@barq
+           ,@gas
+           ,@tell
+           ,@tedadTabaqe
+           ,@tabaqeNo
+           ,@vahedPerTabaqe
+           ,@metrazheKouche
+           ,@ertefaSaqf
+           ,@hashie
+           ,@saleSakht
+           ,@dateParvane
+           ,@parvaneSerial
+           ,@bonBast
+           ,@mamarJoda
+           ,@roomCount
+           ,@code
+           ,@userGuid
+           ,@createDate
+           ,@image
+           ,@priority
+           ,@isArchive
+		   ,@serverSt
+		   ,@serverDate
+		   ,@lenght
+		   ,@advType
+		   ,@divarTitle
+		   ,@hitting
+		   ,@colling
+		   ,@tabdil
+		   ,@reformArear
+		   ,@buildingPermits
+		   ,@widthOfPassage
+		   ,@villaType
+		   ,@commeriacallLicense
+		   ,@suitableFor
+		   ,@wallCovering
+		   ,@treeCount
+		   ,@constructionStage
+		   ,@parent
+		   ,@zoncanGuid
+		   ,@windowGuid
+		   ,@vahedNo
+		   ,@cusGuid)
+	end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingAccountType_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingAccountType_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingAccountType_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingAccountType]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+		  WHERE [Guid] = @guid and CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingAccountType]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingCondition_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingCondition_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingCondition_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingCondition]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+		  WHERE [Guid] = @guid and CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingCondition]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingNote_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingNote_Save]	As Begin print 11 end')  
+GO
+ALTER PROCEDURE [dbo].[sp_BuildingNote_Save]
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@buGuid uniqueidentifier,
+	@note nvarchar(Max)
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingNote]
+	   SET [Modified] = @modif
+		  ,[BuildingGuid] = @buGuid
+		  ,[Note] = @note
+	 WHERE [Guid] = @guid and CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingNote]
+           ([Guid]
+           ,[Modified]
+           ,[BuildingGuid]
+           ,[Note]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@buGuid
+           ,@note
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingOption_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingOption_Save]	As Begin print 11 end')  
+GO
+ALTER PROCEDURE [dbo].[sp_BuildingOption_Save]
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime,
+	@isFullOption bit='false'
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingOptions]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+		  ,[IsFullOption] = @isFullOption
+	 WHERE [Guid] = @guid and CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingOptions]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[IsFullOption]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@isFullOption
+		   ,@cusGuid)
+	 end
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_PhoneBook_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_PhoneBook_Save]	As Begin print 11 end')
+GO
+ALTER PROCEDURE [dbo].[sp_PhoneBook_Save]
+	@Guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(500),
+	@tell nvarchar(50),
+	@group smallint,
+	@parentGuid uniqueidentifier,
+	@title nvarchar(200)
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_PhoneBook]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[Tell] = @tell
+		  ,[Group] = @group
+		  ,[ParentGuid] = @parentGuid
+		  ,[Title] = @title
+	 WHERE [Guid] = @Guid and CustomerGuid=@cusGuid
+	 if @@ROWCOUNT=0
+	 begin
+		INSERT INTO [dbo].[Buildings_PhoneBook]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+           ,[Tell]
+           ,[Group]
+           ,[ParentGuid]
+		   ,[Title]
+		   ,[CustomerGuid])
+		 VALUES
+           (@Guid
+           ,@modif
+           ,@st
+           ,@name
+           ,@tell
+           ,@group
+           ,@parentGuid
+		   ,@title
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingRequest_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingRequest_Save]	As Begin print 11 end')  
+GO
+ALTER PROCEDURE [dbo].[sp_BuildingRequest_Save]
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@st bit,
+	@modif datetime,
+	@createDtae datetime,
+	@askerGuid uniqueidentifier,
+	@userGuid uniqueidentifier,
+	@sellPrice1 decimal,
+	@sellPrice2 decimal,
+	@hasVam bit=null,
+	@rahn1 decimal,
+	@rahn2 decimal,
+	@ejare1 decimal,
+	@ejare2 decimal,
+	@peopleCount smallint=null,
+	@hasOwner bit=null,
+	@shortDate bit=null,
+	@rentalGuid uniqueidentifier=null,
+	@cityGuid uniqueidentifier,
+	@typeGuid uniqueidentifier,
+	@masahat1 int,
+	@masahat2 int,
+	@roomCount int,
+	@accTypeGuid uniqueidentifier,
+	@conditionGuid uniqueidentifier,
+	@shortDesc nvarchar(max),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingRequests]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[AskerGuid] = @askerGuid
+		  ,[SellPrice1] = @sellPrice1
+		  ,[SellPrice2] = @sellPrice2
+		  ,[HasVam] = @hasVam
+		  ,[RahnPrice1] = @rahn1
+		  ,[RahnPrice2] = @rahn2
+		  ,[EjarePrice1] = @ejare1
+		  ,[EjarePrice2] = @ejare2
+		  ,[PeopleCount] = @peopleCount
+		  ,[HasOwner] = @hasOwner
+		  ,[ShortDate] = @shortDate
+		  ,[RentalAutorityGuid] = @rentalGuid
+		  ,[CityGuid] = @cityGuid
+		  ,[BuildingTypeGuid] = @typeGuid
+		  ,[Masahat1] = @masahat1
+		  ,[Masahat2] = @masahat2
+		  ,[RoomCount] = @roomCount
+		  ,[BuildingAccountTypeGuid] = @accTypeGuid
+		  ,[BuildingConditionGuid] = @conditionGuid
+		  ,[ShortDesc] = @shortDesc
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingRequests]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[CreateDate]
+           ,[AskerGuid]
+           ,[UserGuid]
+           ,[SellPrice1]
+           ,[SellPrice2]
+           ,[HasVam]
+           ,[RahnPrice1]
+           ,[RahnPrice2]
+           ,[EjarePrice1]
+           ,[EjarePrice2]
+           ,[PeopleCount]
+           ,[HasOwner]
+           ,[ShortDate]
+           ,[RentalAutorityGuid]
+           ,[CityGuid]
+           ,[BuildingTypeGuid]
+           ,[Masahat1]
+           ,[Masahat2]
+           ,[RoomCount]
+           ,[BuildingAccountTypeGuid]
+           ,[BuildingConditionGuid]
+           ,[ShortDesc]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@createDtae
+           ,@askerGuid
+           ,@userGuid
+           ,@sellPrice1
+           ,@sellPrice2
+           ,@hasVam
+           ,@rahn1
+           ,@rahn2
+           ,@ejare1
+           ,@ejare2
+           ,@peopleCount
+           ,@hasOwner
+           ,@shortDate
+           ,@rentalGuid
+           ,@cityGuid
+           ,@typeGuid
+           ,@masahat1
+           ,@masahat2
+           ,@roomCount
+           ,@accTypeGuid
+           ,@conditionGuid
+           ,@shortDesc
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingReview_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingReview_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingReview_Save
+	@Guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@BuildingGuid uniqueidentifier,
+	@UserGuid uniqueidentifier,
+	@CustomerGuid uniqueidentifier,
+	@Date Datetime,
+	@Report nvarchar(Max)='',
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN	
+	UPDATE [dbo].[Buildings_BuildingReview]
+	   SET [Modified] = GETDATE()
+		  ,[BuildingGuid] = @BuildingGuid
+		  ,[UserGuid] = @UserGuid
+		  ,[CustometGuid] = @CustomerGuid
+		  ,[Date] = @Date
+		  ,[Report] = @Report
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE Guid = @Guid And CustomerGuid=@cusGuid
+	if @@ROWCOUNT = 0
+	Begin
+		INSERT INTO [dbo].[Buildings_BuildingReview]
+           ([Guid]
+           ,[Modified]
+           ,[BuildingGuid]
+           ,[UserGuid]
+           ,[CustometGuid]
+           ,[Date]
+           ,[Report]
+           ,[ServerStatus]
+           ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		 VALUES
+			   (@Guid
+			   ,GETDATE()
+			   ,@BuildingGuid
+			   ,@UserGuid
+			   ,@CustomerGuid
+			   ,@Date
+			   ,@Report
+			   ,@serverSt
+			   ,@serverDate
+			   ,@cusGuid)
+	End
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingType_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingType_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingType_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingTypes]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingTypes]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_User_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_User_Save]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_User_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(400),
+	@userName nvarchar(200),
+	@pass nvarchar(200),
+	@access nvarchar(max),
+	@questiion smallint,
+	@answer nvarchar(400),
+	@email nvarchar(50),
+	@mobile nvarchar(50),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_Users]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[UserName] = @userName
+		  ,[Password] = @pass
+		  ,[Access] = @access
+		  ,[SecurityQuestion] = @questiion
+		  ,[AnswerQuestion] = @answer
+		  ,[Email] = @email
+		  ,[Mobile] = @mobile
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT=0
+	 begin
+		INSERT INTO [dbo].[Buildings_Users]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+           ,[UserName]
+           ,[Password]
+           ,[Access]
+           ,[SecurityQuestion]
+           ,[AnswerQuestion]
+           ,[Email]
+           ,[Mobile]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+           ,@userName
+           ,@pass
+           ,@access
+           ,@questiion
+           ,@answer
+           ,@email
+           ,@mobile
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingView_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingView_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingView_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingViews]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingViews]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingWindow_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingWindow_Save]	As Begin print 11 end')  
+GO
+ALTER PROCEDURE [dbo].[sp_BuildingWindow_Save]
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingWindow]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingWindow]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Zoncan_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Zoncan_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_Zoncan_Save
+	@Guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@st bit,
+	@name nvarchar(200),
+	@desc nvarchar(max),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingZoncan]
+	   SET [Modified] = GETDATE()
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[Description] = @desc
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE Guid = @Guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingZoncan]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+           ,[Description]
+           ,[ServerStatus]
+           ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@Guid
+           ,GETDATE()
+           ,@st
+           ,@name
+           ,@desc
+           ,@serverSt
+           ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Cities_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Cities_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_Cities_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(200),
+	@stateGuid uniqueidentifier,
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_Cities]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[StateGuid] = @stateGuid
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_Cities]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+           ,[StateGuid]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+           ,@stateGuid
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_State_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_State_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_State_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_States]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_States]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Regions_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Regions_Save]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Regions_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(200),
+	@cityGuid uniqueidentifier,
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_Regions]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[CityGuid] = @cityGuid
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_Regions]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+           ,[CityGuid]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+           ,@cityGuid
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_DocumentType_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_DocumentType_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_DocumentType_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_DocumentType]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_DocumentType]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_KitchenService_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_KitchenService_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_KitchenService_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_KitchenService]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_KitchenService]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Rental_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Rental_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_Rental_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_RentalAuthorities]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_RentalAuthorities]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_FloorCover_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_FloorCover_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_FloorCover_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_FloorCover]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_FloorCover]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_PeopleGroup_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_PeopleGroup_Save]	As Begin print 11 end')
+GO
+
+ALTER PROCEDURE [dbo].[sp_PeopleGroup_Save] 
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@name nvarchar(250),
+	@parentGuid uniqueidentifier,
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_PeopleGroup]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[ParentGuid] = @parentGuid
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_PeopleGroup]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Name]
+           ,[ParentGuid]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@st
+           ,@name
+           ,@parentGuid
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+End
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Peoples_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Peoples_Save]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Peoples_Save
+	@Guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@st bit,
+	@code nvarchar(10),
+	@name nvarchar(500),
+	@nCode nvarchar(20),
+	@idCode nvarchar(20),
+	@fName nvarchar(200),
+	@pBirth nvarchar(500),
+	@dBirth nvarchar(20),
+	@address nvarchar(max),
+	@issued nvarchar(200),
+	@postalCode nvarchar(50),
+	@groupGuid uniqueidentifier,
+	@serverSt smallint,
+	@serverDate datetime
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_Peoples]
+	   SET [Modified] = @modif
+		  ,[Status] = @st
+		  ,[Code] = @code
+		  ,[Name] = @name
+		  ,[NationalCode] = @nCode
+		  ,[IdCode] = @idCode
+		  ,[FatherName] = @fName
+		  ,[PlaceBirth] = @pBirth
+		  ,[DateBirth] = @dBirth
+		  ,[Address] = @address
+		  ,[IssuedFrom] = @issued
+		  ,[PostalCode] = @postalCode
+		  ,[GroupGuid] = @groupGuid
+		  ,[ServerStatus] = @serverSt
+		  ,[ServerDeliveryDate] = @serverDate
+	 WHERE [Guid] = @Guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT=0
+	 begin
+		INSERT INTO [dbo].[Buildings_Peoples]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[Code]
+           ,[Name]
+           ,[NationalCode]
+           ,[IdCode]
+           ,[FatherName]
+           ,[PlaceBirth]
+           ,[DateBirth]
+           ,[Address]
+           ,[IssuedFrom]
+           ,[PostalCode]
+           ,[GroupGuid]
+		   ,[ServerStatus]
+		   ,[ServerDeliveryDate]
+		   ,[CustomerGuid])
+		 VALUES
+           (@Guid
+           ,@modif
+           ,@st
+           ,@code
+           ,@name
+           ,@nCode
+           ,@idCode
+           ,@fName
+           ,@pBirth
+           ,@dBirth
+           ,@address
+           ,@issued
+           ,@postalCode
+           ,@groupGuid
+		   ,@serverSt
+		   ,@serverDate
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingRelatedOption_Remove]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingRelatedOption_Remove]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingRelatedOption_Remove
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier
+AS
+BEGIN
+	delete from Buildings_BuildingRelatedOptions
+	where BuildinGuid=@guid and CustomerGuid=@cusGuid
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingGallery_Remove]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingGallery_Remove]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingGallery_Remove
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier
+AS
+BEGIN
+	delete from Buildings_BuildingGallery
+	where BuildingGuid=@guid and CustomerGuid=@cusGuid
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingNote_Remove]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingNote_Remove]	As Begin print 11 end')  
+GO
+ALTER PROCEDURE [dbo].[sp_BuildingNote_Remove]
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier
+AS
+BEGIN
+	delete from Buildings_BuildingNote
+	where BuildingGuid=@guid and CustomerGuid=@cusGuid
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingGallery_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingGallery_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingGallery_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@buGuid uniqueidentifier,
+	@imageName nvarchar(100)
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingGallery]
+	   SET [Modified] = @modif
+		  ,[BuildingGuid] = @buGuid
+		  ,[ImageName] = @imageName
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingGallery]
+           ([Guid]
+           ,[Modified]
+           ,[BuildingGuid]
+           ,[ImageName]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@buGuid
+           ,@imageName
+		   ,@cusGuid)
+	 end
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingRelatedOptopn_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingRelatedOptopn_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingRelatedOptopn_Save
+	@guid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@modif datetime,
+	@buGuid uniqueidentifier,
+	@buOptionGuid uniqueidentifier
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingRelatedOptions]
+	   SET [Modified] = @modif
+		  ,[BuildinGuid] = @buGuid
+		  ,[BuildingOptionGuid] = @buOptionGuid
+	 WHERE [Guid] = @guid and CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingRelatedOptions]
+           ([Guid]
+           ,[Modified]
+           ,[BuildinGuid]
+           ,[BuildingOptionGuid]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@buGuid
+           ,@buOptionGuid
+		   ,@cusGuid)
+	 end
+END

@@ -91,10 +91,33 @@
     <Compile Include="Assistence\ClsCache.cs" />
     <Compile Include="Assistence\DatabaseUtilities.cs" />
     <Compile Include="Assistence\DefaultProducts.cs" />
+    <Compile Include="Bussines\BuildingAccountTypeBussines.cs" />
     <Compile Include="Bussines\BuildingBussines.cs" />
+    <Compile Include="Bussines\BuildingConditionBussines.cs" />
+    <Compile Include="Bussines\BuildingGalleryBussines.cs" />
+    <Compile Include="Bussines\BuildingNoteBussines.cs" />
+    <Compile Include="Bussines\BuildingOptionsBussines.cs" />
+    <Compile Include="Bussines\BuildingRelatedOptionBussines.cs" />
+    <Compile Include="Bussines\BuildingRequestBussines.cs" />
+    <Compile Include="Bussines\BuildingReviewBussines.cs" />
+    <Compile Include="Bussines\BuildingTypeBussines.cs" />
+    <Compile Include="Bussines\BuildingViewBussines.cs" />
+    <Compile Include="Bussines\BuildingWindowBussines.cs" />
+    <Compile Include="Bussines\BuildingZoncanBussines.cs" />
+    <Compile Include="Bussines\CityBussines.cs" />
+    <Compile Include="Bussines\DocumentTypeBussines.cs" />
+    <Compile Include="Bussines\FloorCoverBussines.cs" />
+    <Compile Include="Bussines\KitchenServiceBussines.cs" />
     <Compile Include="Bussines\PardakhtBussines.cs" />
+    <Compile Include="Bussines\PeopleBussines.cs" />
+    <Compile Include="Bussines\PeopleGroupBussines.cs" />
+    <Compile Include="Bussines\PhoneBookBussines.cs" />
     <Compile Include="Bussines\ProductBussines.cs" />
     <Compile Include="Bussines\ReceptionBussines.cs" />
+    <Compile Include="Bussines\RegionBussines.cs" />
+    <Compile Include="Bussines\RentalAouthorityBussines.cs" />
+    <Compile Include="Bussines\StateBussines.cs" />
+    <Compile Include="Bussines\UserBussines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -118,6 +141,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\RealState\RealState\WebHesabBussines\WebHesabBussines.csproj">
+      <Project>{f8f30f25-71e7-4e57-b938-4b30a267eaef}</Project>
+      <Name>WebHesabBussines</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
       <Project>{dcb5bde2-6238-422d-ad4e-f53afce9bf30}</Project>
       <Name>Services</Name>

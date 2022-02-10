@@ -3,14 +3,183 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
+using EntityCache.Assistence;
 using Persistence;
 using Services;
 using Services.AndroidViewModels;
+using WebHesabBussines;
 
 namespace EntityCache.Bussines
 {
     public class BuildingBussines
     {
+        public async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuilding item, Guid customerGuid, SqlTransaction tr = null)
+        {
+            var res = new ReturnedSaveFuncInfo();
+            var autoTran = tr == null;
+            SqlConnection cn = null;
+            try
+            {
+                if (autoTran)
+                {
+                    cn = new SqlConnection(Cache.ConnectionString);
+                    await cn.OpenAsync();
+                    tr = cn.BeginTransaction();
+                }
+                res.AddReturnedValue(await SaveAsync_(item, customerGuid, tr));
+                if (res.HasError) return res;
+                res.AddReturnedValue(await BuildingRelatedOptionBussines.RemoveRangeAsync(item.Guid, customerGuid, tr));
+                if (res.HasError) return res;
+                res.AddReturnedValue(await BuildingGalleryBussines.RemoveRangeAsync(item.Guid, customerGuid, tr));
+                if (res.HasError) return res;
+                res.AddReturnedValue(await BuildingNoteBussines.RemoveRangeAsync(item.Guid, customerGuid, tr));
+                if (res.HasError) return res;
+
+                if (item.OptionList?.Count > 0)
+                {
+                    foreach (var op in item.OptionList)
+                        op.BuildinGuid = item.Guid;
+                    res.AddReturnedValue(await BuildingRelatedOptionBussines.SaveRangeAsync(item.OptionList, customerGuid, tr));
+                    if (res.HasError) return res;
+                }
+                if (item.GalleryList?.Count > 0)
+                {
+                    foreach (var op in item.GalleryList)
+                        op.BuildingGuid = item.Guid;
+
+                    res.AddReturnedValue(await BuildingGalleryBussines.SaveRangeAsync(item.GalleryList, customerGuid, tr));
+                    if (res.HasError) return res;
+                }
+                if (item.NoteList?.Count > 0)
+                {
+                    foreach (var op in item.NoteList)
+                        op.BuildingGuid = item.Guid;
+
+                    res.AddReturnedValue(await BuildingNoteBussines.SaveRangeAsync(item.NoteList, customerGuid, tr));
+                    if (res.HasError) return res;
+                }
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                res.AddReturnedValue(ex);
+            }
+            finally
+            {
+                if (autoTran)
+                {
+                    res.AddReturnedValue(tr.TransactionDestiny(res.HasError));
+                    res.AddReturnedValue(cn.CloseConnection());
+                }
+            }
+            return res;
+        }
+        private async Task<ReturnedSaveFuncInfo> SaveAsync_(WebBuilding item, Guid customerGuid, SqlTransaction tr)
+        {
+            var res = new ReturnedSaveFuncInfo();
+            try
+            {
+                var cmd = new SqlCommand("sp_Building_Save", tr.Connection, tr) { CommandType = CommandType.StoredProcedure };
+                cmd.Parameters.AddWithValue("@guid", item.Guid);
+                cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
+                cmd.Parameters.AddWithValue("@st", item.Status);
+                cmd.Parameters.AddWithValue("@ownerGuid", item.OwnerGuid);
+                cmd.Parameters.AddWithValue("@modif", item.Modified);
+                cmd.Parameters.AddWithValue("@sellPrice", item.SellPrice);
+                cmd.Parameters.AddWithValue("@vamPrice", item.VamPrice);
+                cmd.Parameters.AddWithValue("@qestPrice", item.QestPrice);
+                cmd.Parameters.AddWithValue("@dong", item.Dang);
+                cmd.Parameters.AddWithValue("@docTypeGuid", item.DocumentType);
+                cmd.Parameters.AddWithValue("@tarakom", item.Tarakom);
+                cmd.Parameters.AddWithValue("@rahnPrice1", item.RahnPrice1);
+                cmd.Parameters.AddWithValue("@ejarePrice1", item.EjarePrice1);
+                cmd.Parameters.AddWithValue("@rentalGuid", item.RentalAutorityGuid);
+                cmd.Parameters.AddWithValue("@isShortTime", item.IsShortTime);
+                cmd.Parameters.AddWithValue("@isOwnerHere", item.IsOwnerHere);
+                cmd.Parameters.AddWithValue("@pishTotalPrice", item.PishTotalPrice);
+                cmd.Parameters.AddWithValue("@pishPrice", item.PishPrice);
+                cmd.Parameters.AddWithValue("@deliveryDate", item.DeliveryDate);
+                cmd.Parameters.AddWithValue("@pishDesc", item.PishDesc ?? "");
+                cmd.Parameters.AddWithValue("@moavezeDesc", item.MoavezeDesc ?? "");
+                cmd.Parameters.AddWithValue("@mosharekatDesc", item.MosharekatDesc ?? "");
+                cmd.Parameters.AddWithValue("@masahat", item.Masahat);
+                cmd.Parameters.AddWithValue("@zirbana", item.ZirBana);
+                cmd.Parameters.AddWithValue("@cityGuid", item.CityGuid);
+                cmd.Parameters.AddWithValue("@regionGuid", item.RegionGuid);
+                cmd.Parameters.AddWithValue("@address", item.Address ?? "");
+                cmd.Parameters.AddWithValue("@conditionGuid", item.BuildingConditionGuid);
+                if (item.Side != null)
+                    cmd.Parameters.AddWithValue("@side", (int)item.Side);
+                cmd.Parameters.AddWithValue("@typeGuid", item.BuildingTypeGuid);
+                cmd.Parameters.AddWithValue("@shortDesc", item.ShortDesc ?? "");
+                cmd.Parameters.AddWithValue("@accountTypeGuid", item.BuildingAccountTypeGuid);
+                cmd.Parameters.AddWithValue("@metrazhTejari", item.MetrazhTejari);
+                cmd.Parameters.AddWithValue("@viewGuid", item.BuildingViewGuid);
+                cmd.Parameters.AddWithValue("@floorCoverGuid", item.FloorCoverGuid);
+                cmd.Parameters.AddWithValue("@kitchenServiceGuid", item.KitchenServiceGuid);
+                if (item.Water != null)
+                    cmd.Parameters.AddWithValue("@water", (short)item.Water);
+                if (item.Barq != null)
+                    cmd.Parameters.AddWithValue("@barq", (short)item.Barq);
+                if (item.Gas != null)
+                    cmd.Parameters.AddWithValue("@gas", (short)item.Gas);
+                if (item.Tell != null)
+                    cmd.Parameters.AddWithValue("@tell", (short)item.Tell);
+                cmd.Parameters.AddWithValue("@tedadTabaqe", item.TedadTabaqe);
+                cmd.Parameters.AddWithValue("@tabaqeNo", item.TabaqeNo);
+                cmd.Parameters.AddWithValue("@vahedPerTabaqe", item.VahedPerTabaqe);
+                cmd.Parameters.AddWithValue("@metrazheKouche", item.MetrazhKouche);
+                cmd.Parameters.AddWithValue("@ertefaSaqf", item.ErtefaSaqf);
+                cmd.Parameters.AddWithValue("@hashie", item.Hashie);
+                cmd.Parameters.AddWithValue("@saleSakht", item.SaleSakht ?? "");
+                cmd.Parameters.AddWithValue("@dateParvane", item.DateParvane ?? "");
+                cmd.Parameters.AddWithValue("@parvaneSerial", item.ParvaneSerial ?? "");
+                cmd.Parameters.AddWithValue("@bonBast", item.BonBast);
+                cmd.Parameters.AddWithValue("@mamarJoda", item.MamarJoda);
+                cmd.Parameters.AddWithValue("@roomCount", item.RoomCount);
+                cmd.Parameters.AddWithValue("@code", item.Code ?? "");
+                cmd.Parameters.AddWithValue("@userGuid", item.UserGuid);
+                cmd.Parameters.AddWithValue("@createDate", item.CreateDate);
+                cmd.Parameters.AddWithValue("@image", item.Image ?? "");
+                cmd.Parameters.AddWithValue("@priority", (short)item.Priority);
+                cmd.Parameters.AddWithValue("@isArchive", item.IsArchive);
+                cmd.Parameters.AddWithValue("@serverSt", (short)item.ServerStatus);
+                cmd.Parameters.AddWithValue("@serverDate", item.ServerDeliveryDate);
+                cmd.Parameters.AddWithValue("@lenght", item.Lenght);
+                if (item.AdvertiseType != null)
+                    cmd.Parameters.AddWithValue("@advType", (short)item.AdvertiseType);
+                cmd.Parameters.AddWithValue("@divarTitle", item.DivarTitle ?? "");
+                cmd.Parameters.AddWithValue("@hitting", item.Hiting ?? "");
+                cmd.Parameters.AddWithValue("@colling", item.Colling ?? "");
+                cmd.Parameters.AddWithValue("@tabdil", item.Tabdil);
+                cmd.Parameters.AddWithValue("@reformArear", item.ReformArea);
+                cmd.Parameters.AddWithValue("@buildingPermits", item.BuildingPermits);
+                cmd.Parameters.AddWithValue("@widthOfPassage", item.WidthOfPassage);
+                if (item.VillaType != null)
+                    cmd.Parameters.AddWithValue("@villaType", (short)item.VillaType);
+                if (item.CommericallLicense != null)
+                    cmd.Parameters.AddWithValue("@commeriacallLicense", (short)item.CommericallLicense);
+                cmd.Parameters.AddWithValue("@suitableFor", item.SuitableFor ?? "");
+                cmd.Parameters.AddWithValue("@wallCovering", item.WallCovering ?? "");
+                cmd.Parameters.AddWithValue("@treeCount", item.TreeCount);
+                if (item.ConstructionStage != null)
+                    cmd.Parameters.AddWithValue("@constructionStage", (short)item.ConstructionStage);
+                if (item.Parent != null)
+                    cmd.Parameters.AddWithValue("@parent", (short)item.Parent);
+                cmd.Parameters.AddWithValue("@zoncanGuid", item.ZoncanGuid);
+                cmd.Parameters.AddWithValue("@windowGuid", item.WindowGuid);
+                cmd.Parameters.AddWithValue("@vahedNo", item.VahedNo);
+
+                await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                WebErrorLog.ErrorInstence.StartErrorLog(ex);
+                res.AddReturnedValue(ex);
+            }
+            return res;
+        }
         public static List<BuildingListViewModel> GetAllBuildingListViewModel(Guid customerGuid, EnRequestType type)
         {
             var list = new List<BuildingListViewModel>();
@@ -70,7 +239,7 @@ namespace EntityCache.Bussines
                 if (dr["CreateDate"] != DBNull.Value)
                 {
                     item.Date = ((DateTime)dr["CreateDate"]).GetTelegramDate();
-                    item.CreateDate = (DateTime) dr["CreateDate"];
+                    item.CreateDate = (DateTime)dr["CreateDate"];
                 }
                 if (dr["EjarePrice"] != DBNull.Value) item.EjarePrice = $"{dr["EjarePrice"]:N0} تومان";
                 if (dr["RahnPrice"] != DBNull.Value) item.EjarePrice = $"{dr["RahnPrice"]:N0} تومان";

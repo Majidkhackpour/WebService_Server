@@ -1032,12 +1032,12 @@
     <Folder Include="Areas\Manager\Data\" />
     <Folder Include="BackUpFiles\" />
     <Folder Include="BuildingImages\" />
-    <Folder Include="Views\BuildingNote\" />
-    <Folder Include="Views\BuildingReview\" />
-    <Folder Include="Views\BuildingWindow\" />
-    <Folder Include="Views\BuildingZoncan\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\RealState\RealState\WebHesabBussines\WebHesabBussines.csproj">
+      <Project>{f8f30f25-71e7-4e57-b938-4b30a267eaef}</Project>
+      <Name>WebHesabBussines</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Services\Services\Services\Services.csproj">
       <Project>{dcb5bde2-6238-422d-ad4e-f53afce9bf30}</Project>
       <Name>Services</Name>

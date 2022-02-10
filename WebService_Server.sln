@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityCache", "EntityCache\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{4624CDBB-1744-4638-A49F-EC3F5F1CD485}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHesabBussines", "..\..\RealState\RealState\WebHesabBussines\WebHesabBussines.csproj", "{F8F30F25-71E7-4E57-B938-4B30A267EAEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4624CDBB-1744-4638-A49F-EC3F5F1CD485}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4624CDBB-1744-4638-A49F-EC3F5F1CD485}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4624CDBB-1744-4638-A49F-EC3F5F1CD485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8F30F25-71E7-4E57-B938-4B30A267EAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8F30F25-71E7-4E57-B938-4B30A267EAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8F30F25-71E7-4E57-B938-4B30A267EAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8F30F25-71E7-4E57-B938-4B30A267EAEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
