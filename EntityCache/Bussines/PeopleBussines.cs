@@ -11,7 +11,7 @@ namespace EntityCache.Bussines
 {
     public class PeopleBussines
     {
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(WebPeople item, Guid customerGuid, SqlTransaction tr = null)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebPeople item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;
@@ -24,18 +24,18 @@ namespace EntityCache.Bussines
                     await cn.OpenAsync();
                     tr = cn.BeginTransaction();
                 }
-                //res.AddReturnedValue(await _tell.RemoveByParentAsync(item.Guid, tr));
-                //if (res.HasError) return res;
+                res.AddReturnedValue(await PhoneBookBussines.RemoveByParentAsync(item.Guid, customerGuid, tr));
+                if (res.HasError) return res;
 
-                //if (item.TellList?.Count > 0)
-                //{
-                //    foreach (var t in item.TellList)
-                //    {
-                //        t.ParentGuid = item.Guid;
-                //        t.Name = item.Name;
-                //    }
-                //    res.AddReturnedValue(await _tell.SaveRangeAsync(item.TellList, tr));
-                //}
+                if (item.TellList?.Count > 0)
+                {
+                    foreach (var t in item.TellList)
+                    {
+                        t.ParentGuid = item.Guid;
+                        t.Name = item.Name;
+                    }
+                    res.AddReturnedValue(await PhoneBookBussines.SaveRangeAsync(item.TellList, customerGuid, tr));
+                }
 
                 res.AddReturnedValue(await SaveAsync_(item, customerGuid, tr));
             }
@@ -54,7 +54,7 @@ namespace EntityCache.Bussines
             }
             return res;
         }
-        private async Task<ReturnedSaveFuncInfo> SaveAsync_(WebPeople item, Guid customerGuid, SqlTransaction tr)
+        private static async Task<ReturnedSaveFuncInfo> SaveAsync_(WebPeople item, Guid customerGuid, SqlTransaction tr)
         {
             var res = new ReturnedSaveFuncInfo();
             try

@@ -11,7 +11,7 @@ namespace EntityCache.Bussines
 {
     public class BuildingTypeBussines
     {
-        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuildingType item, Guid customerGuid, SqlTransaction tr)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuildingType item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;

@@ -11,7 +11,7 @@ namespace EntityCache.Bussines
 {
     public class RentalAouthorityBussines
     {
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(WebRental item, Guid customerGuid, SqlTransaction tr = null)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebRental item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;
@@ -26,6 +26,7 @@ namespace EntityCache.Bussines
                 }
                 var cmd = new SqlCommand("sp_Rental_Save", tr.Connection, tr) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@guid", item.Guid);
+                cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
                 cmd.Parameters.AddWithValue("@st", item.Status);
                 cmd.Parameters.AddWithValue("@name", item.Name ?? "");
                 cmd.Parameters.AddWithValue("@modif", item.Modified);

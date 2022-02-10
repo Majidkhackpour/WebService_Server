@@ -11,7 +11,7 @@ namespace EntityCache.Bussines
 {
     public class BuildingRequestBussines
     {
-        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuildingRequest item, Guid customerGuid, SqlTransaction tr)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuildingRequest item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;
@@ -26,16 +26,16 @@ namespace EntityCache.Bussines
                 }
                 res.AddReturnedValue(await SaveAsync_(item, customerGuid, tr));
 
-                //res.AddReturnedValue(await _regions.RemoveRangeAsync(item.Guid, tr));
-                //if (res.HasError) return res;
+                res.AddReturnedValue(await BuildingRequestRegionBussines.RemoveRangeAsync(item.Guid, customerGuid, tr));
+                if (res.HasError) return res;
 
-                //if (item.RegionList.Count > 0)
-                //{
-                //    foreach (var op in item.RegionList)
-                //        op.RequestGuid = item.Guid;
-                //    res.AddReturnedValue(await _regions.SaveRangeAsync(item.RegionList, tr));
-                //    if (res.HasError) return res;
-                //}
+                if (item.RegionList.Count > 0)
+                {
+                    foreach (var op in item.RegionList)
+                        op.RequestGuid = item.Guid;
+                    res.AddReturnedValue(await BuildingRequestRegionBussines.SaveRangeAsync(item.RegionList, customerGuid, tr));
+                    if (res.HasError) return res;
+                }
             }
             catch (Exception ex)
             {

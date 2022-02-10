@@ -1566,3 +1566,63 @@ BEGIN
 		   ,@cusGuid)
 	 end
 END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingRequestRegion_RemoveRange]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingRequestRegion_RemoveRange]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingRequestRegion_RemoveRange
+	@masterGuid uniqueidentifier,
+	@cusGuid uniqueidentifier
+AS
+BEGIN
+	delete from Buildings_BuildingRequestRegions
+	where RequestGuid=@masterGuid and CustomerGuid=@cusGuid
+END
+GO
+--========================================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingRequestRegion_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_BuildingRequestRegion_Save]	As Begin print 11 end')  
+GO
+Alter PROCEDURE sp_BuildingRequestRegion_Save
+	@masterGuid uniqueidentifier,
+	@cusGuid uniqueidentifier,
+	@guid uniqueidentifier,
+	@modif datetime,
+	@regionGuid uniqueidentifier
+AS
+BEGIN
+	UPDATE [dbo].[Buildings_BuildingRequestRegions]
+	   SET [Modified] = @modif
+		  ,[RequestGuid] = @masterGuid
+		  ,[RegionGuid] = @regionGuid
+	 WHERE [Guid] = @guid And CustomerGuid=@cusGuid
+	 if @@ROWCOUNT = 0
+	 begin
+		INSERT INTO [dbo].[Buildings_BuildingRequestRegions]
+           ([Guid]
+           ,[Modified]
+           ,[RequestGuid]
+           ,[RegionGuid]
+		   ,[CustomerGuid])
+		VALUES
+           (@guid
+           ,@modif
+           ,@masterGuid
+           ,@regionGuid
+		   ,@cusGuid)
+	 end
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_PhoneBook_RemoveByParentGuid]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_PhoneBook_RemoveByParentGuid]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_PhoneBook_RemoveByParentGuid
+	@parentGuid uniqueidentifier,
+	@cusGuid uniqueidentifier
+AS
+BEGIN
+	delete From Buildings_PhoneBook
+	where ParentGuid=@parentGuid and CustomerGuid=@cusGuid
+END

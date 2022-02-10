@@ -99,6 +99,7 @@
     <Compile Include="Bussines\BuildingOptionsBussines.cs" />
     <Compile Include="Bussines\BuildingRelatedOptionBussines.cs" />
     <Compile Include="Bussines\BuildingRequestBussines.cs" />
+    <Compile Include="Bussines\BuildingRequestRegionBussines.cs" />
     <Compile Include="Bussines\BuildingReviewBussines.cs" />
     <Compile Include="Bussines\BuildingTypeBussines.cs" />
     <Compile Include="Bussines\BuildingViewBussines.cs" />

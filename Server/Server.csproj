@@ -655,12 +655,9 @@
     <Compile Include="Controllers\BuildingAccountTypeController.cs" />
     <Compile Include="Controllers\BuildingConditionController.cs" />
     <Compile Include="Controllers\BuildingController.cs" />
-    <Compile Include="Controllers\BuildingNoteController.cs" />
     <Compile Include="Controllers\BuildingOptionController.cs" />
     <Compile Include="Controllers\BuildingPhoneBookController.cs" />
-    <Compile Include="Controllers\BuildingRelatedOptionsController.cs" />
     <Compile Include="Controllers\BuildingRequestController.cs" />
-    <Compile Include="Controllers\BuildingRequestRegionController.cs" />
     <Compile Include="Controllers\BuildingReviewController.cs" />
     <Compile Include="Controllers\BuildingTypeController.cs" />
     <Compile Include="Controllers\BuildingUserController.cs" />

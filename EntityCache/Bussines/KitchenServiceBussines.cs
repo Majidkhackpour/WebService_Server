@@ -11,7 +11,7 @@ namespace EntityCache.Bussines
 {
     public class KitchenServiceBussines
     {
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(WebKitchenService item, Guid customerGuid, SqlTransaction tr = null)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebKitchenService item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;

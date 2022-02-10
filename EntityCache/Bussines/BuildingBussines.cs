@@ -14,7 +14,7 @@ namespace EntityCache.Bussines
 {
     public class BuildingBussines
     {
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuilding item, Guid customerGuid, SqlTransaction tr = null)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebBuilding item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;
@@ -75,7 +75,7 @@ namespace EntityCache.Bussines
             }
             return res;
         }
-        private async Task<ReturnedSaveFuncInfo> SaveAsync_(WebBuilding item, Guid customerGuid, SqlTransaction tr)
+        private static async Task<ReturnedSaveFuncInfo> SaveAsync_(WebBuilding item, Guid customerGuid, SqlTransaction tr)
         {
             var res = new ReturnedSaveFuncInfo();
             try

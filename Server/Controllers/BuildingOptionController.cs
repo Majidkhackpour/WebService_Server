@@ -1,20 +1,18 @@
-﻿using Persistence.Entities.Building;
-using Persistence.Model;
+﻿using EntityCache.Bussines;
 using Server.Models;
 using Services;
 using System;
-using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
+using WebHesabBussines;
 
 namespace Server.Controllers
 {
     public class BuildingOptionController : ApiController
     {
-        private ModelContext db = new ModelContext();
-
         [HttpPost]
-        public BuildingOptions SaveAsync(BuildingOptions cls)
+        public async Task<WebBuildingOptions> SaveAsync(WebBuildingOptions cls)
         {
             try
             {
@@ -24,8 +22,8 @@ namespace Server.Controllers
                 if (string.IsNullOrEmpty(guid)) return null;
                 var cusGuid = Guid.Parse(guid);
                 if (!Assistence.CheckCustomer(cusGuid)) return null;
-                db.BuildingOptions.AddOrUpdate(cls);
-                db.SaveChanges();
+                var res = await BuildingOptionsBussines.SaveAsync(cls, cusGuid);
+                if (res.HasError) return null;
                 Assistence.SaveLog(cusGuid, cls.Guid, EnTemp.BuildingOptions);
                 return cls;
             }

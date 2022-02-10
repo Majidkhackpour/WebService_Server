@@ -11,7 +11,7 @@ namespace EntityCache.Bussines
 {
     public class PeopleGroupBussines
     {
-        public async Task<ReturnedSaveFuncInfo> SaveAsync(WebPeopleGroup item, Guid customerGuid, SqlTransaction tr = null)
+        public static async Task<ReturnedSaveFuncInfo> SaveAsync(WebPeopleGroup item, Guid customerGuid, SqlTransaction tr = null)
         {
             var res = new ReturnedSaveFuncInfo();
             var autoTran = tr == null;
