@@ -36,7 +36,7 @@ namespace EntityCache.Bussines
                 cmd.Parameters.AddWithValue("@guid", item.Guid);
                 cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
                 cmd.Parameters.AddWithValue("@masterGuid", item.RequestGuid);
-                cmd.Parameters.AddWithValue("@modif", item.Modified);
+                cmd.Parameters.AddWithValue("@modif", DateTime.Now);
                 cmd.Parameters.AddWithValue("@regionGuid", item.RegionGuid);
 
                 await cmd.ExecuteNonQueryAsync();

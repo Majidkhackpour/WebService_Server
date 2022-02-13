@@ -28,7 +28,7 @@ namespace EntityCache.Bussines
                 var cmd = new SqlCommand("sp_PhoneBook_Save", tr.Connection, tr) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@guid", item.Guid);
                 cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
-                cmd.Parameters.AddWithValue("@modif", item.Modified);
+                cmd.Parameters.AddWithValue("@modif", DateTime.Now);
                 cmd.Parameters.AddWithValue("@st", item.Status);
                 cmd.Parameters.AddWithValue("@name", item.Name);
                 cmd.Parameters.AddWithValue("@tell", item.Tell ?? "");

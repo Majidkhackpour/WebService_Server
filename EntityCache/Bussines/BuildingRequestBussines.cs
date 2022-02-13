@@ -63,7 +63,7 @@ namespace EntityCache.Bussines
                 cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
                 cmd.Parameters.AddWithValue("@st", item.Status);
                 cmd.Parameters.AddWithValue("@createDtae", item.CreateDate);
-                cmd.Parameters.AddWithValue("@modif", item.Modified);
+                cmd.Parameters.AddWithValue("@modif", DateTime.Now);
                 cmd.Parameters.AddWithValue("@askerGuid", item.AskerGuid);
                 cmd.Parameters.AddWithValue("@userGuid", item.UserGuid);
                 cmd.Parameters.AddWithValue("@sellPrice1", item.SellPrice1);

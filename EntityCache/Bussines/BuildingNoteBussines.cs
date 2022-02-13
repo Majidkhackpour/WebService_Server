@@ -1,6 +1,4 @@
-﻿using EntityCache.Assistence;
-using Persistence;
-using Services;
+﻿using Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,7 +19,7 @@ namespace EntityCache.Bussines
                 cmd.Parameters.AddWithValue("@guid", item.Guid);
                 cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
                 cmd.Parameters.AddWithValue("@note", item.Note ?? "");
-                cmd.Parameters.AddWithValue("@modif", item.Modified);
+                cmd.Parameters.AddWithValue("@modif", DateTime.Now);
                 cmd.Parameters.AddWithValue("@buGuid", item.BuildingGuid);
 
                 await cmd.ExecuteNonQueryAsync();

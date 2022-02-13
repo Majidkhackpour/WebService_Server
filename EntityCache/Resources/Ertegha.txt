@@ -1626,3 +1626,15 @@ BEGIN
 	delete From Buildings_PhoneBook
 	where ParentGuid=@parentGuid and CustomerGuid=@cusGuid
 END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_CheckCustomerGuid]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_CheckCustomerGuid]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_CheckCustomerGuid
+	@cusGuid uniqueidentifier
+AS
+BEGIN
+	Select count(*) from Department_Customers
+	where Guid=@cusGuid
+END
