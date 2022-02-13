@@ -176,6 +176,22 @@
     <Compile Include="Migrations\202202090834162__19.designer.cs">
       <DependentUpon>202202090834162__19.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202131708410__20.cs" />
+    <Compile Include="Migrations\202202131708410__20.designer.cs">
+      <DependentUpon>202202131708410__20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202131727276__21.cs" />
+    <Compile Include="Migrations\202202131727276__21.designer.cs">
+      <DependentUpon>202202131727276__21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202131729047__22.cs" />
+    <Compile Include="Migrations\202202131729047__22.designer.cs">
+      <DependentUpon>202202131729047__22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202131735218__23.cs" />
+    <Compile Include="Migrations\202202131735218__23.designer.cs">
+      <DependentUpon>202202131735218__23.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\ModelContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -250,6 +266,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202090834162__19.resx">
       <DependentUpon>202202090834162__19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202131708410__20.resx">
+      <DependentUpon>202202131708410__20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202131727276__21.resx">
+      <DependentUpon>202202131727276__21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202131729047__22.resx">
+      <DependentUpon>202202131729047__22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202131735218__23.resx">
+      <DependentUpon>202202131735218__23.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

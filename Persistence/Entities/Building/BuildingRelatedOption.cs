@@ -14,8 +14,6 @@ namespace Persistence.Entities.Building
         [Key, Column(Order = 1)]
         public Guid CustomerGuid { get; set; }
         public DateTime Modified { get; set; }
-        public ServerStatus ServerStatus { get; set; }
-        public DateTime ServerDeliveryDate { get; set; }
         public Guid BuildinGuid { get; set; }
         public Guid BuildingOptionGuid { get; set; }
     }
