@@ -26,6 +26,7 @@ namespace EntityCache.Bussines
                 }
                 var cmd = new SqlCommand("sp_BuildingReview_Save", tr.Connection, tr) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@Guid", item.Guid);
+                cmd.Parameters.AddWithValue("@st", item.Status);
                 cmd.Parameters.AddWithValue("@cusGuid", customerGuid);
                 cmd.Parameters.AddWithValue("@BuildingGuid", item.BuildingGuid);
                 cmd.Parameters.AddWithValue("@UserGuid", item.UserGuid);

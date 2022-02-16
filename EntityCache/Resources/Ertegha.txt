@@ -741,6 +741,7 @@ IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_BuildingR
 GO
 Alter PROCEDURE sp_BuildingReview_Save
 	@Guid uniqueidentifier,
+	@st bit,
 	@cusGuid uniqueidentifier,
 	@BuildingGuid uniqueidentifier,
 	@UserGuid uniqueidentifier,
@@ -760,6 +761,7 @@ BEGIN
 		  ,[Report] = @Report
 		  ,[ServerStatus] = @serverSt
 		  ,[ServerDeliveryDate] = @serverDate
+		  ,[Status] = @st
 	 WHERE Guid = @Guid And CustomerGuid=@cusGuid
 	if @@ROWCOUNT = 0
 	Begin
@@ -773,7 +775,8 @@ BEGIN
            ,[Report]
            ,[ServerStatus]
            ,[ServerDeliveryDate]
-		   ,[CustomerGuid])
+		   ,[CustomerGuid]
+		   ,[Status])
 		 VALUES
 			   (@Guid
 			   ,GETDATE()
@@ -784,7 +787,8 @@ BEGIN
 			   ,@Report
 			   ,@serverSt
 			   ,@serverDate
-			   ,@cusGuid)
+			   ,@cusGuid
+			   ,@st)
 	End
 END
 GO

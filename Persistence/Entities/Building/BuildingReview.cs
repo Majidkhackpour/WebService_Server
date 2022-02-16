@@ -21,5 +21,6 @@ namespace Persistence.Entities.Building
         public ServerStatus ServerStatus { get; set; }
         public DateTime ServerDeliveryDate { get; set; }
         public DateTime Modified { get; set; }
+        public bool Status { get; set; }
     }
 }
