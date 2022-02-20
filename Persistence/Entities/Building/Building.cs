@@ -32,9 +32,6 @@ namespace Persistence.Entities.Building
         public decimal PishTotalPrice { get; set; }
         public decimal PishPrice { get; set; }
         public DateTime? DeliveryDate { get; set; }
-        public string PishDesc { get; set; }
-        public string MoavezeDesc { get; set; }
-        public string MosharekatDesc { get; set; }
         public int Masahat { get; set; }
         public int ZirBana { get; set; }
         public Guid CityGuid { get; set; }
@@ -56,7 +53,6 @@ namespace Persistence.Entities.Building
         public int TedadTabaqe { get; set; }
         public int TabaqeNo { get; set; }
         public int VahedPerTabaqe { get; set; }
-        public float MetrazhKouche { get; set; }
         public float ErtefaSaqf { get; set; }
         public float Hashie { get; set; }
         public float Lenght { get; set; }
@@ -64,10 +60,6 @@ namespace Persistence.Entities.Building
         public bool? BuildingPermits { get; set; }
         public float WidthOfPassage { get; set; }
         public string SaleSakht { get; set; }
-        public string DateParvane { get; set; }
-        public string ParvaneSerial { get; set; }
-        public bool BonBast { get; set; }
-        public bool MamarJoda { get; set; }
         public int RoomCount { get; set; }
         public EnBuildingPriority Priority { get; set; }
         public bool IsArchive { get; set; }

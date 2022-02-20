@@ -93,9 +93,6 @@ ALTER PROCEDURE [dbo].[sp_Building_Save]
 	@pishTotalPrice decimal,
 	@pishPrice decimal,
 	@deliveryDate datetime=null,
-	@pishDesc nvarchar(Max)=null,
-	@moavezeDesc nvarchar(Max)=null,
-	@mosharekatDesc nvarchar(Max)=null,
 	@masahat int,
 	@zirbana int,
 	@cityGuid uniqueidentifier,
@@ -117,14 +114,9 @@ ALTER PROCEDURE [dbo].[sp_Building_Save]
 	@tedadTabaqe int,
 	@tabaqeNo int,
 	@vahedPerTabaqe int,
-	@metrazheKouche real,
 	@ertefaSaqf real,
 	@hashie real,
 	@saleSakht nvarchar(30)=null,
-	@dateParvane nvarchar(30)=null,
-	@parvaneSerial nvarchar(300)=null,
-	@bonBast bit,
-	@mamarJoda bit,
 	@roomCount int,
 	@code nvarchar(50)=null,
 	@userGuid uniqueidentifier,
@@ -173,9 +165,6 @@ BEGIN
 		  ,[PishTotalPrice] = @pishTotalPrice
 		  ,[PishPrice] = @pishPrice
 		  ,[DeliveryDate] = @deliveryDate
-		  ,[PishDesc] = @pishDesc
-		  ,[MoavezeDesc] = @moavezeDesc
-		  ,[MosharekatDesc] = @mosharekatDesc
 		  ,[Masahat] = @masahat
 		  ,[ZirBana] = @zirbana
 		  ,[CityGuid] = @cityGuid
@@ -197,14 +186,8 @@ BEGIN
 		  ,[TedadTabaqe] = @tedadTabaqe
 		  ,[TabaqeNo] = @tabaqeNo
 		  ,[VahedPerTabaqe] = @vahedPerTabaqe
-		  ,[MetrazhKouche] = @metrazheKouche
-		  ,[ErtefaSaqf] = @ertefaSaqf
 		  ,[Hashie] = @hashie
 		  ,[SaleSakht] = @saleSakht
-		  ,[DateParvane] = @dateParvane
-		  ,[ParvaneSerial] = @parvaneSerial
-		  ,[BonBast] = @bonBast
-		  ,[MamarJoda] = @mamarJoda
 		  ,[RoomCount] = @roomCount
 		  ,[Code] = @code
 		  ,[Image] = @image
@@ -253,9 +236,6 @@ BEGIN
            ,[PishTotalPrice]
            ,[PishPrice]
            ,[DeliveryDate]
-           ,[PishDesc]
-           ,[MoavezeDesc]
-           ,[MosharekatDesc]
            ,[Masahat]
            ,[ZirBana]
            ,[CityGuid]
@@ -277,14 +257,9 @@ BEGIN
            ,[TedadTabaqe]
            ,[TabaqeNo]
            ,[VahedPerTabaqe]
-           ,[MetrazhKouche]
            ,[ErtefaSaqf]
            ,[Hashie]
            ,[SaleSakht]
-           ,[DateParvane]
-           ,[ParvaneSerial]
-           ,[BonBast]
-           ,[MamarJoda]
            ,[RoomCount]
            ,[Code]
            ,[UserGuid]
@@ -333,9 +308,6 @@ BEGIN
            ,@pishTotalPrice
            ,@pishPrice
            ,@deliveryDate
-           ,@pishDesc
-           ,@moavezeDesc
-           ,@mosharekatDesc
            ,@masahat
            ,@zirbana
            ,@cityGuid
@@ -357,14 +329,9 @@ BEGIN
            ,@tedadTabaqe
            ,@tabaqeNo
            ,@vahedPerTabaqe
-           ,@metrazheKouche
            ,@ertefaSaqf
            ,@hashie
            ,@saleSakht
-           ,@dateParvane
-           ,@parvaneSerial
-           ,@bonBast
-           ,@mamarJoda
            ,@roomCount
            ,@code
            ,@userGuid

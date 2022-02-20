@@ -100,9 +100,6 @@ namespace EntityCache.Bussines
                 cmd.Parameters.AddWithValue("@pishTotalPrice", item.PishTotalPrice);
                 cmd.Parameters.AddWithValue("@pishPrice", item.PishPrice);
                 cmd.Parameters.AddWithValue("@deliveryDate", item.DeliveryDate);
-                cmd.Parameters.AddWithValue("@pishDesc", item.PishDesc ?? "");
-                cmd.Parameters.AddWithValue("@moavezeDesc", item.MoavezeDesc ?? "");
-                cmd.Parameters.AddWithValue("@mosharekatDesc", item.MosharekatDesc ?? "");
                 cmd.Parameters.AddWithValue("@masahat", item.Masahat);
                 cmd.Parameters.AddWithValue("@zirbana", item.ZirBana);
                 cmd.Parameters.AddWithValue("@cityGuid", item.CityGuid);
@@ -129,14 +126,9 @@ namespace EntityCache.Bussines
                 cmd.Parameters.AddWithValue("@tedadTabaqe", item.TedadTabaqe);
                 cmd.Parameters.AddWithValue("@tabaqeNo", item.TabaqeNo);
                 cmd.Parameters.AddWithValue("@vahedPerTabaqe", item.VahedPerTabaqe);
-                cmd.Parameters.AddWithValue("@metrazheKouche", item.MetrazhKouche);
                 cmd.Parameters.AddWithValue("@ertefaSaqf", item.ErtefaSaqf);
                 cmd.Parameters.AddWithValue("@hashie", item.Hashie);
                 cmd.Parameters.AddWithValue("@saleSakht", item.SaleSakht ?? "");
-                cmd.Parameters.AddWithValue("@dateParvane", item.DateParvane ?? "");
-                cmd.Parameters.AddWithValue("@parvaneSerial", item.ParvaneSerial ?? "");
-                cmd.Parameters.AddWithValue("@bonBast", item.BonBast);
-                cmd.Parameters.AddWithValue("@mamarJoda", item.MamarJoda);
                 cmd.Parameters.AddWithValue("@roomCount", item.RoomCount);
                 cmd.Parameters.AddWithValue("@code", item.Code ?? "");
                 cmd.Parameters.AddWithValue("@userGuid", item.UserGuid);
