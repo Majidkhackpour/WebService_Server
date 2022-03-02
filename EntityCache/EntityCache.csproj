@@ -106,6 +106,7 @@
     <Compile Include="Bussines\BuildingWindowBussines.cs" />
     <Compile Include="Bussines\BuildingZoncanBussines.cs" />
     <Compile Include="Bussines\CityBussines.cs" />
+    <Compile Include="Bussines\CustomerBussines.cs" />
     <Compile Include="Bussines\DocumentTypeBussines.cs" />
     <Compile Include="Bussines\FloorCoverBussines.cs" />
     <Compile Include="Bussines\KitchenServiceBussines.cs" />

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Services;
+using Services.Interfaces;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Services;
-using Services.Interfaces;
-using Telegram.Bot;
 
 namespace EntityCache.ViewModels
 {
@@ -13,7 +12,7 @@ namespace EntityCache.ViewModels
         public string ApiCode { get; set; }
         public string Message { get; set; }
 
-        public async Task SendAsync()
+        public Task SendAsync()
         {
             try
             {
@@ -29,6 +28,7 @@ namespace EntityCache.ViewModels
             {
                 WebErrorLog.ErrorInstence.StartErrorLog(ex);
             }
+            return Task.CompletedTask;
         }
     }
 }

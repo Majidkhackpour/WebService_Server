@@ -67,7 +67,5 @@ namespace Persistence.Entities
         public string LkSerial { get; set; }
         public bool isBlock { get; set; }
         public bool isWebServiceBlock { get; set; }
-        [NotMapped] public string ExpireDateSh => Calendar.MiladiToShamsi(ExpireDate);
-        [NotMapped] public int Term { get; set; }
     }
 }

@@ -1609,3 +1609,139 @@ BEGIN
 	Select count(*) from Department_Customers
 	where Guid=@cusGuid
 END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Customer_Save]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Customer_Save]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Customer_Save
+	@Guid uniqueidentifier,
+	@st bit,
+	@createDate datetime,
+	@name nvarchar(500),
+	@companyName nvarchar(500),
+	@nationalCode nvarchar(50),
+	@appSerial nvarchar(100),
+	@address nvarchar(500),
+	@postalCode nvarchar(50),
+	@tell1 nvarchar(50),
+	@tell2 nvarchar(50),
+	@tell3 nvarchar(50),
+	@tell4 nvarchar(50),
+	@email nvarchar(100),
+	@desc nvarchar(max),
+	@expireDate datetime,
+	@userGuid uniqueidentifier,
+	@account decimal(18,3),
+	@userName nvarchar(100),
+	@pass nvarchar(100),
+	@siteUrl nvarchar(50),
+	@hardSerial nvarchar(100),
+	@isBlock bit,
+	@isWebServiceBlock bit
+AS
+BEGIN
+	UPDATE [dbo].[Department_Customers]
+	   SET [Modified] = GETDATE()
+		  ,[Status] = @st
+		  ,[Name] = @name
+		  ,[CompanyName] = @companyName
+		  ,[NationalCode] = @nationalCode
+		  ,[AppSerial] = @appSerial
+		  ,[Address] = @address
+		  ,[PostalCode] = @postalCode
+		  ,[Tell1] = @tell1
+		  ,[Tell2] = @tell2
+		  ,[Tell3] = @tell3
+		  ,[Tell4] = @tell4
+		  ,[Email] = @email
+		  ,[Description] = @desc
+		  ,[ExpireDate] = @expireDate
+		  ,[Account] = @account
+		  ,[UserName] = @userName
+		  ,[Password] = @pass
+		  ,[SiteUrl] = @siteUrl
+		  ,[HardSerial] = @hardSerial
+		  ,[isBlock] = @isBlock
+		  ,[isWebServiceBlock] = isWebServiceBlock
+	 WHERE [Guid] = @Guid
+	if @@ROWCOUNT<=0
+	begin
+		INSERT INTO [dbo].[Department_Customers]
+           ([Guid]
+           ,[Modified]
+           ,[Status]
+           ,[CreateDate]
+           ,[Name]
+           ,[CompanyName]
+           ,[NationalCode]
+           ,[AppSerial]
+           ,[Address]
+           ,[PostalCode]
+           ,[Tell1]
+           ,[Tell2]
+           ,[Tell3]
+           ,[Tell4]
+           ,[Email]
+           ,[Description]
+           ,[ExpireDate]
+           ,[UserGuid]
+           ,[Account]
+           ,[UserName]
+           ,[Password]
+           ,[SiteUrl]
+           ,[HardSerial]
+           ,[LkSerial]
+           ,[isBlock]
+           ,[isWebServiceBlock])
+		 VALUES
+			   (@Guid
+			   ,GETDATE()
+			   ,@st
+			   ,@createDate
+			   ,@name
+			   ,@companyName
+			   ,@nationalCode
+			   ,@appSerial
+			   ,@address
+			   ,@postalCode
+			   ,@tell1
+			   ,@tell2
+			   ,@tell3
+			   ,@tell4
+			   ,@email
+			   ,@desc
+			   ,@expireDate
+			   ,@userGuid
+			   ,@account
+			   ,@userName
+			   ,@pass
+			   ,@siteUrl
+			   ,@hardSerial
+			   ,''
+			   ,@isBlock
+			   ,@isWebServiceBlock)
+	end
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Customer_GetAll]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Customer_GetAll]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Customer_GetAll
+AS
+BEGIN
+	Select * From Department_Customers
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Customer_Get]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Customer_Get]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Customer_Get
+	@Guid uniqueidentifier
+AS
+BEGIN
+	Select * From Department_Customers
+	Where Guid = @Guid
+END
