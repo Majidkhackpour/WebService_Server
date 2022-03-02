@@ -36,10 +36,6 @@
                             <div class="slider round">
                             </div>
                         </label>
-                        @*<div class="checkbox">
-                                @Html.EditorFor(model => model.Status)
-                                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                            </div>*@
                     </div>
                 </div>
 
@@ -68,16 +64,22 @@
                 </div>
 
                 <div class="form-group">
-                        @Html.Partial("AppSerial")
-                </div>
-
-                @*<div class="form-group">
                     @Html.LabelFor(model => model.AppSerial, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.AppSerial, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.AppSerial, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => model.AppSerial, "", new { @class = "text-danger" })
                     </div>
-                </div>*@
+                    <br />
+                    @for (var i = 0; i < Model.CustomerSerial.Count; i++)
+                    {
+                        <div>
+                            @Html.HiddenFor(m => m.CustomerSerial[i].ProductGuid)
+                            @Html.HiddenFor(m => m.CustomerSerial[i].ProductCode)
+                            @Html.CheckBoxFor(m => m.CustomerSerial[i].IsChecked)
+                            @Html.LabelFor(m => m.CustomerSerial[i].IsChecked, Model.CustomerSerial[i].ProductName)
+                        </div>
+                    }
+                </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -205,12 +207,3 @@
 
 <script src="~/areas/manager/content/vendors/select2/js/select2.min.js"></script>
 <script src="~/areas/manager/content/assets/js/examples/select2.js"></script>
-<script>
-    $("#IsEnabled").change(function () {
-
-        // check if checkbox is being checked
-        // taken from /a/23007488 by Alexandru Chichinete
-        if ($("#IsEnabled").is(":checked")) {
-            // enable form submit
-        }
-    });</script>

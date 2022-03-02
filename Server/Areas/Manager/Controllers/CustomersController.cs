@@ -4,6 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using EntityCache.ViewModels;
 
 namespace Server.Areas.Manager.Controllers
 {
@@ -27,11 +28,26 @@ namespace Server.Areas.Manager.Controllers
 
             return PartialView(customers);
         }
-        public ActionResult Create() => View();
+        public async Task<ActionResult> Create()
+        {
+            var cus = new CustomerBussines();
+            var allProduct = await ProductBussines.GetAllAsync();
+            foreach (var prd in allProduct)
+            {
+                cus.CustomerSerial.Add(new CustomerSerialViewModel()
+                {
+                    IsChecked = false,
+                    ProductCode = prd.Code,
+                    ProductGuid = prd.Guid,
+                    ProductName = prd.Name
+                });
+            }
+            return View(cus);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,CompanyName,NationalCode,PostalCode,AppSerial,Address,Tell1,Tell2,Tell3,Tell4,Email,HardSerial,SiteUrl,Address,Description")] CustomerBussines customers)
+        public async Task<ActionResult> Create([Bind(Include = "Name,CompanyName,NationalCode,PostalCode,AppSerial,Address,Tell1,Tell2,Tell3,Tell4,Email,HardSerial,SiteUrl,Address,Description,CustomerSerial")] CustomerBussines customers)
         {
             if (!ModelState.IsValid) return View(customers);
             customers.Guid = Guid.NewGuid();
@@ -50,7 +66,7 @@ namespace Server.Areas.Manager.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var customers = await CustomerBussines.GetAsync(id.Value);
+            var customers = await CustomerBussines.GetAsync(id.Value, true);
             if (customers == null || customers.Guid == Guid.Empty)
                 return HttpNotFound();
             return View(customers);
@@ -67,7 +83,7 @@ namespace Server.Areas.Manager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Guid,Modified,Status,Name,CompanyName,NationalCode,AppSerial,Address,PostalCode,Tell1,Tell2,Tell3,Tell4,Email,Description,ExpireDate,UserGuid,Account,UserName,Password,SiteUrl,HardSerial,LkSerial,isBlock,isWebServiceBlock")] CustomerBussines customers, HttpPostAttribute item)
+        public async Task<ActionResult> Edit([Bind(Include = "Guid,Modified,Status,Name,CompanyName,NationalCode,AppSerial,Address,PostalCode,Tell1,Tell2,Tell3,Tell4,Email,Description,ExpireDate,UserGuid,Account,UserName,Password,SiteUrl,HardSerial,LkSerial,isBlock,isWebServiceBlock,CustomerSerial")] CustomerBussines customers, HttpPostAttribute item)
         {
             if (!ModelState.IsValid) return View(customers);
             await customers.SaveAsync();

@@ -1745,3 +1745,26 @@ BEGIN
 	Select * From Department_Customers
 	Where Guid = @Guid
 END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Product_GetByCode]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Product_GetByCode]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Product_GetByCode
+	@Code nvarchar(50)
+AS
+BEGIN
+	select * from Department_Product
+	Where Code=@Code
+END
+GO
+-- ==========================================================================================
+IF Not EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[sp_Product_GetAll]') AND OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	exec('Create Procedure [dbo].[sp_Product_GetAll]	As Begin print 11 end')
+GO
+Alter PROCEDURE sp_Product_GetAll
+AS
+BEGIN
+	select * from Department_Product
+	Where Status='true'
+END

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using EntityCache.Assistence;
+using EntityCache.ViewModels;
 using Persistence;
+using Persistence.Entities;
 using Services;
 using Servicess.Interfaces.Department;
 
@@ -23,7 +26,7 @@ namespace EntityCache.Bussines
         public string Name { get; set; }
         [Display(Name = "نام مجموعه")] public string CompanyName { get; set; }
         [Display(Name = "کد ملی")] public string NationalCode { get; set; }
-        [Display(Name = "سریال نرم افزار")] public string AppSerial { get; set; }
+        [Display(Name = "سریال نرم افزار")] public string AppSerial { get; set; } = "";
         [Display(Name = "آدرس")] public string Address { get; set; }
         [Display(Name = "کدپستی")] public string PostalCode { get; set; }
         [Display(Name = "تلفن 1")] public string Tell1 { get; set; }
@@ -42,6 +45,7 @@ namespace EntityCache.Bussines
         public string LkSerial { get; set; }
         public bool isBlock { get; set; } = false;
         public bool isWebServiceBlock { get; set; } = false;
+        public List<CustomerSerialViewModel> CustomerSerial { get; set; } = new List<CustomerSerialViewModel>();
 
         public async Task<ReturnedSaveFuncInfo> SaveAsync(SqlTransaction tr = null)
         {
@@ -56,6 +60,17 @@ namespace EntityCache.Bussines
                     await cn.OpenAsync();
                     tr = cn.BeginTransaction();
                 }
+
+                if (CustomerSerial != null && CustomerSerial.Count > 0)
+                {
+                    AppSerial = "";
+                    foreach (var item in CustomerSerial)
+                    {
+                        if (!item.IsChecked) continue;
+                        AppSerial += item.ProductCode;
+                    }
+                }
+
                 var cmd = new SqlCommand("sp_Customer_Save", tr.Connection, tr) { CommandType = CommandType.StoredProcedure };
                 cmd.Parameters.AddWithValue("@guid", Guid);
                 cmd.Parameters.AddWithValue("@st", Status);
@@ -113,7 +128,7 @@ namespace EntityCache.Bussines
                         using (var dr = await cmd.ExecuteReaderAsync())
                         {
                             while (dr.Read())
-                                list.Add(LoadData(dr));
+                                list.Add(await LoadDataAsync(dr, false));
 
                             dr.Close();
                         }
@@ -128,7 +143,7 @@ namespace EntityCache.Bussines
             }
             return list;
         }
-        public static async Task<CustomerBussines> GetAsync(Guid guid)
+        public static async Task<CustomerBussines> GetAsync(Guid guid, bool isLoadSerail = false)
         {
             CustomerBussines item = null;
             try
@@ -143,7 +158,7 @@ namespace EntityCache.Bussines
                         using (var dr = await cmd.ExecuteReaderAsync())
                         {
                             if (dr.Read())
-                                item = LoadData(dr);
+                                item = await LoadDataAsync(dr, isLoadSerail);
 
                             dr.Close();
                         }
@@ -158,7 +173,7 @@ namespace EntityCache.Bussines
             }
             return item;
         }
-        private static CustomerBussines LoadData(SqlDataReader dr)
+        private static async Task<CustomerBussines> LoadDataAsync(SqlDataReader dr, bool isloadSerail)
         {
             var item = new CustomerBussines();
             try
@@ -188,6 +203,48 @@ namespace EntityCache.Bussines
                 if (dr["HardSerial"] != DBNull.Value) item.HardSerial = dr["HardSerial"].ToString();
                 if (dr["isBlock"] != DBNull.Value) item.isBlock = (bool)dr["isBlock"];
                 if (dr["isWebServiceBlock"] != DBNull.Value) item.isWebServiceBlock = (bool)dr["isWebServiceBlock"];
+                if (!isloadSerail) return item;
+                var serialList = new List<string>();
+                var code = "";
+                foreach (var res in item.AppSerial.ToList())
+                {
+                    if (code.Length < 2)
+                    {
+                        code += res;
+                        if (code.Length != 2) continue;
+                        serialList.Add(code);
+                        code = "";
+                    }
+                    else
+                    {
+                        serialList.Add(code);
+                        code = "";
+                    }
+                }
+                var allProduct = await ProductBussines.GetAllAsync();
+                foreach (var prd in allProduct)
+                {
+                    if (serialList.Contains(prd.Code))
+                    {
+                        item.CustomerSerial.Add(new CustomerSerialViewModel()
+                        {
+                            IsChecked = true,
+                            ProductCode = prd.Code,
+                            ProductGuid = prd.Guid,
+                            ProductName = prd.Name
+                        });
+                    }
+                    else
+                    {
+                        item.CustomerSerial.Add(new CustomerSerialViewModel()
+                        {
+                            IsChecked = false,
+                            ProductCode = prd.Code,
+                            ProductGuid = prd.Guid,
+                            ProductName = prd.Name
+                        });
+                    }
+                }
             }
             catch (Exception ex)
             {

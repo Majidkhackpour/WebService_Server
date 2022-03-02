@@ -127,6 +127,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\CustomerSerialViewModel.cs" />
     <Compile Include="ViewModels\ProductGardeshViewModel.cs" />
     <Compile Include="ViewModels\WebTelegramBuilding.cs" />
     <Compile Include="ViewModels\WebTelegramMessage.cs" />
