@@ -1,1 +1,13 @@
-﻿pokjhgvcv
+﻿@using Services
+@model EntityCache.ViewModels.ActivatioCodeViewModel
+
+<div class="card card-body text-left">
+    <h2>کد فعالسازی تولید شده</h2>
+    <h2>" @Model.ActivationCode "</h2>
+    <hr />
+</div>
+<hr />
+<div>
+    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">ارسال از طریق پیامک</button>
+    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">ثبت</button>
+</div>
